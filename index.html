@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#667eea">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Roots Exam">
+<title>The Roots - Quranic Arabic Exam | Pathways</title>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px;color:#333}
+.app{width:100%;max-width:1100px;background:white;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;animation:si .5s ease-out;max-height:95vh;overflow-y:auto}
+@keyframes si{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hdr{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:40px 30px;text-align:center}
+.hdr.elementary{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
+.hdr.middle{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
+.hdr.highschool{background:linear-gradient(135deg,#43e97b 0%,#38f9d7 100%)}
+.hdr.adult{background:linear-gradient(135deg,#fa709a 0%,#fee140 100%)}
+.hdr h1{font-size:2em;margin:10px 0;font-weight:600}
+.hdr .sub{font-size:1.5em;font-style:italic;margin:8px 0}
+.hdr .ar{font-size:1.4em;margin:15px 0;direction:rtl}
+.cnt{padding:40px 30px;min-height:400px;animation:fu .6s ease-out}
+.ls{text-align:center}
+.ls h2{color:#333;margin-bottom:15px;font-size:2em;font-weight:700}
+.ls p{color:#666;margin-bottom:30px;font-size:1.1em}
+.lg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:30px}
+.lc{border:3px solid #e0e0e0;border-radius:16px;padding:30px 20px;cursor:pointer;transition:all .4s;background:#fafafa;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+.lc:hover{transform:translateY(-8px);box-shadow:0 15px 40px rgba(0,0,0,.2)}
+.lc.elementary{border-color:#f093fb}.lc.elementary:hover{background:rgba(240,147,251,.1)}
+.lc.middle{border-color:#4facfe}.lc.middle:hover{background:rgba(79,172,254,.1)}
+.lc.highschool{border-color:#43e97b}.lc.highschool:hover{background:rgba(67,233,123,.1)}
+.lc.adult{border-color:#fa709a}.lc.adult:hover{background:rgba(250,112,154,.1)}
+.li{font-size:3.5em;margin-bottom:15px;transition:transform .4s}
+.lc:hover .li{transform:scale(1.2) rotate(-8deg)}
+.lc h3{font-size:1.5em;margin:15px 0 8px;font-weight:700;color:#333}
+.ab{font-size:.85em;color:#999;margin:6px 0}
+.ld{color:#777;font-size:.9em;margin:10px 0}
+.ls2{text-align:left;background:white;padding:12px;border-radius:8px;margin:12px 0;font-size:.8em;color:#666;list-style:none;border:1px solid #f0f0f0}
+.ls2 li{margin:6px 0;padding-left:18px;position:relative}
+.ls2 li:before{content:'✓';position:absolute;left:0;color:#43e97b;font-weight:bold}
+.db{display:inline-block;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:8px 16px;border-radius:20px;font-size:.8em;font-weight:700;margin-top:12px}
+.lc.elementary .db{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
+.lc.middle .db{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
+.lc.highschool .db{background:linear-gradient(135deg,#43e97b 0%,#38f9d7 100%)}
+.lc.adult .db{background:linear-gradient(135deg,#fa709a 0%,#fee140 100%)}
+.fs{margin:25px 0}
+.fs h3{color:#333;margin-bottom:18px;font-size:1.3em;font-weight:700;border-bottom:3px solid #667eea;padding-bottom:10px}
+.fg{margin-bottom:18px}
+.fg label{display:block;margin-bottom:8px;color:#333;font-weight:600;font-size:.95em}
+.fg input,.fg select{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-size:16px;font-family:inherit;transition:all .3s}
+.fg input:focus,.fg select:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,.1)}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+@media(max-width:600px){.fr{grid-template-columns:1fr}.cnt{padding:25px 15px}.hdr{padding:30px 20px}.hdr h1{font-size:1.6em}.lg{grid-template-columns:1fr}}
+.eh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px;padding-bottom:20px;border-bottom:2px solid #e0e0e0;gap:15px;flex-wrap:wrap}
+.ps{flex:1;min-width:150px}
+.pl{color:#666;font-weight:600;font-size:.9em;margin-bottom:8px;display:flex;justify-content:space-between}
+.pb{width:100%;height:10px;background:#e0e0e0;border-radius:5px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);transition:width .4s}
+.tm{font-size:1.5em;font-weight:800;color:#667eea;white-space:nowrap;padding:10px 16px;background:rgba(102,126,234,.1);border-radius:8px;border:2px solid rgba(102,126,234,.2);font-family:'Courier New',monospace}
+.tm.warn{color:#e74c3c;background:rgba(231,76,60,.15);border-color:rgba(231,76,60,.3);animation:pu .8s infinite}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.6}}
+.qc{background:#f9f9f9;border-left:5px solid #667eea;padding:30px;border-radius:10px;margin-bottom:25px;animation:fu .5s}
+.qb{display:inline-block;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:6px 12px;border-radius:16px;font-size:.7em;font-weight:700;margin-bottom:15px;text-transform:uppercase}
+.qt{font-size:1.15em;color:#333;margin-bottom:20px;line-height:1.6;font-weight:600}
+.qo{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.op{padding:14px 16px;border:2px solid #ddd;border-radius:8px;cursor:pointer;transition:all .3s;background:white;display:flex;align-items:center;gap:12px;font-size:.95em}
+.op:hover{border-color:#667eea;transform:translateX(2px)}
+.op input{cursor:pointer;width:20px;height:20px;accent-color:#667eea;flex-shrink:0}
+.op.sel{border-color:#667eea;background:rgba(102,126,234,.08);font-weight:600}
+.bg{display:flex;gap:12px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+button{padding:12px 30px;font-size:.95em;border:none;border-radius:8px;cursor:pointer;transition:all .3s;font-weight:700;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+button:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.bp{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white}
+.bs{background:#f0f0f0;color:#333;border:2px solid #ddd}
+.rc{text-align:center}
+.rc h2{color:#333;margin-bottom:10px;font-size:2em;font-weight:700}
+.sd{font-size:4em;font-weight:900;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:20px 0}
+.sf{font-size:1.5em;color:#333;margin:15px 0;font-weight:700}
+.sb{display:inline-block;padding:10px 25px;border-radius:20px;font-weight:700;font-size:.95em;margin:15px 0;text-transform:uppercase}
+.sb.pass{background:rgba(39,174,96,.15);color:#27ae60;border:2px solid #27ae60}
+.sb.fail{background:rgba(231,76,60,.15);color:#e74c3c;border:2px solid #e74c3c}
+.sdt{background:#f9f9f9;padding:25px;border-radius:10px;margin:25px 0;text-align:left;border-left:5px solid #667eea}
+.sdt h4{color:#333;margin-bottom:18px;font-size:1.2em;font-weight:700}
+.dr{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #e0e0e0}
+.dr:last-child{border-bottom:none}
+.cert{border:4px solid #667eea;border-radius:12px;padding:40px 25px;margin:30px 0;background:rgba(102,126,234,.05);text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.cs{font-size:4em;margin:15px 0}
+.cert h3{color:#333;font-size:1.8em;margin:15px 0;font-weight:700}
+.cert p{color:#666;margin:12px 0;font-size:1em}
+.cert .ach{font-weight:900;color:#667eea}
+.pn{background:rgba(102,126,234,.1);border-left:4px solid #667eea;padding:15px;margin:20px 0;border-radius:8px;font-size:.9em;color:#555}
+@media(max-width:480px){.sd{font-size:2.5em}.eh{flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect}=React;
+const LC={elementary:{id:'elementary',name:'Elementary',ar:'6-11',dur:25,q:8,desc:'Basic alphabet & vocabulary',icon:'🌟',pass:70},middle:{id:'middle',name:'Middle School',ar:'12-14',dur:45,q:15,desc:'Grammar & comprehension',icon:'📚',pass:70},highschool:{id:'highschool',name:'High School',ar:'15-18',dur:90,q:20,desc:'Advanced proficiency',icon:'🎓',pass:70},adult:{id:'adult',name:'Professional',ar:'18+',dur:195,q:25,desc:'Full RQAP Level 2',icon:'👑',pass:65}};
+const QS={elementary:[{id:1,t:'First letter Arabic alphabet?',o:['ب','ا','ن','م'],c:1},{id:2,t:'"Water" in Arabic?',o:['ماء','طعام','نار','هواء'],c:0},{id:3,t:'"Hello" is?',o:['وداعا','شكرا','مرحبا','أهلا'],c:2},{id:4,t:'"Three" = ?',o:['2','3','4','5'],c:1},{id:5,t:'Color in Arabic?',o:['كتاب','أحمر','طالب','معلم'],c:1},{id:6,t:'"Lion" = ?',o:['Dog','Cat','Lion','Bird'],c:2},{id:7,t:'"Ba" sounds like?',o:['/b/','/t/','/n/','/m/'],c:0},{id:8,t:'Which is a greeting?',o:['Hello','مرحبا','Bonjour','All of them'],c:3}],middle:[{id:1,t:'Root of "يكتب"?',o:['ك-ت-ب','ي-ك-ت','ك-ب-ن','ت-ب-ع'],c:0},{id:2,t:'Translate "الحمد لله"?',o:['Thank you','Praise be to God','God is great','God loves us'],c:1},{id:3,t:'What is "مدرسة"?',o:['Teacher','School','Student','Book'],c:1},{id:4,t:'Identify verb: "أكل محمد"',o:['محمد','أكل','التفاح','الـ'],c:1},{id:5,t:'Plural of "مدرس"?',o:['مدرسة','مدرسات','مدرسين','مدرسان'],c:1},{id:6,t:'Longest surah?',o:['Al-Fatiha','Al-Baqarah','Al-Imran','An-Nisa'],c:1},{id:7,t:'Translate "في البيت"?',o:['On the house','In the house','At home','The house'],c:1},{id:8,t:'What is "دعا"?',o:['To pray','To call/invite','To ask','To give'],c:1},{id:9,t:'Past tense "she wrote"?',o:['كتبت','كتب','تكتب','كتبا'],c:0},{id:10,t:'Root of "قال"?',o:['ق-و-ل','ق-ا-ل','ق-ي-ل','ق-ل-ب'],c:0},{id:11,t:'Subject in "الطالبة تقرأ"?',o:['تقرأ','الطالبة','قرأ','تـ'],c:1},{id:12,t:'What is "نهر"?',o:['Sea','River','Ocean','Lake'],c:1},{id:13,t:'Translate "أنا أحب الكتب"?',o:['I love books','You love books','He loves','We love'],c:0},{id:14,t:'Plural of "كتاب"?',o:['كتابة','كتب','كتاب','كتابان'],c:1},{id:15,t:'How many surahs in Quran?',o:['100','110','114','120'],c:2}],highschool:[{id:1,t:'Verbal noun of "ذهب"?',o:['الذهاب','الذاهب','يذهب','ذاهب'],c:0},{id:2,t:'Conditional form?',o:['يفعل','لو فعل','إذا فعل','لم يفعل'],c:1},{id:3,t:'Analyze "إن الله مع الصابرين"?',o:['Simple sentence','Compound','Assertive+predicate','Interrogative'],c:2},{id:4,t:'What is "الفعل الناقص"?',o:['Incomplete verb','Weak verb','Linking verb','Hollow verb'],c:1},{id:5,t:'"كان" indicates?',o:['Past','Future','State of being','Action'],c:2},{id:6,t:'Agent in "كتب الطالب"?',o:['كتب','الطالب','Both','الـ'],c:1},{id:7,t:'Dual of "محمد"?',o:['محمدان','محمدين','محمادة','محمدات'],c:0},{id:8,t:'Translate "بسم الله"?',o:['In the name of God','Named God','God named','All above'],c:0},{id:9,t:'What is "الإعراب"?',o:['Voweling','Grammar cases','Diacritical marks','All above'],c:3},{id:10,t:'Tense of "سيكتب"?',o:['Past','Present','Future','Conditional'],c:2},{id:11,t:'Arabic root forms?',o:['3 main','7 forms','10 forms','14 forms'],c:3},{id:12,t:'Nominative case marker?',o:['Damma (u)','Kasra (i)','Sukun','Fatha (a)'],c:0},{id:13,t:'Mudhaf structure?',o:['Two nouns in genitive','Adjective+noun','Verb+object','Prep+noun'],c:0},{id:14,t:'"الفعل المصروف" means?',o:['Unchanged verb','Fully conjugable verb','Invariable','Derived verb'],c:1},{id:15,t:'Total surahs?',o:['50','100','114','200'],c:2},{id:16,t:'Jussive case marker?',o:['Damma','Kasra','Sukun','Fatha'],c:2},{id:17,t:'5 Pillars of Islam?',o:['5 religious practices','Set of beliefs','Islamic law','All of the above'],c:3},{id:18,t:'Solar letters count?',o:['12','13','14','15'],c:2},{id:19,t:'What is "الضمير المنفصل"?',o:['Separate pronoun','Attached pronoun','Demonstrative','Relative pronoun'],c:0},{id:20,t:'"Bismillah" is?',o:['3-letter phrase','A full word','An opening phrase','All above'],c:3}],adult:[{id:1,t:'Grammar of "إن الله مع الصابرين"?',o:['Assertive+subject/predicate','Conditional clause','Question form','Imperative'],c:0},{id:2,t:'Tajweed rule for "ال"?',o:['Assimilation','Definite article','Solar/Lunar letters','Glottal stop'],c:2},{id:3,t:'Features in "والمؤمنات والمؤمنون"?',o:['Plural forms','Gender markers','Coordinated clause','All of above'],c:3},{id:4,t:'CEFR Level B1 describes?',o:['Independent user','Proficient user','Basic user','Mastery level'],c:0},{id:5,t:'What is "الإظهار" in tajweed?',o:['Assimilation','Clear pronunciation','Nasal sound','Emphatic'],c:1},{id:6,t:'Conjugate "درس" all persons?',o:['درسوا only','يدرس only','ندرس only','All forms possible'],c:3},{id:7,t:'"الإدغام" is a?',o:['Regional dialect','Tajweed rule','Grammar concept','Variation'],c:1},{id:8,t:'Mudhaf-Mudhaf ilayh structure?',o:['Two nouns genitive relation','Adjective+noun','Verb+object','Prep+noun'],c:0},{id:9,t:'Fully conjugable Arabic verb?',o:['Unchanged verb','Conjugable verb','Invariable','Derived only'],c:1},{id:10,t:'Number of Quran surahs?',o:['100','110','114','120'],c:2},{id:11,t:'5 Pillars include?',o:['Shahada,Prayer,Zakat,Hajj,Fasting','Five beliefs only','Five laws','All correct'],c:3},{id:12,t:'Solar letters in Arabic?',o:['12 letters','13 letters','14 letters','15 letters'],c:2},{id:13,t:'What is "الضمير المنفصل"?',o:['Separate pronoun','Attached pronoun','Demonstrative','Relative'],c:0},{id:14,t:'"Bismillah" structure?',o:['Three words','One compound word','An opening phrase','All correct'],c:3},{id:15,t:'CEFR Framework levels?',o:['5 levels','6 levels','7 levels','4 levels'],c:1},{id:16,t:'Major tajweed rules?',o:['10 rules','15 rules','20 rules','25+ rules'],c:2},{id:17,t:'Quran chapters?',o:['100','114','130','150'],c:1},{id:18,t:'Arabic root pattern?',o:['2 letters','3 letters (most)','4 letters','Varies always'],c:1},{id:19,t:'Arabic grammar cases?',o:['Nominative only','Accusative only','Genitive only','All three cases'],c:3},{id:20,t:'RQAP assessment level?',o:['RQAP Level 1','RQAP Level 2 (Asasi)','RQAP Level 3','Professional Only'],c:1},{id:21,t:'Proficiency dimensions?',o:['Receptive only','Productive only','Interactive only','All three'],c:3},{id:22,t:'RQAP certification basis?',o:['Level-based','Score-based','Test-based','All integrated'],c:3},{id:23,t:'RQAP certificate validity?',o:['1 year','2 years','3 years','5 years'],c:3},{id:24,t:'Standard retake policy?',o:['Only once','Maximum 2 times','Unlimited','Every 6 months'],c:1},{id:25,t:'Portfolio in assessment?',o:['Yes, required','No','Optional only','Recommended'],c:0}]};
+function App(){
+const[scr,setScr]=useState('level');
+const[lv,setLv]=useState(null);
+const[nm,setNm]=useState('');
+const[em,setEm]=useState('');
+const[qi,setQi]=useState(0);
+const[ans,setAns]=useState({});
+const[tm,setTm]=useState(0);
+const[go,setGo]=useState(false);
+const[sc,setSc]=useState(0);
+useEffect(()=>{
+let iv;
+if(go&&tm>0){iv=setInterval(()=>{setTm(t=>{if(t<=1){sub();return 0}return t-1})},1000)}
+return()=>clearInterval(iv);
+},[go,tm]);
+const fmt=s=>{const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;return h>0?`${h}:${m.toString().padStart(2,'0')}:${ss.toString().padStart(2,'0')}`:`${m}:${ss.toString().padStart(2,'0')}`};
+const sel=l=>{setLv(l);setTm(LC[l].dur*60);setScr('info')};
+const start=()=>{if(nm&&em){setGo(true);setScr('exam')}else alert('Name and Email required')};
+const pick=(id,a)=>setAns(p=>({...p,[id]:a}));
+const nxt=()=>{const q=QS[lv].length;if(qi<q-1)setQi(p=>p+1);else sub()};
+const sub=()=>{const qs=QS[lv];let c=0;qs.forEach(q=>{if(ans[q.id]===q.c)c++});setSc(Math.round(c/qs.length*100));setScr('result');setGo(false)};
+const rst=()=>{setScr('level');setLv(null);setNm('');setEm('');setQi(0);setAns({});setSc(0)};
+const cfg=LC[lv];const qs=QS[lv]||[];const q=qs[qi];const ps=cfg&&sc>=cfg.pass;
+const getFb=s=>{if(s>=90)return'🏆 Outstanding! Mastery Achieved!';if(s>=80)return'🌟 Excellent! Great Performance!';if(s>=70)return'✅ Good Job! Passed!';if(s>=60)return'📚 Almost There! Keep Practicing!';return'💪 Keep Learning! Try Again!'};
+return React.createElement('div',{className:'app'},
+React.createElement('div',{className:`hdr ${lv||''}`},
+React.createElement('h1',null,'The Roots'),
+React.createElement('div',{className:'sub'},'Quranic Arabic'),
+React.createElement('div',{className:'ar'},'شهادة جذور لإتقان العربية القرآنية')
+),
+React.createElement('div',{className:'cnt'},
+scr==='level'&&React.createElement('div',{className:'ls'},
+React.createElement('h2',null,'Select Your Level'),
+React.createElement('p',null,'Choose your educational level to begin the exam'),
+React.createElement('div',{className:'lg'},
+Object.entries(LC).map(([k,v])=>
+React.createElement('div',{key:k,className:`lc ${k}`,onClick:()=>sel(k)},
+React.createElement('div',{className:'li'},v.icon),
+React.createElement('h3',null,v.name),
+React.createElement('div',{className:'ab'},`Ages: ${v.ar}`),
+React.createElement('p',{className:'ld'},v.desc),
+React.createElement('ul',{className:'ls2'},
+React.createElement('li',null,`${v.q} Questions`),
+React.createElement('li',null,`Pass: ${v.pass}%`),
+React.createElement('li',null,'Certificate on pass')
+),
+React.createElement('div',{className:'db'},`⏱ ${v.dur} MIN`)
+)
+)
+)
+),
+scr==='info'&&cfg&&React.createElement('div',null,
+React.createElement('h2',{style:{textAlign:'center',marginBottom:'25px',color:'#333'}},'Step 1 — Candidate Information'),
+React.createElement('div',{className:'fs'},
+React.createElement('h3',null,'Your Details'),
+React.createElement('div',{className:'fg'},
+React.createElement('label',null,'Full Name (as on certificate) *'),
+React.createElement('input',{type:'text',placeholder:'e.g. Sarah Ahmed',value:nm,onChange:e=>setNm(e.target.value)})
+),
+React.createElement('div',{className:'fr'},
+React.createElement('div',{className:'fg'},
+React.createElement('label',null,'Email Address *'),
+React.createElement('input',{type:'email',placeholder:'your@email.com',value:em,onChange:e=>setEm(e.target.value)})
+),
+React.createElement('div',{className:'fg'},
+React.createElement('label',null,'Level Selected'),
+React.createElement('input',{type:'text',value:`${cfg.name} (Ages ${cfg.ar})`,readOnly:true,style:{background:'#f5f5f5'}})
+)
+),
+React.createElement('div',{className:'pn'},
+React.createElement('strong',null,'Privacy: '),'Your data is stored locally in your browser only. Nothing is sent to any server.'
+)
+),
+React.createElement('div',{className:'bg'},
+React.createElement('button',{className:'bs',onClick:()=>setScr('level')},'← Back'),
+React.createElement('button',{className:'bp',onClick:start},'Start Exam →')
+)
+),
+scr==='exam'&&q&&cfg&&React.createElement('div',null,
+React.createElement('div',{className:'eh'},
+React.createElement('div',{className:'ps'},
+React.createElement('div',{className:'pl'},
+React.createElement('span',null,`Question ${qi+1} of ${qs.length} | ${cfg.name} Level`),
+React.createElement('span',{style:{color:'#667eea',fontWeight:'700'}},`${Math.round((qi+1)/qs.length*100)}%`)
+),
+React.createElement('div',{className:'pb'},
+React.createElement('div',{className:'pf',style:{width:`${(qi+1)/qs.length*100}%`}})
+)
+),
+React.createElement('div',{className:`tm ${tm<300?'warn':''}`},`⏱ ${fmt(tm)}`)
+),
+React.createElement('div',{className:'qc'},
+React.createElement('div',{className:'qb'},`Q${qi+1} — Multiple Choice`),
+React.createElement('p',{className:'qt'},q.t),
+React.createElement('div',{className:'qo'},
+q.o.map((opt,i)=>
+React.createElement('label',{key:i,className:`op ${ans[q.id]===i?'sel':''}`,onClick:()=>pick(q.id,i)},
+React.createElement('input',{type:'radio',name:`q${q.id}`,checked:ans[q.id]===i,onChange:()=>pick(q.id,i)}),
+opt
+)
+)
+)
+),
+React.createElement('div',{className:'bg'},
+React.createElement('button',{className:'bs',onClick:()=>setQi(p=>Math.max(0,p-1)),disabled:qi===0},'← Prev'),
+React.createElement('button',{className:'bp',onClick:nxt,disabled:ans[q.id]===undefined},qi===qs.length-1?'Submit Exam ✓':'Next →')
+)
+),
+scr==='result'&&cfg&&React.createElement('div',{className:'rc'},
+React.createElement('h2',null,'Exam Complete!'),
+React.createElement('div',{className:'sd'},`${sc}%`),
+React.createElement('div',{className:'sf'},getFb(sc)),
+React.createElement('div',{className:`sb ${ps?'pass':'fail'}`},ps?'✓ PASSED':'✗ NOT PASSED'),
+React.createElement('div',{className:'sdt'},
+React.createElement('h4',null,'📊 Results Summary'),
+React.createElement('div',{className:'dr'},React.createElement('span',null,'Candidate:'),React.createElement('strong',null,nm)),
+React.createElement('div',{className:'dr'},React.createElement('span',null,'Level:'),React.createElement('strong',null,cfg.name)),
+React.createElement('div',{className:'dr'},React.createElement('span',null,'Score:'),React.createElement('strong',{style:{color:ps?'#27ae60':'#e74c3c'}},`${sc}%`)),
+React.createElement('div',{className:'dr'},React.createElement('span',null,'Passing Score:'),React.createElement('strong',null,`${cfg.pass}%`)),
+React.createElement('div',{className:'dr'},React.createElement('span',null,'Status:'),React.createElement('strong',{style:{color:ps?'#27ae60':'#e74c3c'}},ps?'PASSED ✓':'NOT PASSED ✗')),
+React.createElement('div',{className:'dr'},React.createElement('span',null,'Date:'),React.createElement('strong',null,new Date().toLocaleDateString()))
+),
+ps&&React.createElement('div',{className:'cert'},
+React.createElement('div',{className:'cs'},'📜'),
+React.createElement('h3',null,'Certificate of Achievement'),
+React.createElement('p',null,'This certifies that'),
+React.createElement('p',null,React.createElement('strong',{style:{fontSize:'1.3em',color:'#333'}},nm)),
+React.createElement('p',null,'has successfully completed'),
+React.createElement('p',{className:'ach'},`The Roots Quranic Arabic Proficiency Exam — ${cfg.name} Level`),
+React.createElement('p',null,`with a score of ${sc}%`),
+React.createElement('p',null,'Pathways School — The Roots Program'),
+React.createElement('p',{style:{fontSize:'.85em',color:'#aaa',marginTop:'20px'}},`Issued: ${new Date().toLocaleDateString()}`)
+),
+!ps&&React.createElement('div',{style:{background:'rgba(102,126,234,.1)',padding:'20px',borderRadius:'10px',margin:'20px 0'}},
+React.createElement('p',{style:{fontSize:'1.1em',color:'#667eea',fontWeight:'600'}},'Keep studying! You can retake the exam after reviewing the material. You need ',React.createElement('strong',null,`${cfg.pass}%`),' to pass.')
+),
+React.createElement('div',{className:'bg'},
+React.createElement('button',{className:'bp',onClick:rst},'Try Again / New Level')
+)
+)
+)
+);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+</script>
+</body>
+</html>
