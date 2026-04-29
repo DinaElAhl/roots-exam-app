@@ -1,655 +1,331 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#1a6b4a">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>The Roots - Quranic Arabic Proficiency Exam</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;min-height:100%}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,#1a6b4a,#2d9b6f);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:16px}
-#app{width:100%;max-width:880px;background:#fff;border-radius:20px;box-shadow:0 12px 45px rgba(0,0,0,.25);overflow:hidden;margin:auto}
-/* HEADER */
-.hdr{color:#fff;padding:28px 26px;text-align:center}
-.hdr.home{background:linear-gradient(135deg,#1a6b4a,#2d9b6f)}
-.hdr.elementary{background:linear-gradient(135deg,#e8491d,#f7971e)}
-.hdr.middle{background:linear-gradient(135deg,#1565c0,#42a5f5)}
-.hdr.highschool{background:linear-gradient(135deg,#6a1b9a,#ab47bc)}
-.hdr.adult{background:linear-gradient(135deg,#bf360c,#e64a19)}
-.hdr h1{font-size:1.65em;font-weight:700;margin:6px 0}
-.hdr .sub{font-size:.95em;opacity:.9;margin-top:4px}
-.hdr .ar{font-size:1.6em;font-weight:700;direction:rtl;margin:6px 0;font-family:'Traditional Arabic','Amiri',serif}
-/* CONTENT */
-.cnt{padding:28px 26px}
-/* LEVEL CARDS */
-.home-intro{text-align:center;margin-bottom:22px}
-.home-intro h2{font-size:1.6em;font-weight:700;color:#1a6b4a;margin-bottom:6px}
-.home-intro p{color:#555;font-size:.95em;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
-.card{border:2.5px solid #e0e0e0;border-radius:14px;padding:20px 15px;cursor:pointer;transition:transform .22s,box-shadow .22s,border-color .22s;background:#fafafa;text-align:center}
-.card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,.12)}
-.card.elementary:hover{border-color:#e8491d;background:#fff8f5}
-.card.middle:hover{border-color:#1565c0;background:#f3f7ff}
-.card.highschool:hover{border-color:#6a1b9a;background:#faf3ff}
-.card.adult:hover{border-color:#bf360c;background:#fff5f2}
-.card .icon{font-size:2.4em;display:block;margin-bottom:8px}
-.card h3{font-size:1.05em;font-weight:700;color:#222;margin:4px 0}
-.card .age{font-size:.76em;font-weight:700;margin:3px 0;padding:2px 8px;border-radius:10px;display:inline-block}
-.card.elementary .age{background:#fde8e0;color:#c33800}
-.card.middle .age{background:#e3eeff;color:#0d47a1}
-.card.highschool .age{background:#f3e5f5;color:#6a1b9a}
-.card.adult .age{background:#fce4dc;color:#bf360c}
-.card .desc{color:#666;font-size:.8em;margin:8px 0 6px;line-height:1.5}
-.card ul{text-align:right;direction:rtl;background:#f5f5f5;border-radius:8px;padding:8px 12px;margin:8px 0;list-style:none;font-size:.78em;color:#555}
-.card ul li{padding:3px 0;border-bottom:1px solid #eee}
-.card ul li:last-child{border:none}
-.card .meta{font-size:.74em;color:#888;margin-top:6px}
-/* EXAM INFO FORM */
-.info-wrap{max-width:500px;margin:0 auto}
-.info-wrap h2{text-align:center;color:#1a6b4a;font-size:1.45em;font-weight:700;margin-bottom:18px}
-.field{margin-bottom:14px}
-.field label{display:block;font-weight:600;color:#444;font-size:.9em;margin-bottom:5px}
-.field input{width:100%;padding:10px 13px;border:2px solid #ddd;border-radius:9px;font-size:.95em;outline:none;transition:border-color .2s}
-.field input:focus{border-color:#1a6b4a}
-/* PROGRESS */
-.prog-wrap{margin-bottom:16px}
-.prog-bar{background:#e8e8e8;border-radius:20px;height:6px;overflow:hidden}
-.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#1a6b4a,#2d9b6f);transition:width .3s}
-.qinfo{display:flex;justify-content:space-between;align-items:center;margin-top:5px;font-size:.82em;color:#777}
-/* TIMER */
-.timer{padding:8px 14px;border-radius:9px;text-align:center;font-weight:700;font-size:.95em;margin-bottom:14px;background:#e8f5e9;border:2px solid #43a047;color:#1b5e20;display:inline-block;width:100%}
-.timer.warn{background:#ffebee;border-color:#e53935;color:#b71c1c;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
-/* PASSAGE */
-.passage-wrap{background:#f0f7ff;border:1px solid #bbdefb;border-radius:10px;padding:16px;margin-bottom:16px}
-.passage-label{font-size:.78em;color:#1565c0;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-.passage-text{direction:rtl;text-align:right;font-size:1.15em;line-height:2.1;color:#1a237e;font-family:'Traditional Arabic','Amiri',serif;font-weight:500}
-.passage-note{font-size:.78em;color:#888;text-align:left;margin-top:6px;font-style:italic}
-/* QUESTION */
-.qtext{font-size:1.12em;font-weight:700;color:#111;margin-bottom:14px;line-height:1.6}
-.qtext .ar-inline{font-family:'Traditional Arabic','Amiri',serif;font-size:1.2em;color:#1a6b4a;font-weight:700}
-/* OPTIONS */
-.options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.opt{background:#fafafa;border:2px solid #e0e0e0;border-radius:9px;padding:11px 14px;cursor:pointer;transition:all .18s;text-align:left;font-size:.93em;display:flex;align-items:center;gap:10px}
-.opt:hover:not(.locked){background:#e8f5e9;border-color:#2d9b6f}
-.opt.selected{background:#e3f2fd;border-color:#1565c0}
-.opt.correct{background:#e8f5e9;border-color:#43a047;color:#1b5e20;font-weight:600}
-.opt.wrong{background:#ffebee;border-color:#e53935;color:#b71c1c}
-.opt.ar-opt{direction:rtl;text-align:right;font-family:'Traditional Arabic','Amiri',serif;font-size:1.1em;line-height:1.7}
-.opt-lbl{width:24px;height:24px;border-radius:50%;border:2px solid #bbb;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:700;flex-shrink:0;color:#666}
-.opt.selected .opt-lbl{border-color:#1565c0;background:#1565c0;color:#fff}
-.opt.correct .opt-lbl{border-color:#43a047;background:#43a047;color:#fff}
-.opt.wrong .opt-lbl{border-color:#e53935;background:#e53935;color:#fff}
-/* FEEDBACK */
-.feedback{background:#f1f8e9;border:1px solid #aed581;border-radius:8px;padding:10px 13px;margin-bottom:12px;font-size:.88em;color:#33691e;direction:rtl;text-align:right;font-family:'Traditional Arabic','Amiri',serif;line-height:1.8;display:none}
-.feedback.show{display:block}
-.feedback.wrong-fb{background:#fff3e0;border-color:#ffb74d;color:#e65100}
-/* BUTTONS */
-.btn{display:block;width:100%;padding:12px;border-radius:10px;font-size:.97em;font-weight:600;cursor:pointer;border:none;transition:all .2s;margin-top:8px}
-.btn-main{background:linear-gradient(135deg,#1a6b4a,#2d9b6f);color:#fff}
-.btn-main:hover{transform:translateY(-1px);box-shadow:0 5px 15px rgba(26,107,74,.35)}
-.btn-main:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-sec{background:#f0f0f0;color:#444;border:2px solid #ddd}
-.btn-sec:hover{background:#e4e4e4}
-/* RESULTS */
-.result-center{text-align:center}
-.score-num{font-size:3.6em;font-weight:800;background:linear-gradient(135deg,#1a6b4a,#2d9b6f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin:10px 0}
-.score-sub{color:#555;font-size:.93em;margin-bottom:10px}
-.badge{display:inline-block;padding:6px 20px;border-radius:18px;font-weight:700;font-size:.97em;margin:8px 0}
-.pass-badge{background:#e8f5e9;color:#1b5e20;border:2px solid #43a047}
-.fail-badge{background:#ffebee;color:#b71c1c;border:2px solid #e53935}
-/* CERTIFICATE */
-.cert{border:3px double #c8a951;border-radius:16px;padding:24px;margin:16px 0;text-align:center;background:linear-gradient(135deg,#fffde7,#fff8e1)}
-.cert h3{color:#5d4037;font-size:1.2em;font-weight:700;margin-bottom:8px}
-.cert .cert-ar{font-family:'Traditional Arabic','Amiri',serif;font-size:1.3em;color:#4e342e;direction:rtl;margin:8px 0}
-.cert .cname{font-size:1.5em;font-weight:800;color:#3e2723;margin:8px 0}
-.cert .cline{color:#5d4037;font-size:.9em;margin:3px 0}
-.cert .cdate{font-size:.77em;color:#8d6e63;margin-top:10px;font-style:italic}
-/* REVIEW */
-.review-box{background:#f9f9f9;border-radius:12px;padding:16px;margin:14px 0;text-align:left}
-.review-box h4{font-weight:700;color:#333;margin-bottom:12px;font-size:.97em;border-bottom:1px solid #eee;padding-bottom:8px}
-.ri{padding:9px 0;border-bottom:1px solid #eee;font-size:.87em}
-.ri:last-child{border:none}
-.ri .rq{color:#333;font-weight:600;margin-bottom:4px;line-height:1.5}
-.ri .rq-ar{direction:rtl;text-align:right;font-family:'Traditional Arabic','Amiri',serif;font-size:1.05em}
-.ri .rcor{color:#2e7d32;font-weight:600}
-.ri .rwrong{color:#c62828;font-weight:600}
-.ri .rexp{color:#1565c0;font-size:.85em;margin-top:2px;font-style:italic}
-@media(max-width:480px){.grid{grid-template-columns:1fr 1fr}.cnt{padding:18px 14px}.hdr{padding:20px 14px}}
-</style>
-</head>
-<body>
-<div id="app"></div>
-<script>
-const LEVELS={
-  elementary:{id:"elementary",name:"Elementary",ar:"المُسْتَوى الابتِدائِي",age:"Ages 6-11",dur:25,total:8,pass:70,icon:"🌱",
-    desc:"Letters, sounds, greetings & classroom objects",
-    skills:["الحروف والأصوات","التحيات والأرقام","مفردات الفصل","كلمات بسيطة"]},
-  middle:{id:"middle",name:"Middle School",ar:"المُسْتَوى المُتَوَسِط",age:"Ages 12-14",dur:45,total:15,pass:70,icon:"📖",
-    desc:"Sentences, verbs, family & daily expressions",
-    skills:["الجمل البسيطة","الأفعال والضمائر","الأسرة والحياة اليومية","نص قصير وفهم"]},
-  highschool:{id:"highschool",name:"High School",ar:"المُسْتَوى الثانَوِي",age:"Ages 15-18",dur:90,total:20,pass:70,icon:"🎓",
-    desc:"Grammar, verb forms & Quranic reading",
-    skills:["الإعراب والقواعد","تصريف الأفعال","فهم المقروء القرآني","التجويد الأساسي"]},
-  adult:{id:"adult",name:"Professional / Adult",ar:"المُسْتَوى المُتَقدِّم",age:"Ages 18+",dur:195,total:25,pass:65,icon:"🏆",
-    desc:"Advanced grammar, tajweed, balaghah & RQAP",
-    skills:["البلاغة والنحو المتقدم","التجويد وأحكامه","تحليل النصوص القرآنية","إطار RQAP والتقييم"]}
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>The Roots - Arabic &amp; Quran Proficiency Assessment</title><style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;min-height:100%;font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(145deg,#0d3b5e,#1a6b3a);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:16px}#app{width:100%;max-width:860px;background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.3);overflow:hidden;margin:auto}.hdr{color:#fff;padding:22px 26px;text-align:center}.hdr.at{background:linear-gradient(135deg,#1a5276,#2980b9)}.hdr.qt{background:linear-gradient(135deg,#145a32,#27ae60)}.hdr.home{background:linear-gradient(135deg,#0d3b5e,#1a6b3a)}.hdr h1{font-size:1.55em;font-weight:700;margin:4px 0}.hdr .sub{font-size:.88em;opacity:.85;margin-top:4px}.hdr .ar{font-size:1.6em;font-weight:700;direction:rtl;margin:5px 0;font-family:'Traditional Arabic','Amiri',serif}.cnt{padding:20px 24px}.home-intro{text-align:center;margin-bottom:22px}.home-intro h2{font-size:1.45em;font-weight:700;color:#0d3b5e;margin-bottom:5px}.home-intro p{color:#555;font-size:.93em;line-height:1.6}.tracks{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}@media(max-width:560px){.tracks{grid-template-columns:1fr}}.tcard{border:2.5px solid #ddd;border-radius:13px;padding:20px 16px;cursor:pointer;transition:transform .2s,box-shadow .2s;text-align:center}.tcard:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,.12)}.tcard.at{border-color:#2980b9;background:linear-gradient(145deg,#eaf4fb,#fafafa)}.tcard.at:hover{border-color:#1a5276;background:#eaf4fb}.tcard.qt{border-color:#27ae60;background:linear-gradient(145deg,#eafaf1,#fafafa)}.tcard.qt:hover{border-color:#145a32;background:#eafaf1}.tcard .ic{font-size:2.5em;display:block;margin-bottom:9px}.tcard h3{font-size:1.1em;font-weight:700;margin-bottom:5px}.tcard.at h3{color:#1a5276}.tcard.qt h3{color:#145a32}.tcard p{font-size:.83em;color:#666;line-height:1.5}.tcard .badges{margin-top:9px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center}.bdg{font-size:.71em;padding:2px 8px;border-radius:10px;font-weight:600}.bdg.ab{background:#d6eaf8;color:#1a5276}.bdg.qb{background:#d5f5e3;color:#145a32}.nav-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}.btn{display:inline-block;padding:10px 22px;border-radius:8px;font-size:.93em;font-weight:700;cursor:pointer;border:none;transition:background .2s,transform .1s}.btn:active{transform:scale(.97)}.btn-a{background:#1a5276;color:#fff}.btn-a:hover{background:#0d3b5e}.btn-q{background:#145a32;color:#fff}.btn-q:hover{background:#0b4125}.btn-sec{background:#eee;color:#444}.btn-sec:hover{background:#ddd}.btn-sm{padding:7px 15px;font-size:.83em}.exam-meta{display:flex;justify-content:space-between;align-items:center;background:#f8f9fa;border-radius:9px;padding:9px 14px;margin-bottom:16px;font-size:.86em;color:#555;flex-wrap:wrap;gap:8px}.em-level{font-weight:700;color:#1a5276}.em-level.q{color:#145a32}.timer{font-weight:700;font-size:.98em;color:#e74c3c;font-variant-numeric:tabular-nums}.timer.warn{color:#c0392b;animation:pulse .8s infinite alternate}@keyframes pulse{from{opacity:1}to{opacity:.4}}.prog-wrap{margin-bottom:16px}.prog-lbl{display:flex;justify-content:space-between;font-size:.8em;color:#777;margin-bottom:4px}.prog{height:6px;background:#eee;border-radius:3px;overflow:hidden}.prog-fill{height:100%;border-radius:3px;transition:width .3s}.prog-fill.a{background:linear-gradient(90deg,#2980b9,#1a5276)}.prog-fill.q{background:linear-gradient(90deg,#27ae60,#145a32)}.passage{background:#fdf8f0;border:1.5px solid #d4ac62;border-radius:9px;padding:13px 16px;margin-bottom:16px;direction:rtl;text-align:right}.passage h4{font-size:.81em;font-weight:600;color:#7d6028;margin-bottom:7px;direction:ltr;text-align:left}.passage .pt{font-family:'Traditional Arabic','Amiri',serif;font-size:1.32em;line-height:2;color:#333}.passage .ptr{direction:ltr;text-align:left;font-family:'Segoe UI',sans-serif;font-size:.8em;color:#777;margin-top:7px;font-style:italic}.qbox{border:1.5px solid #e0e0e0;border-radius:11px;padding:17px 18px;margin-bottom:15px}.qnum{font-size:.78em;font-weight:600;color:#999;margin-bottom:5px}.qtext{font-size:1em;color:#222;margin-bottom:13px;line-height:1.6}.qtext .arq{font-family:'Traditional Arabic','Amiri',serif;font-size:1.38em;direction:rtl;display:block;text-align:right;margin:7px 0;color:#1a3a5c;line-height:2}.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}@media(max-width:480px){.opts{grid-template-columns:1fr}}.opt{padding:9px 13px;border:1.5px solid #ddd;border-radius:7px;cursor:pointer;font-size:.89em;text-align:center;transition:all .18s;background:#fafafa;color:#333;min-height:40px;display:flex;align-items:center;justify-content:center;font-family:'Traditional Arabic','Amiri',serif}.opt span.en{font-family:'Segoe UI',sans-serif;font-size:.8em}.opt:hover:not(.locked){border-color:#2980b9;background:#eaf4fb}.opt.ok{background:#d5f5e3;border-color:#27ae60;color:#145a32;font-weight:700}.opt.wrong{background:#fde8e8;border-color:#e74c3c;color:#c0392b;font-weight:700}.opt.showok{background:#d5f5e3;border-color:#27ae60;color:#145a32}.opt.locked{cursor:default}.explain{background:#f0f9ff;border-left:4px solid #2980b9;border-radius:0 8px 8px 0;padding:9px 13px;margin-top:11px;font-size:.86em;color:#1a3a5c;line-height:1.6;display:none}.explain.show{display:block}.explain.qe{background:#f0fff8;border-left-color:#27ae60;color:#0b4125}.nxt{text-align:right;margin-top:12px}.result{text-align:center;padding:28px 18px}.result .ric{font-size:3.3em;margin-bottom:10px}.result h2{font-size:1.45em;margin-bottom:7px}.result .score{font-size:2.6em;font-weight:800;margin:11px 0}.score.pass-a{color:#1a5276}.score.pass-q{color:#145a32}.score.fail{color:#e74c3c}.result p{color:#555;margin-bottom:14px;line-height:1.6}.rmsg{font-size:.93em;background:#f8f9fa;border-radius:9px;padding:13px;margin-bottom:16px;color:#444;line-height:1.6}.cert{background:linear-gradient(135deg,#fdf8e1,#fff9e6);border:2px solid #d4ac62;border-radius:13px;padding:18px;margin-bottom:16px}.cert h3{color:#7d6028;font-size:1.05em;margin-bottom:5px}.cert .clvl{font-size:1.25em;font-weight:800;color:#5d4037;margin:7px 0}.cert .cdesc{font-size:.83em;color:#8d6e63}.nf-wrap{max-width:380px;margin:0 auto 18px;text-align:center}.nf-wrap label{display:block;font-size:.9em;color:#555;margin-bottom:5px;font-weight:600}.nf-wrap input{width:100%;padding:10px 14px;border:1.5px solid #ccc;border-radius:8px;font-size:.93em;font-family:inherit}.nf-wrap input:focus{outline:none;border-color:#2980b9}.pt-bar{display:flex;gap:3px;flex-wrap:wrap;margin:10px 0}.pt-step{flex:1;min-width:52px;padding:5px 4px;text-align:center;border-radius:6px;font-size:.7em;font-weight:600;border:1.5px solid #ddd;background:#fff;color:#999}.pt-step.done{background:#2980b9;border-color:#2980b9;color:#fff}.pt-step.done.q{background:#27ae60;border-color:#27ae60}.pt-step.curr{border-color:#e67e22;color:#e67e22;background:#fef9e7}.pt-step.lk{background:#f8f9fa;color:#ccc;border-color:#eee}</style></head><body><div id="app"></div><script>var ARABIC_LEVELS=[{"id":"a1","cefr":"A1","name":"Beginner","nameAr":"المبتدئ","track":"arabic","passPct":70,"timeMin":20,"questions":[{"q":"What Arabic letter makes the \"B\" sound?","opts":["أ","ب","ت","ث"],"oa":true,"c":1,"exp":"ب (baa) = \"B\" sound, 2nd letter of Arabic alphabet."},{"q":"Which word means \"a book\"?","opts":["كِتَابٌ","بَيْتٌ","قَلَمٌ","بَابٌ"],"oa":true,"c":0,"exp":"كِتَابٌ (kitaab) = \"a book.\" Core vocab, ABY Book 1 Unit 1."},{"q":"Which means \"Peace be upon you\"?","opts":["شُكْرًا","السَّلَامُ عَلَيْكُمْ","مَعَ السَّلَامَةِ","صَبَاحُ الخَيْرِ"],"oa":true,"c":1,"exp":"السَّلَامُ عَلَيْكُمْ = the standard Islamic greeting."},{"q":"Which is the word for \"pen\"?","opts":["بَابٌ","كُرْسِيٌّ","قَلَمٌ","لَوْحٌ"],"oa":true,"c":2,"exp":"قَلَمٌ (qalam) = pen. Classroom vocabulary, ABY Book 1."},{"q":"What does the definite article ال do?","opts":["Makes plural","Makes definite (the)","Makes feminine","Makes verb"],"c":1,"exp":"ال (al-) = \"the.\" كِتَابٌ = \"a book\"; الكِتَابُ = \"the book.\""},{"q":"Which word means \"five\"?","opts":["ثَلَاثَةٌ","سَبْعَةٌ","خَمْسَةٌ","عَشَرَةٌ"],"oa":true,"c":2,"exp":"خَمْسَةٌ (khamsa) = five."},{"q":"What color is الأَحْمَرُ?","opts":["Blue","Green","Red","White"],"c":2,"exp":"الأَحْمَرُ (al-ahmar) = red. ABY Book 1, Unit 3 colors."},{"q":"Which means \"What is your name?\"","opts":["كَيْفَ حَالُكَ؟","مَا اسْمُكَ؟","مِنْ أَيْنَ أَنْتَ؟","كَمْ عُمْرُكَ؟"],"oa":true,"c":1,"exp":"مَا اسْمُكَ؟ (Maa ismuka?) = \"What is your name?\""},{"q":"How many letters in the Arabic alphabet?","opts":["22","26","28","30"],"c":2,"exp":"Arabic has 28 letters. Step 1 in all non-native Arabic curricula."},{"q":"Which is a correct nominal sentence (جملة اسمية)?","opts":["ذَهَبَ الوَلَدُ","هَذَا كِتَابٌ","يَقْرَأُ أَحْمَدُ","فِي البَيْتِ"],"oa":true,"c":1,"exp":"هَذَا كِتَابٌ = \"This is a book.\" No verb, subject + predicate. Core pattern, Madinah Arabic Lesson 1."}]},{"id":"a2","cefr":"A2","name":"Elementary","nameAr":"الأساسي","track":"arabic","passPct":70,"timeMin":25,"questions":[{"q":"Which verb form means \"she writes\"?","opts":["يَكْتُبُ","تَكْتُبُ","أَكْتُبُ","كَتَبَ"],"oa":true,"c":1,"exp":"تَكْتُبُ = 3rd person feminine singular present. يَكْتُبُ = he writes; أَكْتُبُ = I write."},{"q":"What is the plural of كِتَابٌ?","opts":["كِتَابَانِ","كُتُبٌ","كِتَابَاتٌ","مَكَاتِبُ"],"oa":true,"c":1,"exp":"كُتُبٌ = broken plural of كِتَابٌ (pattern: فُعُلٌ). Essential in ABY Book 1 and Madinah Arabic."},{"q":"Which word is feminine?","opts":["وَلَدٌ","كِتَابٌ","مَدْرَسَةٌ","بَابٌ"],"oa":true,"c":2,"exp":"مَدْرَسَةٌ = feminine (ends with ة = taa marbuta, feminine marker)."},{"q":"What does بَيْتُ المُعَلِّمِ mean?","opts":["The teacher is home","The teacher's house","A house and teacher","The big house"],"c":1,"exp":"Idhafa construction: first noun (مُضَاف) + second genitive (مُضَاف إليه) = possession."},{"q":"Which preposition means \"in/at\"?","opts":["مِنْ","إِلَى","فِي","عَلَى"],"oa":true,"c":2,"exp":"فِي = in/at. مِنْ = from, إِلَى = to, عَلَى = on."},{"q":"Correct sentence: \"The student goes to school\"","opts":["الطَّالِبُ ذَهَبَتْ إِلَى المَدْرَسَةِ","الطَّالِبُ يَذْهَبُ إِلَى المَدْرَسَةِ","الطَّالِبُ تَذْهَبُ إِلَى المَدْرَسَةِ","الطَّالِبَ يَذْهَبُ المَدْرَسَةَ"],"oa":true,"c":1,"exp":"يَذْهَبُ = masculine present; المَدْرَسَةِ = genitive after إِلَى."},{"q":"What does مُدَرِّسٌ mean?","opts":["Student","Principal","Teacher","Classmate"],"c":2,"exp":"مُدَرِّسٌ = teacher (Form II active participle, root د-ر-س)."},{"q":"How do you say \"my house\"?","opts":["بَيْتُهُ","بَيْتُكَ","بَيْتِي","بَيْتُنَا"],"oa":true,"c":2,"exp":"بَيْتِي (baytii) = my house. Suffix ي = my."},{"q":"Which question word means \"where\"?","opts":["مَتَى","كَيْفَ","أَيْنَ","لِمَاذَا"],"oa":true,"c":2,"exp":"أَيْنَ = where. مَتَى = when, كَيْفَ = how, لِمَاذَا = why."},{"q":"Nominative dual of قَلَمٌ (pen)?","opts":["أَقْلَامٌ","قَلَمَانِ","قَلَمَيْنِ","قَلَمَتَانِ"],"oa":true,"c":1,"exp":"قَلَمَانِ = two pens (nominative dual, suffix ـَانِ). Accusative/genitive = قَلَمَيْنِ."},{"passage":{"t":"أَنَا اسْمِي سَارَةُ. أَنَا طَالِبَةٌ. أَسْكُنُ فِي القَاهِرَةِ.","tr":"My name is Sarah. I am a student. I live in Cairo."},"q":"Where does Sarah live?","opts":["In school","In Riyadh","In Cairo","In a house"],"c":2,"exp":"أَسْكُنُ فِي القَاهِرَةِ = \"I live in Cairo.\""},{"q":"Which means \"There is a book on the table\"?","opts":["الكِتَابُ تَحْتَ الطَّاوِلَةِ","عَلَى الطَّاوِلَةِ كِتَابٌ","الكِتَابُ فِي الطَّاوِلَةِ","وَضَعْتُ الكِتَابَ"],"oa":true,"c":1,"exp":"Existential: preposition phrase + indefinite noun. كِتَابٌ = indefinite nominative."}]},{"id":"b1","cefr":"B1","name":"Intermediate","nameAr":"المتوسط","track":"arabic","passPct":70,"timeMin":35,"questions":[{"q":"Root of اِسْتَخْدَمَ (to use)?","opts":["خ-د-م","س-خ-د","د-م-س","خ-م-د"],"c":0,"exp":"Root: خ-د-م. Prefix اِسْتَ = Form X. Root means service."},{"q":"Verb form (وَزْن) of دَرَّسَ (to teach)?","opts":["Form I فَعَلَ","Form II فَعَّلَ","Form III فَاعَلَ","Form IV أَفْعَلَ"],"c":1,"exp":"Form II (فَعَّلَ): doubled middle radical (شدة). Root د-ر-س."},{"q":"Correct use of الَّذِي?","opts":["الكِتَابُ الَّذِي قَرَأَتْهُ مُفِيدٌ","الطَّالِبَةُ الَّذِي نَجَحَتْ","البُيُوتُ الَّذِي بُنِيَتْ","المَدْرَسَةُ الَّذِي زُرْتُهُ"],"oa":true,"c":0,"exp":"الَّذِي agrees with masculine كِتَابٌ. For feminine: الَّتِي; plural: الَّذِينَ."},{"q":"Future tense of يَذْهَبُ (he goes)?","opts":["ذَهَبَ","سَيَذْهَبُ","يَكُونُ يَذْهَبُ","كَانَ يَذْهَبُ"],"oa":true,"c":1,"exp":"سَ + present = future: سَيَذْهَبُ = \"he will go.\""},{"q":"Form III verb from root ك-ت-ب?","opts":["كَتَّبَ","كَاتَبَ","أَكْتَبَ","تَكَاتَبَ"],"oa":true,"c":1,"exp":"كَاتَبَ = Form III (فَاعَلَ) = to correspond with."},{"q":"What does سَافَرَ إِلَى مِصْرَ mean?","opts":["Returned from Egypt","Traveled to Egypt","Lives in Egypt","Came from Egypt"],"c":1,"exp":"سَافَرَ = traveled; إِلَى = to; مِصْرَ = Egypt (diptote, no tanwin)."},{"passage":{"t":"كَانَ أَحْمَدُ يَدْرُسُ اللُّغَةَ العَرَبِيَّةَ. بَعْدَ التَّخَرُّجِ، عَمِلَ مُدَرِّسًا فِي مَدْرَسَةٍ ثَانَوِيَّةٍ.","tr":"Ahmad studied Arabic. After graduation, he worked as a teacher in secondary school."},"q":"What did Ahmad do after graduation?","opts":["Continued studying","Traveled abroad","Worked as teacher","Wrote novels"],"c":2,"exp":"عَمِلَ مُدَرِّسًا = worked as a teacher."},{"q":"Correct negation of past ذَهَبَ?","opts":["لَا يَذْهَبُ","لَمْ يَذْهَبْ","مَا ذَهَبَ","لَمَّا ذَهَبَ"],"oa":true,"c":1,"exp":"لَمْ + jussive = past negation: لَمْ يَذْهَبْ = \"he did not go.\" Note jussive ending (sukun)."},{"q":"Correct subject-verb agreement?","opts":["الطُّلَّابُ يَدْرُسُونَ","الطُّلَّابُ يَدْرُسُ","الطُّلَّابُ تَدْرُسُونَ","الطُّلَّابُ يَدْرُسَانِ"],"oa":true,"c":0,"exp":"Masculine plural subject + يَدْرُسُونَ (masculine plural verb)."},{"q":"Active participle (اسم فاعل) from root د-ر-س?","opts":["دِرَاسَةٌ","مَدْرَسَةٌ","دَارِسٌ","مَدْرُوسٌ"],"oa":true,"c":2,"exp":"دَارِسٌ = Form I active participle (فَاعِلٌ) = \"one who studies.\""},{"q":"Meaning of اِزْدَادَ?","opts":["To decrease","To increase","To visit","To benefit"],"c":1,"exp":"اِزْدَادَ = to increase. Form VIII from root ز-ي-د."},{"q":"إعراب of الوَلَدَ in: رَأَيْتُ الوَلَدَ?","opts":["Nominative مَرْفُوعٌ","Accusative مَنْصُوبٌ","Genitive مَجْرُورٌ","Jussive مَجْزُومٌ"],"c":1,"exp":"الوَلَدَ = accusative (مَنْصُوبٌ) as direct object of رَأَيْتُ (fatHa ending)."},{"q":"Translation of \"I wish I had studied more\"?","opts":["أُرِيدُ أَنْ أَدْرُسَ أَكْثَرَ","كُنْتُ أَدْرُسُ كَثِيرًا","لَيْتَنِي دَرَسْتُ أَكْثَرَ","يَجِبُ أَنْ أَدْرُسَ أَكْثَرَ"],"oa":true,"c":2,"exp":"لَيْتَنِي = \"I wish that I.\" Past tense after لَيْتَ = regret about past."},{"q":"مَصْدَر of Form IV أَفْعَلَ from root ف-ه-م?","opts":["فَهْمٌ","فَهَّمَ","إِفْهَامٌ","تَفَاهُمٌ"],"oa":true,"c":2,"exp":"Form IV مَصْدَر pattern = إِفْعَالٌ. أَفْهَمَ → إِفْهَامٌ."},{"q":"Correct comparative: \"Ahmad is taller than Ali\"?","opts":["أَحْمَدُ طَوِيلٌ مِثْلَ عَلِيٍّ","أَحْمَدُ أَطْوَلُ مِنْ عَلِيٍّ","أَحْمَدُ طَوِيلٌ مِنْ عَلِيٍّ","أَحْمَدُ هُوَ الأَطْوَلُ"],"oa":true,"c":1,"exp":"أَفْعَلُ مِنْ = comparative pattern. أَطْوَلُ from طَوِيلٌ."}]},{"id":"b2","cefr":"B2","name":"Upper-Intermediate","nameAr":"فوق المتوسط","track":"arabic","passPct":70,"timeMin":45,"questions":[{"q":"Passive voice of كَتَبَ الطَّالِبُ الرِّسَالَةَ?","opts":["كَتَبَتِ الرِّسَالَةُ","كُتِبَتِ الرِّسَالَةُ","تُكْتَبُ الرِّسَالَةُ","كَتَبَ الرِّسَالَةَ"],"oa":true,"c":1,"exp":"Passive pattern: ضُمَّ الأَوَّلُ وَكُسِرَ مَا قَبْلَ الآخِرِ. الرِّسَالَةُ becomes subject (نائب فاعل) in nominative."},{"q":"Form V verb from root ع-ل-م?","opts":["أَعْلَمَ","تَعَلَّمَ","عَالَمَ","اِعْتَلَمَ"],"oa":true,"c":1,"exp":"تَعَلَّمَ = Form V (تَفَعَّلَ) = to learn (reflexive of Form II عَلَّمَ = to teach)."},{"q":"Role of مَكَانَهَا in: أُقِيمَتْ مَكَانَهَا نَاطِحَاتُ سَحَابٍ?","opts":["Subject","Adverb of place (ظرف مكان)","Direct object","Predicate"],"c":1,"exp":"مَكَانَهَا = ظَرْفُ مَكَانٍ (adverbial of place), accusative: \"in their place.\""},{"q":"Unreal/hypothetical conditional?","opts":["إِذَا دَرَسْتَ نَجَحْتَ","لَوْ دَرَسْتَ لَنَجَحْتَ","إِنْ تَدْرُسْ تَنْجَحْ","حِينَ دَرَسْتَ نَجَحْتَ"],"oa":true,"c":1,"exp":"لَوْ + past → لَـ + past = unreal condition: \"If you had studied, you would have passed.\""},{"q":"What is المَصْدَرُ الصِّنَاعِيُّ?","opts":["Verbal noun (Form I)","Abstract noun with ـِيَّةٌ suffix","Plural of nouns","Active participle"],"c":1,"exp":"Abstract noun formed by adding ـِيَّةٌ: إِنْسَانٌ→إِنْسَانِيَّةٌ (humanity); حُرٌّ→حُرِّيَّةٌ (freedom)."},{"q":"Identify Form VIII verb?","opts":["اِنْفَتَحَ","اِجْتَمَعَ","تَعَاوَنَ","اِسْتَخْدَمَ"],"oa":true,"c":1,"exp":"اِجْتَمَعَ = Form VIII (اِفْتَعَلَ) from ج-م-ع (to meet). VII=اِنفتح; VI=تَعَاوَنَ; X=اِستَخدَمَ."},{"q":"In أَعْجَبَنِي الكِتَابُ, grammatical subject?","opts":["أَعْجَبَ (verb)","نِي (me)","الكِتَابُ (book)","No subject"],"c":2,"exp":"الكِتَابُ = الفَاعِلُ (subject, nominative). \"The book pleased me.\""},{"q":"Which is a مَصْدَرٌ مِيمِيٌّ?","opts":["مَكْتَبٌ","كِتَابَةٌ","مَكْتُوبٌ","مَكْتَبَةٌ"],"oa":true,"c":0,"exp":"مَكْتَبٌ can be مَصْدَرٌ مِيمِيٌّ (act of writing) or noun of place (office)."},{"q":"Analyze: تَطَوُّرِ المُجْتَمَعَاتِ الإِنْسَانِيَّةِ","opts":["Noun + adjective","Two-word idhafa","Three-term idhafa chain","Verb + noun"],"c":2,"exp":"Three-term idhafa: تَطَوُّرِ (development of) + المُجْتَمَعَاتِ (societies) + الإِنْسَانِيَّةِ (adjective) = \"development of human societies.\""},{"q":"Meaning of Form VII: اِنْكَسَرَ?","opts":["To break something","To be broken (intransitive)","To fix","To shatter intentionally"],"c":1,"exp":"Form VII (اِنْفَعَلَ) = intransitive/reflexive. اِنْكَسَرَ = \"to be broken.\" Cannot take a direct object."},{"q":"What does لَيْسَ do grammatically?","opts":["Subject nominative + predicate accusative","Negates future","Is a preposition","Forms questions"],"c":0,"exp":"لَيْسَ = sister of كَانَ. Puts اسم لَيْسَ in nominative and خَبَر لَيْسَ in accusative."},{"q":"Correct use of الحَالُ (circumstantial acc.)?","opts":["جَاءَ أَحْمَدُ الطَّالِبُ","جَاءَ أَحْمَدُ مُسْرِعًا","جَاءَ أَحْمَدُ إِلَى البَيْتِ","جَاءَ أَحْمَدُ وَهُوَ"],"oa":true,"c":1,"exp":"مُسْرِعًا = حَالٌ: describes state of subject during action. \"Ahmad came hurrying.\" Must be indefinite + accusative."},{"q":"Meaning of إِنَّمَا?","opts":["Perhaps","Truly (emphasis)","Only/nothing but (restriction)","Even though"],"c":2,"exp":"إِنَّمَا = إِنَّ + مَا kaffa = restriction. إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ = \"Actions are judged ONLY by intentions.\""},{"q":"What is جَمْعُ التَّكْسِيرِ?","opts":["Plural by adding ون/ات","Plural by internal vowel change","Dual form","Diminutive"],"c":1,"exp":"Broken plural = internal rearrangement. كِتَابٌ→كُتُبٌ, بَيْتٌ→بُيُوتٌ. Unique Arabic feature."},{"q":"Correct case after preposition?","opts":["ذَهَبْتُ إِلَى المَدْرَسَةَ","ذَهَبْتُ إِلَى المَدْرَسَةِ","ذَهَبْتُ إِلَى المَدْرَسَةُ","ذَهَبْتُ إِلَى المَدْرَسَةً"],"oa":true,"c":1,"exp":"Prepositions govern genitive (مَجْرُورٌ, kasra). المَدْرَسَةِ = correct."},{"q":"What does عَلَى الرَّغْمِ مِنْ mean?","opts":["As a result of","Instead of","Despite/In spite of","According to"],"c":2,"exp":"\"Despite/in spite of.\" Common concessive phrase in MSA."},{"passage":{"t":"هُدِمَتْ كَثِيرٌ مِنَ المَبَانِي التُّرَاثِيَّةِ وَأُقِيمَتْ مَكَانَهَا نَاطِحَاتُ سَحَابٍ، مِمَّا أَثَارَ جَدَلًا وَاسِعًا بَيْنَ المُثَقَّفِينَ.","tr":"Many heritage buildings were demolished and modern skyscrapers erected, sparking widespread controversy among intellectuals."},"q":"What caused the controversy?","opts":["Preservation of buildings","Demolition of heritage + replacement with skyscrapers","Arrival of intellectuals","Construction of a university"],"c":1,"exp":"هُدِمَتْ (demolished) + replacement with نَاطِحَاتُ سَحَابٍ = caused controversy."},{"q":"التَّنَازُعُ in: يَأْكُلُ وَيَشْرَبُ أَحْمَدُ?","opts":["Two subjects/one verb","Two verbs compete for one noun","Subject agrees with two predicates","Verb disagrees with subject"],"c":1,"exp":"التَّنَازُعُ: يَأْكُلُ and يَشْرَبُ both compete to govern أَحْمَدُ. Advanced AUC 202 grammar."}]},{"id":"c1","cefr":"C1","name":"Advanced","nameAr":"المتقدم","track":"arabic","passPct":65,"timeMin":60,"questions":[{"passage":{"t":"لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا","tr":"Allah does not burden a soul beyond that it can bear. (Al-Baqarah 2:286)"},"q":"Role of نَفْسًا?","opts":["Subject (فاعل)","Direct object (مفعول به)","Adverb of time","Predicate"],"c":1,"exp":"نَفْسًا = مَفْعُولٌ بِهِ of يُكَلِّفُ, accusative (tanwin fath). وُسْعَهَا = second object."},{"q":"Rhetorical device in: وَالسَّمَاءُ رَفَعَهَا وَوَضَعَ الْمِيزَانَ (55:7)?","opts":["تشبيه (Simile)","طِبَاق (Antithesis)","كناية (Metonymy)","مجاز مرسل"],"c":1,"exp":"الطِّبَاقُ: رَفَعَهَا (raised) vs وَضَعَ (lowered/placed) = pair of opposites for emphasis."},{"q":"Difference between التَّشْبِيهُ and الاسْتِعَارَةُ?","opts":["Identical","تشبيه uses كَ/مِثْلَ; استعارة omits the comparison particle (metaphor)","استعارة only for verbs","تشبيه is modern"],"c":1,"exp":"التَّشْبِيهُ = explicit comparison with أداة (كَ، مِثْلَ، كَأَنَّ). الاسْتِعَارَةُ = comparison element omitted = implied metaphor."},{"q":"إِعْرَابُ الفِعْلِ in لَنْ يَذْهَبَ?","opts":["مرفوع","منصوب (subjunctive) after لَنْ","مجزوم","مبني على الفتح"],"c":1,"exp":"لَنْ + مضارع → منصوب (fatHa ending). لَنْ يَذْهَبَ = \"he will never go.\""},{"q":"What is الكِنَايَةُ in rhetoric?","opts":["Direct simile using كَأَنَّ","Literal expression that implies figurative meaning","Rhyming prose (سجع)","Repetition"],"c":1,"exp":"الكِنَايَةُ: you say the literal but mean the figurative. E.g., \"He has a long hand\" = generosity (كناية)."},{"passage":{"t":"عَلَى قَدْرِ أَهْلِ العَزْمِ تَأْتِي العَزَائِمُ *** وَتَأْتِي عَلَى قَدْرِ الكِرَامِ المَكَارِمُ","tr":"To the measure of determined people come great endeavors, and to the measure of the noble come noble deeds. (Al-Mutanabbi)"},"q":"Which rhetorical device is prominent?","opts":["Extended simile","Antithesis","رَدُّ العَجُزِ عَلَى الصَّدْرِ","Quotation"],"c":2,"exp":"رَدُّ العَجُزِ عَلَى الصَّدْرِ: end words echo beginning roots (العَزْمِ/العَزَائِمُ, الكِرَامِ/المَكَارِمُ). ABY Book 3."},{"q":"إعراب of خَيْرًا in: مَا رَأَيْتُ مِنْكَ خَيْرًا?","opts":["خبر ما","مفعول به","تمييز","حال"],"c":1,"exp":"خَيْرًا = مَفْعُولٌ بِهِ of رَأَيْتُ, accusative (tanwin fatH)."},{"q":"Perfect طِبَاق (antithesis) pair?","opts":["الليلُ والظلامُ","الليلُ والنهارُ","الليلُ والقمرُ","الليلُ والسكونُ"],"c":1,"exp":"الليلُ والنهارُ = night/day = complete opposites. Synonyms are not طباق."},{"q":"What is السَّجْعُ?","opts":["Rhyming prose (matched endings)","Poetic meter","Simile","Repetition"],"c":0,"exp":"السَّجْعُ = rhymed prose (sentences ending similarly without meter). Used in Quran and classical Arabic prose."},{"q":"مَفْعُولٌ لِأَجْلِهِ in: جِئْتُ إِكْرَامًا لَكَ?","opts":["جِئْتُ","إِكْرَامًا","لَكَ","Whole sentence"],"c":1,"exp":"إِكْرَامًا = accusative of purpose (answers why?). Verbal noun expressing motive."},{"q":"Function of أَمَّا in: أَمَّا أَحْمَدُ فَنَاجِحٌ?","opts":["Conditional topic-marker (شَرْطٌ تَفْصِيلِيٌّ)","Negative particle","Discourse connector","Conjunction"],"c":0,"exp":"أَمَّا = topicalizing particle introducing topic. Followed by فَاءُ الرَّابِطَةُ."},{"q":"Rhetorical effect of مَا...إِلَّا in: وَمَا النَّصْرُ إِلَّا مِنْ عِندِ اللَّهِ (3:126)?","opts":["Creates question","Restriction/exclusivity (قَصْرٌ)","Comparison","Condition"],"c":1,"exp":"أُسْلُوبُ القَصْرِ: مَا...إِلَّا restricts attribute to one entity only. \"Victory is ONLY from Allah.\""},{"q":"مَصْدَر of اِسْتَفَادَ?","opts":["فَائِدَةٌ","إِفَادَةٌ","اِسْتِفَادَةٌ","فَيْدٌ"],"oa":true,"c":2,"exp":"Form X مَصْدَر pattern = اِسْتِفْعَالٌ → اِسْتِفَادَةٌ."},{"q":"Omission of main clause in لَوْ رَأَيْتَ مَا حَدَثَ is called?","opts":["الإِيجَازُ بِالحَذْفِ","التَّضْمِينُ","الاعْتِرَاضُ","الالْتِفَاتُ"],"c":0,"exp":"الإِيجَازُ بِالحَذْفِ: answer clause omitted for rhetorical effect (emotional impact)."},{"q":"What is الاسْتِعَارَةُ المَكْنِيَّةُ?","opts":["Simile with stated element","Metaphor: المشبه به omitted, its attribute mentioned","Metonymy","Rhymed prose"],"c":1,"exp":"الاسْتِعَارَةُ المَكْنِيَّةُ: predator (المشبه به) omitted, but \"claws\" remains. E.g., \"Death came with its claws.\""},{"q":"Full إعراب of المُعَلِّمُ in: المُعَلِّمُ مُجْتَهِدٌ?","opts":["مبتدأ مرفوع بالضمة الظاهرة","فاعل مرفوع","مفعول به منصوب","خبر مرفوع"],"c":0,"exp":"المُعَلِّمُ: مُبْتَدَأٌ مَرْفُوعٌ بِالضَّمَّةِ الظَّاهِرَةِ. مُجْتَهِدٌ = خَبَر."},{"q":"Example of التَّوْرِيَةُ (double entendre)?","opts":["رَأَيْتُ أَسَدًا يُقَاتِلُ (=brave man)","قَلْبِي مُرِيضٌ (ill OR love-sick)","السَّمَاءُ تَبْكِي (personification)","الشَّمْسُ مِثْلَ الذَّهَبِ"],"c":1,"exp":"التَّوْرِيَةُ: near (literal ill heart) and far (love-sick) meanings. Poet intends the far meaning."},{"q":"عَلَى صَعِيدٍ آخَرَ in MSA journalism means?","opts":["On another battlefield","In another country","On another front/topic (transitional)","Meanwhile"],"c":2,"exp":"\"On another front\" — standard MSA transitional phrase to change topics."},{"q":"Label for: ابْنُ خَلْدُونَ مُؤَرِّخٌ عَظِيمٌ?","opts":["فعلية جملة","جملة اسمية + نعت","جملة فعلية مجهولة","جملة شرطية"],"c":1,"exp":"جُمْلَةٌ اسْمِيَّةٌ: مبتدأ + خبر + نعت."},{"q":"What is الفِعْلُ الناقص (الفعل المعتل الآخر)?","opts":["Verb with weak final radical (و/ي)","Verb with hamza at start","Passive verb","Verb with doubled middle radical"],"c":0,"exp":"الفعل الناقص: final radical = و or ي (e.g., دَعَا، رَمَى، نَسِيَ). Special conjugation rules."}]},{"id":"c2","cefr":"C2","name":"Mastery","nameAr":"الإتقان","track":"arabic","passPct":65,"timeMin":75,"questions":[{"passage":{"t":"قِفَا نَبْكِ مِنْ ذِكْرَى حَبِيبٍ وَمَنْزِلِ","tr":"Stop (you two), let us weep at the memory of a beloved and her dwelling. (Imru al-Qays — Muallaqah)"},"q":"Form of قِفَا?","opts":["Singular imperative","Dual imperative (أمر للمثنى)","Plural imperative","Past tense"],"c":1,"exp":"قِفَا = dual imperative of وَقَفَ. ا = dual sign. Poet addresses two companions (classical wuquf ala al-atlal)."},{"q":"What is البَدَلُ الاشْتِمَالِيُّ?","opts":["Appositive where second is part of first","Appositive where second is inherent in/associated with first","Comprehensive appositive","Corrective appositive"],"c":1,"exp":"بَدَلُ الاشْتِمَالِ: second noun = something associated with first. أَعْجَبَنِي زَيْدٌ عِلْمُهُ — عِلْمُهُ is not a physical part but inherent quality."},{"q":"What is البَحْرُ الطَّوِيلُ in Arabic prosody?","opts":["Shortest meter","Most common","فَعُولُنْ مَفَاعِيلُنْ فَعُولُنْ مَفَاعِلُنْ — meter of the Muallaqat","Free verse"],"c":2,"exp":"البَحْرُ الطَّوِيلُ = most prestigious Arabic poetic meter. Meter of the Seven Muallaqat. \"King\" of Arabic meters."},{"q":"Function of واوُ المَعِيَّةِ?","opts":["Coordinating conjunction","Simultaneity: following verb = منصوب (subjunctive)","Oath particle","Resumptive"],"c":1,"exp":"وَاوُ المَعِيَّةِ: \"while/along with\" → following مضارع is منصوب. E.g., لَا تَأْكُلِ السَّمَكَ وَتَشْرَبَ اللَّبَنَ."},{"q":"Analyze: مَا زَالَ الطَّالِبُ يَدْرُسُ","opts":["Nominal with كان","مَا زَالَ (sister of كان) expressing continuity","Negated verb","Conditional"],"c":1,"exp":"مَا زَالَ = sister of كَانَ = continuity/persistence. \"The student is still studying.\""},{"q":"What is الاحْتِبَاكُ?","opts":["A pun","Complementary omissions in two parallel clauses (each present in the other)","Anaphora","Exaggeration"],"c":1,"exp":"الاحْتِبَاكُ: two parallel clauses where each omits what the other states. A sophisticated ellipsis device."},{"passage":{"t":"إِنَّا أَنزَلْنَاهُ قُرْآنًا عَرَبِيًّا لَّعَلَّكُمْ تَعْقِلُونَ","tr":"Indeed We have sent it down as an Arabic Quran so that you might understand. (Yusuf 12:2)"},"q":"Full إِعْرَاب of قُرْآنًا?","opts":["مفعول به منصوب","حال منصوبة بالفتحة","تمييز","خبر إنَّ"],"c":1,"exp":"قُرْآنًا = حَالٌ (circumstantial acc.) منصوب بالفتحة: describes state of object (هاء in أَنزَلْنَاهُ). Answers \"how was it sent?\""},{"q":"التَّوْكِيدُ اللَّفْظِيُّ vs المَعْنَوِيُّ?","opts":["Verbal (exact repetition) vs semantic (نَفْسُ/كُلُّ/عَيْنُ)","Identical","Verbal for verbs only","One classical/one modern"],"c":0,"exp":"لَفْظِيٌّ = exact repetition. مَعْنَوِيٌّ = نَفْسُ، عَيْنُ (same/very), كُلُّ، جَمِيعُ (all)."},{"q":"إِعْرَابُ لَا in: لَا رَجُلَ فِي البَيْتِ?","opts":["No grammatical effect","لا النافية للجنس: puts noun in accusative","Conditional","Prohibitive"],"c":1,"exp":"لَا النَّافِيَةُ لِلْجِنْسِ: negates entire category. Sister of إِنَّ. اسمها in accusative (مبني على الفتح)."},{"q":"What is الاشْتِغَالُ?","opts":["Verb takes two objects","Noun precedes verb connected to a pronoun referring to that noun","Subject omitted","Two verbs/one subject"],"c":1,"exp":"الاشْتِغَالُ: زَيْدًا ضَرَبْتُهُ — verb ضَرَبْتُهُ is \"occupied\" with pronoun هُ (referring to زَيْدًا)."},{"q":"الفَصْلُ وَالوَصْلُ in rhetoric?","opts":["Figurative vs literal","Rules for using وَ vs no conjunction (asyndeton)","Short vs long sentences","Active vs passive"],"c":1,"exp":"عِلْمُ المَعَانِي topic: وَصْلُ = join with وَ; فَصْلُ = omit وَ. Based on relation between clauses. Hallmark of Quranic style."},{"q":"أَنَّكَ صَادِقٌ in: عَلِمْتُ أَنَّكَ صَادِقٌ is what?","opts":["جملة حالية","أن المصدرية + مصدر مؤول = مفعول به","جملة معترضة","استئناف"],"c":1,"exp":"المُؤَوَّلُ بِالمَصْدَرِ: أَنَّ + clause = implied مَصْدَر in محل نصب مفعول به. Advanced AUC 302 syntax."},{"q":"Difference: الإِيجَازُ vs الإِطْنَابُ?","opts":["Both mean conciseness","الإيجاز = few words/rich meaning; الإطناب = elaboration for emphasis","Reversed meanings","Unrelated concepts"],"c":1,"exp":"الإِيجَازُ = much in few words. الإِطْنَابُ = more words for emphasis/clarity. Both praiseworthy when used appropriately."},{"q":"مَفْعُولُ المُطْلَقُ in: ضَرَبْتُهُ ضَرْبًا شَدِيدًا?","opts":["هُ (him)","ضَرْبًا (cognate accusative)","شَدِيدًا","ضَرَبْتُهُ"],"c":1,"exp":"ضَرْبًا = مَفْعُولٌ مُطْلَقٌ: verbal noun from same root, confirms the verb. شَدِيدًا = its adjective (نَعْت)."},{"q":"Type of واو in: جَاءَ زَيْدٌ وَطَلَعَتِ الشَّمْسُ?","opts":["واو العطف (coordinating)","واو المعية","واو الحال","واو القسم"],"c":0,"exp":"واوُ العَطْفِ: joins two independent equal clauses. No simultaneity or oath implied."},{"q":"الخَلِيلُ بْنُ أَحْمَدَ الفَرَاهِيدِيُّ is known for?","opts":["Inventing Arabic grammar","Codifying Arabic prosody (عَرُوض) + first Arabic dictionary (العَيْن)","Writing first Arabic novel","Establishing Basran school"],"c":1,"exp":"الخَلِيلُ (d.~786 CE) = codified عِلْمُ العَرُوضِ and authored كِتَابُ العَيْنِ (first Arabic dictionary). Teacher of سِيبَوَيْهِ."},{"q":"What is التَّعَلُّقُ in syntax?","opts":["Verb conjugation","Dependency of prepositions/adverbs on verbs or verb-like particles","Breaking plural","Dual"],"c":1,"exp":"التَّعَلُّقُ: شِبْهُ الجُمْلَةِ must be \"attached\" to a verb or its equivalent. Cannot stand alone."},{"q":"What is الإِعْجَازُ القُرْآنِيُّ?","opts":["Legal rulings","Miraculous literary inimitability (التَّحَدِّي) — language surpassing human ability","Historical accuracy","Mathematical patterns"],"c":1,"exp":"Doctrine that Quran's Arabic is inimitable. Analyzed through بلاغة، نظم، إيجاز. Foundation of classical Arabic rhetoric study."},{"q":"What is العَامِلُ النَّحْوِيُّ?","opts":["Case endings (إعراب)","The governor — word/particle determining إعراب of other words","Morphology (صرف)","Indeclinability (بناء)"],"c":1,"exp":"Theory of العَوَامِلُ = backbone of traditional Arabic grammar (النَّحْوُ العَرَبِيُّ)."},{"q":"Analyze: يَتَسَاءَلُونَ أَيَّانَ يَوْمُ الْقِيَامَةِ (75:6)","opts":["Direct statement","Interrogative for disbelief/mockery (استفهام إنكاري)","Request for information","Affirms faith"],"c":1,"exp":"الاسْتِفْهَامُ الإِنْكَارِيُّ: question expressing denial/mockery. أَيَّانَ = emphatic \"when\" in classical Arabic."}]}];
+var QURAN_LEVELS=[{"id":"q1","cefr":"Q1","name":"Quran Beginner","nameAr":"تلاوة مبتدئ","track":"quran","passPct":70,"timeMin":20,"questions":[{"q":"How many Surahs (chapters) are in the Quran?","opts":["99","114","120","144"],"c":1,"exp":"The Quran has exactly 114 Surahs. The longest is Al-Baqarah (286 verses); the shortest are Surahs Al-Kawthar and Al-Nasr (3 verses each)."},{"q":"What is the first Surah of the Quran?","opts":["Al-Baqarah","Al-Fatiha","Al-Ikhlas","Al-Nas"],"c":1,"exp":"سُورَةُ الفَاتِحَةِ (Al-Fatiha = \"The Opening\") is the 1st Surah. It is recited in every unit (rak'a) of prayer."},{"q":"How many verses (ayat) does Surah Al-Fatiha have?","opts":["5","6","7","8"],"c":2,"exp":"Al-Fatiha has 7 verses. The 7 oft-repeated verses (السَّبْعُ المَثَانِي) mentioned in Quran 15:87 refer to Al-Fatiha."},{"q":"What does تَجْوِيدٌ (Tajweed) mean?","opts":["Memorization","Beautification/improving — the science of correct Quran recitation","Translation","Interpretation"],"c":1,"exp":"تَجْوِيدٌ (root: ج-و-د) = to improve, to do well. As a science: the set of rules governing correct pronunciation of the Quran."},{"q":"What is the Basmala?","opts":["أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ","بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ","الحَمْدُ لِلَّهِ رَبِّ العَالَمِينَ","سُبْحَانَ اللَّهِ"],"oa":true,"c":1,"exp":"The Basmala: بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ = \"In the name of Allah, the Most Gracious, the Most Merciful.\" It begins 113 of 114 Surahs."},{"q":"What is the isti'atha (الاستعاذة)?","opts":["أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ","بِسْمِ اللَّهِ","اَللَّهُ أَكْبَرُ","سُبْحَانَ اللَّهِ"],"oa":true,"c":0,"exp":"أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ = \"I seek refuge in Allah from the accursed Satan.\" Recited before beginning Quran recitation (Quran 16:98)."},{"q":"What letter has the Sukun (سُكُون) sign?","opts":["A letter with a vowel","A letter with no vowel (rest/static)","A letter that is doubled","A letter that is silent"],"c":1,"exp":"السُّكُونُ (ـْ) indicates absence of a vowel — the letter is \"static/resting.\" It is essential in Tajweed to identify non-voweled letters."},{"q":"What is the ShaddA (الشَّدَّة)?","opts":["A mark indicating silence","A mark indicating the letter is doubled (gemination)","A small alif for prolongation","The hamza mark"],"c":1,"exp":"الشَّدَّةُ (ـّ) = gemination mark. It doubles the consonant, equivalent to writing it twice (one with sukun + one with vowel). E.g., رَبِّ = rabb-i."},{"q":"How many letters in the Arabic alphabet have 4 forms (initial, medial, final, isolated)?","opts":["All 28","Only 6 letters (الحروف المنفصلة) have 2 forms; rest have 4","22","10"],"c":1,"exp":"6 letters (و، ز، ر، ذ، د، أ) connect only to the right — they have 2 forms. The remaining 22 letters connect on both sides and have 4 forms."},{"q":"What does مَخْرَجُ الحَرْفِ mean in Tajweed?","opts":["The meaning of the letter","The sound exit point (articulation point) of the letter","The vowel of the letter","The written form"],"c":1,"exp":"مَخْرَجُ الحَرْفِ = the articulation point where the sound is produced (throat, tongue, lips, nose). Identifying مَخَارِجُ الحُرُوفِ is the foundation of Tajweed."}]},{"id":"q2","cefr":"Q2","name":"Quran Intermediate","nameAr":"تلاوة متوسط","track":"quran","passPct":70,"timeMin":30,"questions":[{"q":"What is الإِظْهَارُ (Izhar) in Tajweed?","opts":["Nasal sound of 2 counts","Clear pronunciation of Noon/Tanwin (no nasalization)","Merging of two letters","Doubling a letter"],"c":1,"exp":"الإِظْهَارُ الحَلْقِيُّ: when Noon Sakin (نْ) or Tanwin (ً ٍ ٌ) is followed by a throat letter (أ ه ع ح غ خ), the Noon is pronounced clearly without nasalization."},{"q":"What is الإِدْغَامُ (Idgham)?","opts":["Clear pronunciation","Merging/assimilation of Noon Sakin into following letter","Hiding the Noon","Doubling without merging"],"c":1,"exp":"الإِدْغَامُ: when Noon Sakin/Tanwin is followed by certain letters (ي ن م و ل ر), the Noon merges into the following letter. With letters (ي ن م و) = with ghunna; with (ل ر) = without ghunna."},{"q":"What is الإِخْفَاءُ (Ikhfa)?","opts":["Full nasalization","Hiding the Noon — pronounced between Izhar and Idgham (with nasalization)","Stopping of sound","Lengthening"],"c":1,"exp":"الإِخْفَاءُ: when Noon Sakin/Tanwin is followed by 15 remaining letters, the Noon is hidden (between clear and merged) with a light ghunna of 2 counts."},{"q":"What is الإِقْلَابُ (Iqlab)?","opts":["Prolonging a vowel","Converting Noon Sakin into Meem when followed by باء","Doubling","Stopping"],"c":1,"exp":"الإِقْلَابُ: when Noon Sakin/Tanwin is followed by بَاء (ب), the Noon converts to a Meem sound: نُنبِئُكُمْ is pronounced nuMbi'ukum. Symbol: a small م above the Noon."},{"q":"What is الغُنَّةُ (Ghunna)?","opts":["A guttural sound","Nasalization — the nasal sound produced through the nose, associated with ن and م","A vowel sound","The hamza sound"],"c":1,"exp":"الغُنَّةُ = nasal resonance produced through the nasal passage. It is an essential characteristic of ن and م. Measured in counts (harakaat)."},{"q":"Identify the Tajweed rule in this verse: مِن دُونِ اللَّهِ","opts":["Izhar","Idgham","Ikhfa","Iqlab"],"c":2,"exp":"مِن (Noon Sakin) + دُونِ — دَال is one of the 15 Ikhfa letters → الإِخْفَاءُ. The Noon is hidden with nasalization of 2 counts."},{"q":"What is the مَدُّ الطَّبِيعِيُّ (Natural Madd)?","opts":["Prolongation of 6 counts","Prolongation of 4-5 counts","Basic/natural prolongation of 2 counts (1 alif unit) — no additional cause","Prolongation due to hamza"],"c":2,"exp":"المَدُّ الطَّبِيعِيُّ (Natural/Original Madd): prolonging the long vowels (الف، واو، ياء مدية) 2 counts. It is the base case — no hamza or sukun follows."},{"q":"What is الوَقْفُ (stopping) at end of a verse?","opts":["Reading without pause","Stopping breathing and voice completely, with sukun on final letter","Continuing to next verse without pause","Repeating the verse"],"c":1,"exp":"الوَقْفُ: stopping voice and breath at a place in recitation. At the end of a verse: apply sukun on the last letter. There are rules for acceptable stopping places (التام، الكافي، الحسن، القبيح)."},{"q":"Which Surah is known as \"the heart of the Quran\"?","opts":["Al-Fatiha","Ya-Sin","Al-Baqarah","Al-Kahf"],"c":1,"exp":"سُورَةُ يس (Ya-Sin) — the Prophet (ﷺ) said: \"Everything has a heart, and the heart of the Quran is Ya-Sin.\" It covers core theological themes: resurrection, prophethood, divine power."},{"q":"What is تَفْخِيمُ الرَّاءِ (heavy Ra)?","opts":["Always thin","Ra is pronounced heavy/full when it has a fatha or damma, or has sukun preceded by fath/damm","Ra is always silent","Ra merges with next letter"],"c":1,"exp":"الرَّاءُ المُفَخَّمَةُ: Ra is heavy (full mouth) when it has fatha/damma (رَ، رُ), or is sukun preceded by fatha/damma. E.g., رَبُّنَا, رُزِقُوا."},{"q":"What does قَلْقَلَةٌ mean?","opts":["A type of Madd","A vibration/echo in letters ق ط ب ج د when they have sukun","A type of stop","Nasalization"],"c":1,"exp":"القَلْقَلَةُ: a slight echo/vibration produced when reciting the 5 Qalqala letters (قُطُبُ جَدٍّ — ق ط ب ج د) when they have sukun. Makes them \"bounce\" slightly."},{"q":"In Tajweed, what is the Madd Al-Muttasil (المد المتصل)?","opts":["Natural madd","Madd where long vowel and hamza are in same word","Madd where they are in separate words","Madd due to sukun"],"c":1,"exp":"المَدُّ المُتَّصِلُ (Connected Madd): long vowel + hamza in the SAME word. Must be prolonged 4-5 counts. E.g., جَاءَ، سُوءٍ، شِئْتُمْ."}]},{"id":"q3","cefr":"Q3","name":"Quran Advanced","nameAr":"تلاوة متقدم","track":"quran","passPct":65,"timeMin":45,"questions":[{"passage":{"t":"اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ﴿١﴾ خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ ﴿٢﴾","tr":"Read in the name of your Lord who created (1) Created man from a clinging substance (2) — Surah Al-Alaq 96:1-2"},"q":"What Tajweed rule applies at: بِاسْمِ رَبِّكَ?","opts":["Idgham — م merges into ر","Ikhfa — م hidden before ر","The م in بِاسْمِ has no rule with ر","Iqlab — م converts to ن"],"c":1,"exp":"الإِخْفَاءُ الشَّفَوِيُّ: Meem Sakin (مْ) before بَاء → hidden with nasalization. Here: بِاسْمِ is not a Meem Sakin case — but بِاسْمِ رَبِّكَ: the Meem Sakin of اسمِ before ر — this Meem Sakin rule does not apply (it follows regular Idgham Shafawi only before م and Ikhfa Shafawi only before ب). The م here has a kasra, not sukun."},{"q":"What are the 3 types of Lam in لفظ الجلالة (the word اللَّه)?","opts":["Always thin","Always heavy","Heavy when preceded by fatha or damma; thin when preceded by kasra","Always follows previous vowel"],"c":2,"exp":"لَفْظُ الجَلَالَةِ: ل is مُفَخَّمٌ (heavy) when preceded by fatha (قَالَ اللَّهُ) or damma (رَسُولُ اللَّهِ); it is مُرَقَّقٌ (thin) when preceded by kasra (بِسْمِ اللَّهِ). Unique rule in Tajweed."},{"q":"What is المَدُّ الَّلازِمُ (Necessary Madd)?","opts":["Madd of 2 counts","Madd of 4-5 counts","Compulsory Madd of exactly 6 counts — occurs when long vowel is followed by a shaddah or permanent sukun in same word","Natural madd"],"c":2,"exp":"المَدُّ اللَّازِمُ: when a long vowel is followed by a permanent sukun or shaddah. Must be prolonged EXACTLY 6 counts (3 alif-units). E.g., الضَّالِّينَ (in Al-Fatiha), دَابَّةٍ, حَاقَّةُ."},{"q":"What is الترقيق (Tarqiq / thinning) of الراء?","opts":["Always used","Ra is pronounced thin when it has kasra, or has sukun preceded by kasra (and no barrier)","Ra is always heavy","Ra is always thin after ي"],"c":1,"exp":"الرَّاءُ المُرَقَّقَةُ (thin Ra): when Ra has a kasra (رِ), or has sukun preceded by a kasra with no barrier. E.g., رِزْقٌ, الحِجْرِ."},{"q":"In which case does the مَدُّ المُنْفَصِلُ (Separated Madd) occur?","opts":["Long vowel + hamza in same word","Long vowel at end of word + hamza begins next word","Long vowel + sukun","Natural prolongation"],"c":1,"exp":"المَدُّ المُنْفَصِلُ: long vowel at end of one word + hamza at beginning of next word. Prolonged 4-5 counts in Hafs recitation. E.g., يَا أَيُّهَا، بِمَا أُنزِلَ."},{"q":"What is الإِدْغَامُ الشَّفَوِيُّ (Labial Idgham)?","opts":["Noon merging into ل","Meem Sakin merging into following Meem (full nasalization)","Meem Sakin merging into ب","Ra becoming heavy"],"c":1,"exp":"الإِدْغَامُ الشَّفَوِيُّ: when Meem Sakin (مْ) is followed by Meem (م), the first Meem merges completely into the second with a ghunna of 2 counts. E.g., كَمْ مِّن."},{"q":"What are الحُرُوفُ المُسْتَعْلِيَةُ (Letters of Elevation/Heaviness)?","opts":["The throat letters","خص ضغط قظ — 7 letters always heavy","م and ن only","The Qalqala letters"],"c":1,"exp":"الحُرُوفُ المُسْتَعْلِيَةُ (7 letters): خ ص ض غ ط ق ظ — memory aid: خُصَّ ضَغْطٍ قِظْ. These letters are always pronounced heavy (full mouth). Other letters are generally thin (مُرَقَّقَةٌ)."},{"q":"What is the حكم of مَدُّ العِوَضِ?","opts":["Madd when stopping on tanwin fath (ـً)","Natural madd at end of verse","Madd before hamza","Madd in the Fawatih"],"c":0,"exp":"مَدُّ العِوَضِ: when stopping (وقف) on a word ending with tanwin fath (ـً), the tanwin is replaced by an alif and prolonged 2 counts. E.g., stopping on رَحِيمًا → رَحِيمَا."},{"q":"What is the Warsh recitation (رواية ورش)?","opts":["The only accepted recitation","One of the 10 mutawatir recitations — popular in North/West Africa, differs from Hafs in certain prolongations and vowels","The modern Egyptian recitation","A rejected variant"],"c":1,"exp":"رِوَايَةُ وَرْشٍ عَنْ نَافِعٍ: one of the 10 mutawatir (unbroken chain) Quranic recitations. Dominant in Morocco, Algeria, Libya, West Africa. Notable differences from Hafs: مَدُّ البَدَلِ (4-5 counts), imala, tahqiq al-hamza."},{"q":"What is the meaning of التَّحْقِيقُ in recitation?","opts":["Fast recitation","Slow, deliberate recitation giving full right to each letter and rule","Medium speed recitation","Melodic recitation"],"c":1,"exp":"التَّحْقِيقُ: the slowest, most precise style of recitation. Each letter is given full articulation, each rule applied carefully. Recommended for learning and teaching Tajweed."},{"q":"In Surah Al-Alaq (96:1), the word خَلَقَ — identify its root and form.","opts":["Root: خ-ل-ق; Form I past tense verb","Root: ل-ق-خ; noun","Root: خ-ل-ق; adjective","Root: ق-خ-ل; Form IV"],"c":0,"exp":"خَلَقَ: root = خ-ل-ق (to create). Form I past tense verb, 3rd person masculine singular = \"He created.\" First revealed Quranic word after اقْرَأْ."},{"q":"What is the مَدُّ الفَرْقِ (Distinguishing Madd)?","opts":["Natural madd","Madd to distinguish between hamza al-istifham and al-ta'rif (لام الجلالة ا+لـ)","Madd at end of verse","Madd before sukun"],"c":1,"exp":"مَدُّ الفَرْقِ: prolonging 6 counts to distinguish between ا (hamzat al-istifham = interrogative) and لـ (definite article). E.g., آللَّهُ (did Allah?) vs اللَّهُ (Allah). Prevents confusion."}]},{"id":"q4","cefr":"Q4","name":"Quran Scholar","nameAr":"حافظ / قارئ","track":"quran","passPct":65,"timeMin":60,"questions":[{"passage":{"t":"إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ","tr":"Indeed, it is We who sent down the Quran and indeed, We will be its guardian. (Al-Hijr 15:9)"},"q":"Identify all Tajweed rules in: إِنَّا نَحْنُ نَزَّلْنَا","opts":["Only shaddah on إِنَّا","Shaddah on إِنَّا + Idgham of نَ into ن (إدغام بغنة) + shaddah on نَزَّلْ","Only Madd on نَزَّلْ","Ikhfa on نَ"],"c":1,"exp":"إِنَّا: Shaddah on ن = ghunna 2 counts. نَحْنُ نَزَّلْنَا: Noon Sakin (نْ in نَحْنُ) + نَزَّلْنَا → Idgham with ghunna (Noon merges into Noon). نَزَّلْنَا: shaddah on ز = doubled."},{"q":"What is the صِفَاتُ الحُرُوفِ (attributes of letters)?","opts":["The written forms of letters","Qualities inherent to letters beyond their articulation point — e.g., Jahr/Hams, Shidda/Rakhawa","The vowel system","The harakat"],"c":1,"exp":"الصِّفَاتُ: inherent qualities of each letter beyond its مَخْرَج. E.g., الجَهْرُ (voiced) vs الهَمْسُ (whispered), الشِّدَّةُ (strong/complete closure) vs الرَّخَاوَةُ (gentle/open). Essential for advanced Tajweed."},{"q":"What is the اللَّحْنُ الجَلِيُّ (Obvious Error) in recitation?","opts":["Slight mispronunciation","Major recitation error that changes meaning — e.g., changing vowels on words (إعراب errors)","Wrong stopping place","Forgetting a verse"],"c":1,"exp":"اللَّحْنُ الجَلِيُّ: clear, obvious error that changes meaning or distorts words. E.g., reading أَنْعَمْتَ with a kasra on ت (=أَنْعَمْتِ) would change meaning. It is HARAM to commit this error."},{"q":"What is the رِوَايَةُ حَفْصٍ عَنْ عَاصِمٍ?","opts":["A rejected chain","The most widely used Quranic recitation globally — transmitted through Hafs from Asim of Kufa","An African recitation","A Persian recitation variant"],"c":1,"exp":"رِوَايَةُ حَفْصٍ عَنْ عَاصِمٍ: dominant recitation in most of the Muslim world (Middle East, South Asia, Turkey). Hafs (d. 796 CE) transmitted from his teacher Asim of Kufa (d. 745 CE), who transmitted through an unbroken chain to the Prophet ﷺ."},{"q":"In the science of Quran recitation, what are the القِرَاءَاتُ العَشْرُ?","opts":["10 rejected recitations","10 mutawatir recitations — all authentically transmitted from the Prophet ﷺ through unbroken chains","10 different translations","10 scholars who edited the Quran"],"c":1,"exp":"القِرَاءَاتُ العَشْرُ: the 10 canonical Quranic recitations — all متواتر (mass-transmitted). They were codified by Ibn al-Jazari (d. 1429 CE). Each has two riwayat. They represent linguistic variations present in the Prophet's time."},{"q":"What is the ابْتِدَاءُ (starting/beginning) rule in Tajweed?","opts":["You must start from the beginning of a Surah","Rules governing where you may begin reciting after pausing — must start at a place that gives complete meaning","You must recite basmala first","You must start from an even-numbered verse"],"c":1,"exp":"الابْتِدَاءُ: rules for beginning/resuming recitation. You may not begin at a place that would distort meaning (الابتداء القبيح). You should begin where the meaning is complete or at least acceptable."},{"q":"What is أَسْبَابُ النُّزُولِ (Asbab al-Nuzul)?","opts":["The order in which Surahs were revealed","The occasions of revelation — historical context surrounding specific Quranic verses","The names of the Quran","The scribes of the Quran"],"c":1,"exp":"أَسْبَابُ النُّزُولِ: the specific circumstances, events, or questions that prompted the revelation of particular verses. Understanding them is essential for proper interpretation (تفسير)."},{"q":"What is the إعجاز عددي (numerical miracle) claim about the Quran?","opts":["Proven scientific fact","A field of study claiming numerical patterns in the Quran (e.g., word counts); scholars debate its status as \"miraculous\"","Rejected entirely by all scholars","Part of official Tajweed science"],"c":1,"exp":"الإِعْجَازُ العَدَدِيُّ: claimed numerical patterns in the Quran (word frequencies, etc.). While some scholars find them remarkable, traditional Islamic scholarship grounds Quranic miracle in its literary/linguistic inimitability (الإعجاز البياني), not numerical counting."},{"q":"What is التَّفْسِيرُ بِالمَأْثُورِ vs التَّفْسِيرُ بِالرَّأْيِ?","opts":["Ancient vs modern interpretation","Interpretation by transmitted narrations (Quran, Sunnah, companions) vs interpretation by reasoned opinion","Arabic interpretation vs foreign","Short vs long interpretation"],"c":1,"exp":"التَّفْسِيرُ بِالمَأْثُورِ: explains Quran through other Quran verses, Prophetic hadith, companion reports. التَّفْسِيرُ بِالرَّأْيِ: scholarly opinion based on Arabic language knowledge and Islamic principles. The best tafsir combines both."},{"q":"What is سُورَةُ الكَهْفِ known for in Islamic tradition?","opts":["Being the hardest to memorize","Being recommended to recite on Fridays — protection from Dajjal, containing 4 major stories","Being the longest Surah","Being revealed entirely in Mecca"],"c":1,"exp":"سُورَةُ الكَهْفِ: recommended for Friday recitation (hadith in Sahih Muslim). Contains 4 stories: People of the Cave, the Two Gardens, Musa and Khidr, and Dhul-Qarnayn. Hadith say it provides light/protection for a week."},{"q":"What is the حِزْبُ and جُزْءٌ division of the Quran?","opts":["Thematic division by topic","The Quran is divided into 30 equal parts (أجزاء/juz) for monthly recitation; each juz = 2 hizbs; each hizb = 4 rub (quarters)","Division by revelation date","Division by Meccan/Medinan Surahs"],"c":1,"exp":"The Quran is divided into 30 أَجْزَاءٌ (equal parts) for recitation across 30 days of Ramadan. Each جُزْءٌ = 2 أَحْزَابٌ = 8 أَرْبَاعٌ. This division was not part of the original text but added for ease of recitation."},{"q":"Identify all صِفَاتُ الحُرُوفِ of the letter ن (Noon):","opts":["Jahr, Shidda, Isti'la, Itbaq","Jahr, Tawasut (between Shidda and Rakhawa), Istifal, Infitah, Izlaq, and specifically: Ghunna","Hams, Rakhawa, Isti'la","Jahr, Shidda, Istifal"],"c":1,"exp":"Noon's attributes: الجَهْرُ (voiced), التَّوَسُّطُ (between strong and open), الاسْتِفَالُ (low tongue), الانْفِتَاحُ (open), الإِذْلَاقُ (tip of tongue), and uniquely: الغُنَّةُ (nasal resonance 2 counts). The ghunna is its most important characteristic in Tajweed rules."}]}];
+
+// === APP STATE ===
+var S={
+  screen:'home', // home|name|info|exam|result|certificate
+  track:null,    // 'arabic'|'quran'
+  studentName:'',
+  currentLevelIdx:0,
+  currentQIdx:0,
+  answers:[],
+  answered:false,
+  startTime:null,
+  timerInterval:null,
+  secsLeft:0,
+  completedLevels:{arabic:[],quran:[]},
+  arabicLevels:ARABIC_LEVELS,
+  quranLevels:QURAN_LEVELS
 };
 
-// === QUESTION BANKS ===
-// Curriculum references:
-//   Elementary  -> Al-Arabiyya Bayna Yadayk (ABY) Book 1, Units 1-3; Madinah Arabic Book 1, Lessons 1-5
-//   Middle      -> ABY Book 1, Units 4-10; Silsilat al-Arabiyya Lil-Nashin, Level 2
-//   High School -> ABY Book 2; Madinah Arabic Book 2; Al-Kitaab Part 1
-//   Adult       -> ABY Book 3; Al-Kitaab Part 2; RQAP Framework
+// Get the merged data
+S.arabicLevels=ARABIC_LEVELS;
+S.quranLevels=QURAN_LEVELS;
 
-const QS={
+function getLevels(){return S.track==='arabic'?S.arabicLevels:S.quranLevels;}
+function getCurrentLevel(){return getLevels()[S.currentLevelIdx];}
+function trackClass(){return S.track==='arabic'?'at':'qt';}
+function btnClass(){return S.track==='arabic'?'btn-a':'btn-q';}
+function passColor(){return S.track==='arabic'?'pass-a':'pass-q';}
+function progClass(){return S.track==='arabic'?'a':'q';}
 
-// ─── ELEMENTARY (Ages 6-11) ──────────────────────────────────────────────
-// Focus: letters, basic vocab with full harakat, numbers 1-10, colors, 
-// classroom objects, greetings. All questions in simple English for non-natives.
-// Arabic answers are short and fully voweled.
-elementary:[
-  {id:1,
-   q:"What is the Arabic letter that makes the sound /b/ like in \"book\"?",
-   o:["بَ","تَ","نُ","فَ"],
-   a:0,
-   exp:"بَ = Ba, makes the sound /b/. From Al-Arabiyya Bayna Yadayk, Book 1."},
-  {id:2,
-   q:"Choose the correct Arabic word for \"book\":",
-   o:["كِتَابٌ","بَيْتٌ","قَلَمٌ","بَابٌ"],
-   a:0,
-   exp:"كِتَابٌ (kitaabun) = a book. Core vocabulary in every Arabic curriculum for non-natives."},
-  {id:3,
-   q:"A Muslim student says \"as-Salaamu ‘alaykum\" when entering class. What does this mean?",
-   o:["Good morning","Thank you","Peace be upon you","Goodbye"],
-   a:2,
-   exp:"السَّلَامُ عَلَيْكُمْ = Peace be upon you. The universal Islamic greeting taught in ABY Unit 1."},
-  {id:4,
-   q:"Look at this Arabic word:  قَلَمٌ  — What does it mean?",
-   o:["Desk","Pencil / Pen","Book","Bag"],
-   a:1,
-   exp:"قَلَمٌ (qalamun) = a pen / pencil. Classic first-lesson vocabulary in all curricula."},
-  {id:5,
-   q:"Which Arabic word means the number THREE?",
-   o:["اثْنَانِ","أَرْبَعَةٌ","ثَلَاثَةٌ","خَمْسَةٌ"],
-   a:2,
-   exp:"ثَلَاثَةٌ (thalaathah) = three. Numbers 1-10 are Unit 2 in ABY Book 1."},
-  {id:6,
-   q:"Which Arabic word is the correct word for \"teacher\" (male)?",
-   o:["طَالِبٌ","مُدَرِّسٌ","كِتَابٌ","فَصْلٌ"],
-   a:1,
-   exp:"مُدَرِّسٌ (mudarrisun) = a (male) teacher. طَالِبٌ = student. Key classroom vocab in ABY Book 1 Unit 3."},
-  {id:7,
-   q:"Which color is  أَحْمَرُ  (ahmar)?",
-   o:["Blue","Green","Red","Yellow"],
-   a:2,
-   exp:"أَحْمَرُ = red. Colors: أَحْمَر (red), أَخْضَر (green), أَزْرَق (blue), أَصْفَر (yellow). ABY Book 1."},
-  {id:8,
-   q:"Which greeting do you use in the MORNING in Arabic?",
-   o:["مَسَاءُ الخَيْرِ","صَبَاحُ الخَيْرِ","مَعَ السَّلَامَةِ","شُكْرًا"],
-   a:1,
-   exp:"صَبَاحُ الخَيْرِ = Good morning. مَسَاءُ الخَيْرِ = Good evening. ABY Book 1 Unit 1."}
-],
-// ─── MIDDLE SCHOOL (Ages 12-14) ──────────────────────────────────────────
-// Focus: Simple sentences (jumla ismiyya/fiʼliyya), present tense verbs,
-// family vocabulary, daily life, short authentic passage with full harakat.
-// Inspired by ABY Book 1 Units 4-10 and Silsilat al-Arabiyya Level 2.
-middle:[
-  {id:1,
-   passage:{label:"Read the following passage carefully, then answer questions 1–3:",
-            text:"هَذَا أَحْمَدُ. هُوَ طَالِبٌ مُجْتَهِدٌ. يَذْهَبُ إِلَى المَدْرَسَةِ كُلَّ يَوْمٍ. يُحِبُّ القِرَاءَةَ وَالكِتَابَةَ. قَالَ أَبُوهُ: “العِلْمُ نُورٌ وَالجَهْلُ ظُلمَةٌ.”",
-            note:"(Simple story — ABY Book 1 style, fully voweled)"},
-   q:"What is Ahmad described as in the passage?",
-   o:["A lazy student","A diligent student","A teacher","A father"],
-   a:1,
-   exp:"مُجْتَهِدٌ = diligent / hardworking. Note how the nominal sentence “هُوَ طَالِبٌ مُجْتَهِدٌ” works: subject + predicate."},
-  {id:2,
-   passage:{same:true},
-   q:"What does Ahmad love doing? (two things mentioned)",
-   o:["Writing and drawing","Reading and writing","Sport and travel","Cooking and singing"],
-   a:1,
-   exp:"يُحِبُّ القِرَاءَةَ وَالكِتَابَةَ = He loves reading and writing. The verb يُحِبُّ (yuhibbu) = to love/like."},
-  {id:3,
-   passage:{same:true},
-   q:"Translate what the father said: “العِلْمُ نُورٌ وَالجَهْلُ ظُلمَةٌ”",
-   o:["Knowledge is power and ignorance is weakness","Knowledge is light and ignorance is darkness","Study is duty and laziness is wrong","Books are light and ignorance is forbidden"],
-   a:1,
-   exp:"نُورٌ = light (noun), ظُلمَةٌ = darkness. A famous Arabic proverb. Two nominal sentences joined by وَ (and)."},
-  {id:4,
-   q:"Choose the correct meaning of the verb  يَذْهَبُ  (yadhabu):",
-   o:["He studies","He eats","He goes","He reads"],
-   a:2,
-   exp:"يَذْهَبُ = he goes (present tense). Root: ذ-ه-ب. Past: ذَهَبَ. Core verb in ABY and all curricula."},
-  {id:5,
-   q:"Which sentence correctly says \"The book is on the desk\" in Arabic?",
-   o:["الكِتَابُ فِي الحَقِيبَةِ","الكِتَابُ عَلَى المَكْتَبِ","الكِتَابُ تَحْتَ الكُرْسِيِّ","المَكْتَبُ فَوْقَ الكِتَابِ"],
-   a:1,
-   exp:"عَلَى = on/upon. فِي = in. تَحْتَ = under. فَوْقَ = above. Prepositions of place — ABY Book 1 Unit 6."},
-  {id:6,
-   q:"Which word means \"mother\" in Arabic?",
-   o:["أَبٌ","أُمٌّ","أَخٌ","عَمٌّ"],
-   a:1,
-   exp:"أُمٌّ (ummun) = mother. أَبٌ (abun) = father. أَخٌ (akhun) = brother. عَمٌّ (ammun) = paternal uncle. Family — ABY Unit 5."},
-  {id:7,
-   q:"What is the feminine form of  طَالِبٌ  (student, male)?",
-   o:["طَالِبَةٌ","مُدَرِّسَةٌ","كَاتِبَةٌ","مُسْلِمَةٌ"],
-   a:0,
-   exp:"طَالِبَةٌ (taalibahtun) = female student. Arabic adds َةٌ (ta marbuta) to make most nouns feminine. ABY Book 1 Unit 4."},
-  {id:8,
-   q:"Choose the correct Arabic for \"I study in the university\":",
-   o:["أَنَا أَسْكُنُ فِي الجَامِعَةِ","أَنَا أَدْرُسُ فِي الجَامِعَةِ","أَنَا أَذْهَبُ إِلَى الجَامِعَةِ","أَنَا فِي المَدْرَسَةِ"],
-   a:1,
-   exp:"أَدْرُسُ = I study (present). أَسْكُنُ = I live/reside. أَذْهَبُ = I go. ABY Book 1, Unit 8: university life."},
-  {id:9,
-   q:"Which Arabic word is an example of a VERB (فِعْل)?",
-   o:["مَسْجِدٌ","جَمِيلٌ","كَتَبَ","أَحْمَدُ"],
-   a:2,
-   exp:"كَتَبَ (kataba) = he wrote — a past tense VERB. مَسْجِدٌ = mosque (noun). جَمِيلٌ = beautiful (adjective). Parts of speech — ABY Unit 4."},
-  {id:10,
-   q:"The word  وَلَدٌ  means \"a boy\". What is its plural?",
-   o:["أَوْلَادٌ","وَلَدَةٌ","وَلَدَانِ","وَالِدٌ"],
-   a:0,
-   exp:"أَوْلَادٌ (awlaadun) = boys (broken plural). وَلَدَةٌ = girl. Broken plurals are key in ABY Book 1 Unit 7."},
-  {id:11,
-   q:"How do you say \"Thank you\" in Arabic?",
-   o:["عَفْوًا","مَعَ السَّلَامَةِ","شُكْرًا","لَا شُكْرَ"],
-   a:2,
-   exp:"شُكْرًا (shukran) = Thank you. Response: عَفْوًا (afwan) = You’re welcome. ABY Unit 1 social expressions."},
-  {id:12,
-   q:"Which Arabic word means \"to the right\"?",
-   o:["عَلَى اليَسَارِ","أَمَامَ","عَلَى اليَمِينِ","خَلْفَ"],
-   a:2,
-   exp:"عَلَى اليَمِينِ = to the right. عَلَى اليَسَارِ = to the left. Directions — ABY Unit 9."},
-  {id:13,
-   q:"Which sentence uses the correct word order in Arabic?",
-   o:["طَالِبٌ هُوَ مُجْتَهِدٌ","مُجْتَهِدٌ هُوَ طَالِبٌ","هُوَ طَالِبٌ مُجْتَهِدٌ","مُجْتَهِدٌ طَالِبٌ هُوَ"],
-   a:2,
-   exp:"هُوَ طَالِبٌ مُجْتَهِدٌ = He is a diligent student. Nominal sentence: pronoun + noun + adjective. ABY Unit 4."},
-  {id:14,
-   q:"The verb  أَكَلَ  means \"he ate\". What is the present tense form?",
-   o:["يَأْكُلُ","أَكَلَتَ","كُلْ","مَأْكُولٌ"],
-   a:0,
-   exp:"يَأْكُلُ (ya’kulu) = he eats. Verb conjugation pattern: past أَكَلَ / present يَأْكُلُ. ABY Unit 6: daily actions."},
-  {id:15,
-   q:"How many Surahs (chapters) are in the Quran?",
-   o:["100","110","114","120"],
-   a:2,
-   exp:"القُرْآنُ الكَرِيمُ يتَكَوَّنُ مِنْ 114 سُورَةً. The Quran has 114 Surahs. Quranic literacy — ABY Unit 10."}
-],
-// ─── HIGH SCHOOL (Ages 15-18) ────────────────────────────────────────────
-// Focus: iʻraab, verb conjugation tables, passive voice, Quranic reading
-// comprehension, basic tajweed. ABY Book 2, Madinah Arabic Book 2 level.
-highschool:[
-  {id:1,
-   passage:{label:"Read this verse from Surah Al-‘Alaq (the first revealed), then answer Q1–3:",
-            text:"اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ● خَلَقَ الْإِنْسَانَ مِنْ عَلَقٍ",
-            note:"(Surah Al-ʽAlaq 96:1-2 — Hafs recitation)"},
-   q:"What does the opening command  اقْرَأْ  (Iqra’) mean?",
-   o:["Pray","Read / Recite","Write","Remember"],
-   a:1,
-   exp:"اقْرَأْ = Read / Recite — from the root ق-ر-أ. This is the very first word revealed to the Prophet ★. Verb form: Imperative (fiʼl al-amr)."},
-  {id:2,
-   passage:{same:true},
-   q:"What was man (al-insaan) created from, according to verse 2?",
-   o:["Water","Dust","A clinging clot (عَلَق)","Clay"],
-   a:2,
-   exp:"عَلَقٍ = a clinging clot / leech-like substance. مِنْ = from. This is the preposition مِنْ indicating origin."},
-  {id:3,
-   passage:{same:true},
-   q:"What is the grammatical function of  بِاسْمِ رَبِّكَ  in the verse?",
-   o:["Subject of the verb","Object of the verb","Prepositional phrase (adverbial)","An adjective phrase"],
-   a:2,
-   exp:"بِ is a preposition (harf jarr). اسْمِ is a genitive noun (majrur). Together they form a jar wa-majrur (prepositional phrase) modifying the verb اقْرَأْ."},
-  {id:4,
-   q:"Identify the grammatical case (iʻraab) of  الطالِبُ  in the sentence:  جَاءَ الطالِبُ",
-   o:["Accusative — Nasb (مَنْصُوب)","Genitive — Jarr (مَجْرُور)","Nominative — Rafʼ (مَرْفُوع)","Jussive — Jazm (مَجْزُوم)"],
-   a:2,
-   exp:"جَاءَ الطالِبُ = The student came. الطالِبُ is the SUBJECT (faʼil) of the verb جَاءَ, so it is NOMINATIVE (مَرْفُوع), marked by damma (ُ)."},
-  {id:5,
-   q:"The verb  دَرَسَ  (darasa) means \"he studied\". Conjugate it for \"she studied\":",
-   o:["دَرَسُوا","تَدْرُسُ","دَرَسَتَ","دَرَسَنَّ"],
-   a:2,
-   exp:"دَرَسَتَ (darasat) = she studied. Add تَ (ta) to the past verb for 3rd person feminine singular. Verb conjugation — ABY Book 2 Unit 1."},
-  {id:6,
-   q:"Which option correctly shows the DUAL (muthanna) of  كِتَابٌ  (book)?",
-   o:["كُتُبٌ","كِتَابَانِ","كِتَابَيْنِ","كِتَابَاتٌ"],
-   a:1,
-   exp:"كِتَابَانِ (kitaabaani) = two books (nominative dual). In accusative/genitive: كِتَابَيْنِ. Dual suffix: add انِ (nominative) or ينِ (acc/gen)."},
-  {id:7,
-   q:"Convert this active sentence to PASSIVE voice:  كَتَبَ الطالِبُ الدَّرْسَ",
-   o:["كُتِبَ الدَّرْسُ","كَتَبَ الدَّرْسُ","كَتَبَتِ الدَّرْسُ","كُتِبَ الطالِبُ"],
-   a:0,
-   exp:"كُتِبَ الدَّرْسُ = The lesson was written. Passive past: change vowels to u-i (damm-kasra). The object becomes the naib al-faʼil (substitute subject)."},
-  {id:8,
-   q:"What is the Verbal Noun (masdar) of the verb  كَتَبَ  (he wrote)?",
-   o:["كِتَابٌ","كَاتِبٌ","كِتَابَةٌ","مَكْتُوبٌ"],
-   a:2,
-   exp:"كِتَابَةٌ (kitaabah) = the act of writing (masdar). كِتَابٌ = book. كَاتِبٌ = writer. مَكْتُوبٌ = what is written. ABY Book 2 — patterns of masdar."},
-  {id:9,
-   q:"Which tajweed rule applies in  مِنْ رَحْمَةِ  — noon sakinah before ra’ (ر)?",
-   o:["Izhar (clear pronunciation)","Idgham with ghunnah","Idgham without ghunnah","Iqlab"],
-   a:2,
-   exp:"Noon sakinah before ر or ل = Idgham bila ghunnah (merging without nasal). The noon disappears completely into the letter. Al-Jazariyya tajweed rules."},
-  {id:10,
-   q:"Which option is an example of an ANNEXATION (idaafa / إضَافَة)?",
-   o:["كِتَابٌ جَمِيلٌ","كِتَابُ الطالِبِ","هُوَ كِتَابٌ","كَتَبَ الطالِبُ"],
-   a:1,
-   exp:"كِتَابُ الطالِبِ = the student’s book (possession). Idaafa: first noun (mudaf) has no tanwin/al; second noun (mudaf ilayh) is genitive. ABY Book 2 Unit 3."},
-  {id:11,
-   q:"The word  الرَّحْمَنُ  in بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ  comes from root ر-ح-م. What is its meaning?",
-   o:["The Powerful","The Wise","The Most Merciful (the general mercy)","The Hearing"],
-   a:2,
-   exp:"الرَّحْمَنُ = the Entirely Merciful (Rahman — general mercy for all creation). الرَّحِيمُ = the Especially Merciful (Raheem — special mercy for believers). A distinction stressed in all Quranic Arabic courses."},
-  {id:12,
-   q:"Which of these is a SOUND PLURAL (jamaʼ salim — جَمْعٌ سَالِم)?",
-   o:["كُتُبٌ","مُسْلِمُونَ","مَسَاجِدُ","أَوْلَادٌ"],
-   a:1,
-   exp:"مُسْلِمُونَ (Muslims, masculine sound plural) adds ونَ (nom) or ينَ (acc/gen). Sound plurals preserve the root intact. ABY Book 2 Unit 2."},
-  {id:13,
-   q:"Choose the correct CONDITIONAL sentence in Arabic:",
-   o:["إِذَا دَرَسْتَ نَجَحْتَ","إِذَا دَرَسَ نَجَحْتَ","إِذَا دَرَسْتَ تَنْجَحُ","إِذَا نَجَحْتَ دَرَسَ"],
-   a:0,
-   exp:"إِذَا دَرَسْتَ نَجَحْتَ = If you studied, you succeeded. إذَا takes past tense (even for future meaning). ABY Book 2 — conditional structures."},
-  {id:14,
-   q:"What is the difference between  هَذَا  and  هَذِهِ  in Arabic?",
-   o:["No difference — both mean ‘this’","هَذَا = this (masculine); هَذِهِ = this (feminine)","هَذَا = that (near); هَذِهِ = that (far)","هَذَا = he; هَذِهِ = she"],
-   a:1,
-   exp:"هَذَا كِتَابٌ = This is a book (masc). هَذِهِ مَدْرَسَةٌ = This is a school (fem). Demonstratives for near objects — ABY Book 1 Unit 3."},
-  {id:15,
-   q:"What does the prefix  مَ  on a verb pattern (e.g., مَكْتَبٌ — م-ك-ت-ب) typically indicate?",
-   o:["The doer of the action (ism al-faʼil)","The place or instrument of the action (ism al-makan/alah)","The verbal noun (masdar)","The passive participle"],
-   a:1,
-   exp:"مَكْتَبٌ = a place of writing (desk/office). The pattern مَفْعَل often gives ism al-makan (place noun) or ism al-alah (instrument). ABY Book 2 Unit 5."},
-  {id:16,
-   q:"In the verse  وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجيًا  (At-Talaq 65:2), what does the conditional particle  مَن  mean here?",
-   o:["What","Who / Whoever","Which","How many"],
-   a:1,
-   exp:"مَن = whoever/who (conditional relative pronoun). وَمَن يَتَّقِ اللَّهَ = And whoever fears Allah. A key Quranic grammar point in Al-Kitaab and ABY Book 2."},
-  {id:17,
-   q:"What tajweed rule applies when you read  مِنْ بَعْدِ  (noon sakinah before ba’)?",
-   o:["Izhar","Idgham","Iqlab — the noon becomes a mim with ghunnah","Ikhfa"],
-   a:2,
-   exp:"Noon sakinah before بَ = Iqlab: the noon (ن) is converted to a meem (م) with ghunnah (nasal). One of the four major rules for noon sakinah in tajweed."},
-  {id:18,
-   q:"Choose the sentence that correctly uses an ADJECTIVE (naʼt / نَعْت) in Arabic:",
-   o:["الطَّالِبُ مُجْتَهِدٌ ذَهَبَ","الطَّالِبُ ذَهَبَ المُجْتَهِدُ","ذَهَبَ الطَّالِبُ المُجْتَهِدُ","ذَهَبَ المُجْتَهِدُ طَّالِبٌ"],
-   a:2,
-   exp:"ذَهَبَ الطَّالِبُ المُجْتَهِدُ = The diligent student went. The adjective المُجْتَهِدُ follows its noun and matches in definiteness, gender, number and case."},
-  {id:19,
-   q:"The root ع-ل-م appears in many Quranic words. Which of these is NOT from this root?",
-   o:["عِلْمٌ","عَالِمٌ","عِبَادَةٌ","مَعْلُومٌ"],
-   a:2,
-   exp:"عِبَادَةٌ (worship) comes from root ع-ب-د, NOT ع-ل-م. Words from ع-ل-م: عِلْم (knowledge), عَالِم (scholar), مَعْلُوم (known). Root analysis — core skill in Al-Kitaab."},
-  {id:20,
-   q:"What does the kasra (ِ) below the final letter indicate about a noun in Arabic?",
-   o:["The noun is the subject (rafʼ)","The noun is the direct object (nasb)","The noun is after a preposition or in an idaafa (jarr)","The noun is undefined"],
-   a:2,
-   exp:"Kasra (ِ) on the final letter = Genitive / Jarr case. This occurs after prepositions (فِي, مِن, عَلَى...) or in the second word of an idaafa. ABY Book 2 — iʻraab."}
-],
-// ─── ADULT / PROFESSIONAL (Ages 18+) ─────────────────────────────────────
-// Focus: advanced tajweed, balaghah, complex grammar, RQAP assessment framework,
-// discourse analysis. ABY Book 3, Al-Kitaab Part 2 level.
-adult:[
-  {id:1,
-   passage:{label:"Read and analyze this Quranic verse (Q1–3):",
-            text:"وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِّرٍ",
-            note:"(Surah Al-Qamar 54:17 — repeated 4 times in the Surah)"},
-   q:"The verb  يَسَّرْنَا  is on the pattern  فَعَّلَ . What does this pattern (tafʼil) typically express?",
-   o:["Simple one-time action","Intensive or causative action","Future intention","Passive state"],
-   a:1,
-   exp:"فَعَّلَ (Form II) = causative / intensive. يَسَّرَ = to facilitate/make easy (from يَسَرَ = to be easy). Root ي-س-ر. Form II verbs are Lesson 1 in ABY Book 3 verb morphology."},
-  {id:2,
-   passage:{same:true},
-   q:"The rhetorical question  فَهَلْ مِن مُّدَّكِّرٍ  is a stylistic device. What is it called in Balaghah?",
-   o:["Tashbih (simile)","Istiʼfham inkari (rhetorical question expecting no)","Tawkid (emphasis)","Tibaq (antithesis)"],
-   a:1,
-   exp:"فَهَلْ مِن مُّدَّكِّرٍ = Is there anyone who will reflect? — a rhetorical question (istiʼfham inkari or taqriri): it implies the answer and emphasizes the challenge. Core balaghah — ABY Book 3."},
-  {id:3,
-   passage:{same:true},
-   q:"The word  الْقُرْآنَ  has the definite article  الْ . What tajweed category is  لْ  here (shamsiyya or qamariyya)?",
-   o:["Shamsiyya — the lam is assimilated into the following letter","Qamariyya — the lam is clearly pronounced","Madd — a lengthening rule","Ghunnah — a nasal rule"],
-   a:1,
-   exp:"ق is a QAMARIYYA (moon letter) — the lam is pronounced clearly: الْقُرْآن. Compare الشَّمْس where ش is SHAMSIYYA and the lam assimilates. 14 solar + 14 lunar letters."},
-  {id:4,
-   q:"Analyze the sentence:  إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ . What is the grammatical role of  اللَّهَ ?",
-   o:["Mubtada’ (subject of nominal sentence)","Khabar (predicate)","Ism Inna (subject of إنّ clause)","Faʼil (subject of verb)"],
-   a:2,
-   exp:"إنَّ and its sisters put the mubtada’ into accusative (nasb), renaming it Ism Inna. So اللَّهَ is the ISM INNA (accusative). The predicate غَفُورٌ رَحِيمٌ remains nominative. ABY Book 3."},
-  {id:5,
-   q:"In the word  الرَّحْمَٰنِ  there is a small  ٰ (alif khanjariyya). What tajweed rule does it trigger?",
-   o:["Ghunnah — 2 beats nasal","Madd Lazim — 6 beats mandatory elongation","Madd Tabii — 2 beats natural elongation","Iqlab — change of letter"],
-   a:2,
-   exp:"ٰ = alif khanjariyya (dagger alif) — it indicates a Madd Tabii (natural madd) of 2 harakas (beats). The alif was dropped from the writing but the elongation is preserved. Core tajweed — Al-Jazariyya."},
-  {id:6,
-   q:"Which of the following is an example of  طِبَاقٌ  (Tibaq — antithesis) in the Quran?",
-   o:["رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً","هُوَ الأَوَّلُ وَالآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ","بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ","وَقَالوُا سَمِعْنَا"],
-   a:1,
-   exp:"هُوَ الأَوَّلُ وَالآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ (Al-Hadid 57:3) = He is the First and the Last, the Manifest and the Hidden. Pairs of opposites — classic Tibaq (antithesis)."},
-  {id:7,
-   q:"The concept of  المُسْتَوى الوَظِيفِيّ  in CEFR refers to:",
-   o:["A1 — complete beginner","A2 — basic user","B1 — threshold / independent user","B2 — upper intermediate"],
-   a:2,
-   exp:"B1 (Threshold) = independent user. This is the CEFR level targeted by RQAP Level 2 (Asasi). Learners can handle familiar topics and produce simple connected text. ABY Book 2 aligns with A2-B1."},
-  {id:8,
-   q:"What is  المَفْعُولُ المُطْلَقُ  (mafʼul mutlaq) and what does it do?",
-   o:["A preposition phrase showing location","An absolute object (cognate accusative) that emphasizes or describes the verb","The subject of a verbal sentence","A time adverb"],
-   a:1,
-   exp:"ضَرَبْتُهُ ضَرْبًا شَدِيدًا = I hit him a severe hitting. The masdar (ضَرْبًا) is the mafʼul mutlaq — it confirms the verb and the adjective specifies it. Al-Kitaab Part 2."},
-  {id:9,
-   q:"In the sentence  جَاءَ الطُّلاَّبُ ضَاحِكِينَ , the word  ضَاحِكِينَ  is a  حَال . What does this mean?",
-   o:["It is the direct object of the verb","It describes the state of the subject AT THE TIME of the action","It is the subject","It is a time expression"],
-   a:1,
-   exp:"جَاءَ الطُّلاَّبُ ضَاحِكِينَ = The students came laughing. ضَاحِكِينَ = laughing (hal) — describes the state of الطلاب at the moment they came. Always accusative (nasb)."},
-  {id:10,
-   q:"What is  الإْدغَامُ بِغُنَّةٍ  (Idgham with ghunnah) in tajweed?",
-   o:["Noon sakinah is clearly pronounced before the next letter","Noon sakinah merges into the next letter WITH nasal resonance (2 beats)","Noon sakinah changes to a meem","Noon sakinah is hidden with partial nasal"],
-   a:1,
-   exp:"Idgham bi-ghunnah: noon sakinah or tanwin before ي ن م و — the noon merges INTO the following letter and the nasal (ghunnah) is held for 2 harakas. One of 4 rules for noon sakinah in Al-Jazariyya and all tajweed curricula."},
-  {id:11,
-   q:"In Arabic morphology, what verb form (bab) does  اسْتَغْفَرَ  belong to?",
-   o:["Form II — فَعَّلَ","Form V — تَفَعَّلَ","Form X — اسْتَفْعَلَ","Form VII — انْفَعَلَ"],
-   a:2,
-   exp:"اسْتَغْفَرَ = to seek forgiveness (Form X: اسْتَفْعَلَ). Form X often means “to seek/request”. Root: غ-ف-ر (forgiveness). The 10 verb forms (abyaab) are central to ABY Book 3."},
-  {id:12,
-   q:"The RQAP (Roots Quranic Arabic Proficiency) Level 2 exam tests which CEFR can-do skills primarily?",
-   o:["A1: Can name familiar objects","A2: Can understand isolated sentences","B1: Can understand main points of familiar topics and produce simple connected text","B2: Can understand complex texts and interact with fluency"],
-   a:2,
-   exp:"RQAP Level 2 (Asasi) targets B1 — the threshold level. Learners can: understand key points of clear input on familiar matters, produce simple connected text on familiar topics, describe experiences and give reasons. Based on CEFR and ACTFL standards."},
-  {id:13,
-   q:"What is  التَّشْبِيهُ البَلِيغُ  (concise simile) in balaghah?",
-   o:["A simile that uses كَأَنَّهُ (as if)","A simile with all four elements present","A simile where the tool (adat) and/or shared point (wajh) are omitted, leaving only the two compared things","A metaphor where one noun replaces another"],
-   a:2,
-   exp:"عَلِيٌّ أَسَدٌ = Ali is a lion. The tool (كَ) and shared quality (brave) are omitted. This is Tashbih Baligh — the most rhetorically powerful form of simile, approaching pure metaphor (istiʼara). ABY Book 3 balaghah."},
-  {id:14,
-   q:"In authentic Arabic discourse, the particle  أَمَّا  (amma) followed by  فَ  creates what structure?",
-   o:["A question","A conditional topic-comment structure — Amma...fa (As for X, then...)","A negative sentence","A past narrative"],
-   a:1,
-   exp:"أَمَّا الكِتَابُ فَمُفِيدٌ = As for the book, it is beneficial. Amma...fa is a topic-comment (topicalization) structure used extensively in classical Arabic and Quranic discourse. Al-Kitaab Part 2."},
-  {id:15,
-   q:"What does  التَّضْمِينُ  (al-tadmin) mean in Arabic morphology?",
-   o:["Making a verb passive","Using a verb with the preposition of another verb to add extra meaning","Converting a noun to a verb","A type of broken plural"],
-   a:1,
-   exp:"تَضْمِين = implication / pregnant use. E.g., نَظَرَ إِلَيْهِ (he looked at him) — نَظَرَ uses إلى (for تَوَجَّهَ) to imply he directed his gaze. Advanced Arabic stylistics — Al-Kitaab / ABY Book 3."},
-  {id:16,
-   q:"In tajweed, what is  المَدُّ المُتَّصِلُ  (madd muttasil)?",
-   o:["Madd of 2 beats — letter of madd at end of word, hamza at start of next word","Madd of 4 or 5 beats — letter of madd followed immediately by hamza IN THE SAME WORD","Madd of 6 beats — mandatory elongation","No elongation — madd followed by sukun"],
-   a:1,
-   exp:"Madd Muttasil: the madd letter (ا/و/ي) is followed by hamza (ء) IN THE SAME WORD. Duration: 4 or 5 harakas in Hafs ʼan ʼAsim. Example: جَاءَ = the hamza comes right after the alif madd within one word."},
-  {id:17,
-   q:"Which statement about  النَّعْتُ السَّبَبِيّ  (naʼt sababi) is CORRECT?",
-   o:["It agrees with its noun in all 4 features (gender, number, case, definiteness)","It agrees in case and definiteness with its noun but in gender and number with the HIDDEN referent (not the noun it follows)","It is always in the feminine singular form","It is placed before the noun it modifies"],
-   a:1,
-   exp:"Naʼt sababi modifies a noun because of a relationship to something hidden within it. It agrees with the PRECEDING noun in case and definiteness, but with the hidden REFERENT in gender and number. E.g., جَاءَ طَالِبٌ مُجتَهِدٌ أَبُوهُ = A student whose father is diligent came."},
-  {id:18,
-   q:"The RQAP framework assesses Arabic proficiency across THREE dimensions. Which is CORRECT?",
-   o:["Reading, Writing, Speaking","Grammar, Vocabulary, Pronunciation","Receptive, Productive, and Interactive competence","Tajweed, Fiqh, and History"],
-   a:2,
-   exp:"RQAP — like CEFR and ACTFL — assesses: (1) Receptive (reading + listening), (2) Productive (writing + speaking), (3) Interactive (conversation + mediation). This three-way model is standard in modern Arabic proficiency testing."},
-  {id:19,
-   q:"In Quranic Arabic, the word  صَلوٰةٌ  (salaah) and  زَكوٰةٌ  (zakaah) have ٰ (dagger alif). This signals:",
-   o:["That the hamza is omitted","That these are foreign words","That an alif is pronounced (2-beat madd) even though it is not written","That the word ends with a long vowel only in pause"],
-   a:2,
-   exp:"The dagger alif (ٰ) = alif khanjariyya — it was written in early Quran manuscripts as a small alif above the letter to signal a madd tabii (2 beats) even though the full alif is not written in the line. This is a key Quranic orthography point."},
-  {id:20,
-   q:"What is the key difference between  الأُسْلُوبُ الخَبَرِيّ  and  الأُسْلُوبُ الإِنْشَائِيّ  in Arabic rhetoric?",
-   o:["No difference — both are declarative sentences","Khabari states facts (true/false); Insha’i performs an action (command, question, wish, oath) — neither true nor false","Khabari is formal; Insha’i is informal","Khabari uses past tense; Insha’i uses present tense"],
-   a:1,
-   exp:"الكَلَامُ الخَبَرِيّ: ‬‫I came yesterday‬‪ — can be true or false. الكَلَامُ الإِنْشَائِيّ: ‬‫Come!‬‪ / ‬‫Are you here?‬‪ — performative speech, neither true nor false. Fundamental balaghah classification in ABY Book 3."},
-  {id:21,
-   q:"Which option correctly defines  التَّكْرارُ  (takrar) as a Quranic rhetorical device?",
-   o:["Avoiding repetition for brevity","Deliberate repetition of a word or structure for emphasis, emotional impact, or memorability","A type of rhyme at the end of verses","Using opposites for contrast"],
-   a:1,
-   exp:"Takrar = deliberate repetition. Example: the verse فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ is repeated 31 times in Surah Ar-Rahman for emphasis and rhetorical impact. Key balaghah concept."},
-  {id:22,
-   q:"The  إِعْرَابُ المَحَلِيّ  (iʻraab mahalli) applies when:",
-   o:["A word has visible case endings","A word is in an indeclinable structure (such as an entire clause acting as a grammatical element) — the case is assigned to the position not the word","A word has two possible cases","A noun is in the construct state"],
-   a:1,
-   exp:"Iʻraab mahalli = positional case: when a whole sentence or indeclinable word occupies a grammatical slot. E.g., عَلِمْتُ أَنَّهُ صَادِقٌ: the clause أَنَّهُ صَادِقٌ is in the accusative POSITION (object of عَلِمْتُ). Advanced grammar — Al-Kitaab Part 2."},
-  {id:23,
-   q:"In RQAP assessment, a candidate who “can understand the overall meaning of short Quranic verses with familiar vocabulary, and can explain their general meaning in writing” is likely at which level?",
-   o:["Pre-A1 — Mubtadiʼ (complete beginner)","A2 — Asasi Awwal (basic)","B1 — Asasi (threshold, RQAP Level 2)","B2 — Mutawassit (upper intermediate)"],
-   a:2,
-   exp:"B1 / RQAP Level 2 (Asasi): can understand main points of clear Quranic input on familiar topics. This is the goal of ABY Books 1-2 and Madinah Arabic Books 1-2 combined. The candidate has moved from basic to independent user."},
-  {id:24,
-   q:"What is the standard waiting period before a candidate may RETAKE the RQAP Level 2 exam after a failed attempt?",
-   o:["2 weeks","1 month","3 months","6 months"],
-   a:2,
-   exp:"RQAP policy: a minimum of 3 months between attempts for Level 2, allowing candidates sufficient time to address identified weaknesses before re-sitting. Retake conditions are reviewed by the RQAP board."},
-  {id:25,
-   q:"RQAP Level 2 (Asasi) certificate validity is typically:",
-   o:["1 year","2 years","3 years","5 years"],
-   a:3,
-   exp:"RQAP Level 2 certificates are valid for 5 years from the date of issue. After 5 years, candidates may retake the exam to renew or upgrade their certification. This aligns with major international language certification frameworks."}
-]};
-// ── STATE ─────────────────────────────────────────────────────────────────
-let S={screen:"home",level:null,name:"",email:"",age:"",qIdx:0,answers:{},confirmed:false,selected:null,timeLeft:0,timer:null,passRef:null};
+function app(){return document.getElementById('app');}
+function render(html){app().innerHTML=html;}
 
-function render(){
-  const el=document.getElementById("app");
-  if(S.screen==="home") el.innerHTML=renderHome();
-  else if(S.screen==="info") el.innerHTML=renderInfo();
-  else if(S.screen==="exam") el.innerHTML=renderExam();
-  else el.innerHTML=renderResults();
-  bind();
+// === TIMER ===
+function startTimer(secs){
+  S.secsLeft=secs;
+  clearInterval(S.timerInterval);
+  S.timerInterval=setInterval(function(){
+    S.secsLeft--;
+    var el=document.getElementById('timer');
+    if(el){
+      var m=Math.floor(S.secsLeft/60),s=S.secsLeft%60;
+      el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+      if(S.secsLeft<=60)el.classList.add('warn');
+    }
+    if(S.secsLeft<=0){clearInterval(S.timerInterval);submitExam();}
+  },1000);
+}
+function stopTimer(){clearInterval(S.timerInterval);}
+
+// === SCREENS ===
+function showHome(){
+  S.screen='home';
+  stopTimer();
+  render('<div class="hdr home"><div class="ar">الجُذُورُ</div><h1>The Roots — Arabic &amp; Quran Proficiency Assessment</h1><div class="sub">Discover your true level through auto-progression</div></div>'+
+  '<div class="cnt">'+
+  '<div class="home-intro"><h2>Welcome to The Roots Assessment</h2>'+
+  '<p>Two separate exam tracks. No self-selection — you start at Level 1 and auto-advance through levels based on your performance. Your final certified level is determined by where you pass.</p></div>'+
+  '<div class="tracks">'+
+  '<div class="tcard at" onclick="startTrack('arabic')">'+
+  '<span class="ic">📚</span><h3>Arabic Language</h3>'+
+  '<p>6 levels: Beginner to Mastery (A1→C2)<br>Aligned with AUC, ACTFL, CEFR &amp; ABY / Al-Kitaab / Madinah Arabic curricula</p>'+
+  '<div class="badges"><span class="bdg ab">A1</span><span class="bdg ab">A2</span><span class="bdg ab">B1</span><span class="bdg ab">B2</span><span class="bdg ab">C1</span><span class="bdg ab">C2</span></div>'+
+  '</div>'+
+  '<div class="tcard qt" onclick="startTrack('quran')">'+
+  '<span class="ic">📖</span><h3>Quran &amp; Tajweed</h3>'+
+  '<p>4 levels: Beginner to Scholar<br>Covers Quran knowledge, Tajweed rules, recitation science &amp; Quranic studies</p>'+
+  '<div class="badges"><span class="bdg qb">Q1</span><span class="bdg qb">Q2</span><span class="bdg qb">Q3</span><span class="bdg qb">Q4</span></div>'+
+  '</div></div>'+
+  '<div style="background:#f0f4f8;border-radius:10px;padding:14px;font-size:.85em;color:#555;line-height:1.7">'+
+  '<strong>How it works:</strong> Enter your name → Start at Level 1 → Answer all questions → If you pass (≥70%), you auto-advance to the next level → Continue until you reach your highest passing level. Your certificate shows your certified level.'+
+  '</div></div>');
 }
 
-function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-
-function renderHome(){
-  const cards=Object.values(LEVELS).map(lv=>{
-    const skills=lv.skills.map(s=>"<li>"+s+"</li>").join("");
-    return "<div class='card "+lv.id+"' data-lv='"+lv.id+"'><span class='icon'>"+lv.icon+"</span><h3>"+lv.name+"</h3><span class='age'>"+lv.age+"</span><p class='desc'>"+lv.desc+"</p><ul>"+skills+"</ul><div class='meta'>"+lv.total+" Qs &middot; "+lv.dur+" min &middot; Pass "+lv.pass+"%</div></div>";
-  }).join("");
-  return "<div class='hdr home'><div class='ar'>جُذُور — الاختبار العربي القرآني</div><h1>The Roots — Quranic Arabic Proficiency</h1><div class='sub'>For non-native Arabic learners &mdash; Choose your level</div></div><div class='cnt'><div class='home-intro'><h2>Select Your Level</h2><p>Questions inspired by <em>Al-Arabiyya Bayna Yadayk</em>, <em>Al-Kitaab</em>, <em>Madinah Arabic</em> &amp; <em>Silsilat Al-Arabiyya</em> curricula</p></div><div class='grid'>"+cards+"</div></div>";
+function startTrack(t){
+  S.track=t;
+  S.currentLevelIdx=0;
+  S.answers=[];
+  var completed=S.completedLevels[t];
+  // If resuming, start from where left off
+  if(completed.length>0)S.currentLevelIdx=completed.length;
+  showNameScreen();
 }
 
-function renderInfo(){
-  const lv=S.level;
-  return "<div class='hdr "+lv.id+"'><div class='ar'>"+lv.ar+"</div><h1>"+lv.name+" Level</h1><div class='sub'>"+lv.age+" &middot; "+lv.total+" Questions &middot; "+lv.dur+" min</div></div><div class='cnt'><div class='info-wrap'><h2>Candidate Details</h2><div class='field'><label>Full Name</label><input id='n' placeholder='Enter your full name' value='"+esc(S.name)+"'></div><div class='field'><label>Email</label><input id='e' type='email' placeholder='Email address' value='"+esc(S.email)+"'></div><div class='field'><label>Age</label><input id='a' type='number' placeholder='Your age' value='"+esc(S.age)+"'></div><button class='btn btn-main' id='b-begin' "+(S.name.trim()?"":"disabled")+">Begin Examination &rarr;</button><button class='btn btn-sec' id='b-back'>&#8592; Back to Levels</button></div></div>";
+function showNameScreen(){
+  var isArabic=S.track==='arabic';
+  var tc=trackClass();
+  render('<div class="hdr '+tc+'"><div class="ar">'+(isArabic?'اللُّغَةُ العَرَبِيَّةُ':'تِلَاوَةُ القُرْآنِ')+'</div>'+
+  '<h1>'+(isArabic?'Arabic Language Assessment':'Quran &amp; Tajweed Assessment')+'</h1></div>'+
+  '<div class="cnt">'+
+  '<div class="nf-wrap"><label>Enter your name to begin:</label>'+
+  '<input type="text" id="nameInp" placeholder="Your full name..." onkeydown="if(event.key==='Enter')confirmName()" style="margin-bottom:14px"/></div>'+
+  '<div style="text-align:center">'+
+  '<button class="btn '+btnClass()+'" onclick="confirmName()">Start Assessment</button>'+
+  '<button class="btn btn-sec" style="margin-left:10px" onclick="showHome()">← Back</button>'+
+  '</div></div>');
+  setTimeout(function(){var e=document.getElementById('nameInp');if(e)e.focus();},100);
 }
 
-function renderExam(){
-  const lv=S.level, qs=QS[lv.id], q=qs[S.qIdx];
-  const pct=((S.qIdx+1)/qs.length*100).toFixed(0);
-  const m=Math.floor(S.timeLeft/60), sc=S.timeLeft%60;
-  const tStr=m+":"+(sc<10?"0":"")+sc;
-  const warn=S.timeLeft<120;
+function confirmName(){
+  var e=document.getElementById('nameInp');
+  var n=e?e.value.trim():'';
+  if(!n){e.style.borderColor='#e74c3c';return;}
+  S.studentName=n;
+  showLevelInfo();
+}
 
-  // Passage
-  let passHtml="";
-  if(q.passage&&!q.passage.same){S.passRef=q.passage;}
-  const curPass=(q.passage)?(q.passage.same?S.passRef:q.passage):null;
-  if(curPass){
-    passHtml="<div class='passage-wrap'><div class='passage-label'>"+esc(curPass.label)+"</div><div class='passage-text'>"+curPass.text+"</div>"+(curPass.note?"<div class='passage-note'>"+esc(curPass.note)+"</div>":"")+"</div>";
+function showLevelInfo(){
+  var lvl=getCurrentLevel();
+  var tc=trackClass();
+  var isA=S.track==='arabic';
+  var levels=getLevels();
+  var stepsHtml='<div class="pt-bar">';
+  for(var i=0;i<levels.length;i++){
+    var cls='pt-step';
+    var completed=S.completedLevels[S.track];
+    if(completed.indexOf(levels[i].id)>=0)cls+=' done'+(isA?'':' q');
+    else if(i===S.currentLevelIdx)cls+=' curr';
+    else cls+=' lk';
+    stepsHtml+='<div class="'+cls+'">'+levels[i].cefr+'<br><span style="font-size:.9em">'+levels[i].name.split(' ')[0]+'</span></div>';
   }
-
-  const opts=q.o.map((opt,i)=>{
-    const isAr=/[؀-ۿ]/.test(opt);
-    let cls="opt"+(isAr?" ar-opt":"");
-    if(S.confirmed){
-      if(i===q.a)cls+=" correct";
-      else if(i===S.selected&&S.selected!==q.a)cls+=" wrong";
-      cls+=" locked";
-    }else if(i===S.selected)cls+=" selected";
-    return "<button class='"+cls+"' data-i='"+i+"'><span class='opt-lbl'>"+String.fromCharCode(65+i)+"</span><span>"+opt+"</span></button>";
-  }).join("");
-
-  // Explanation shown after confirming
-  const expHtml=S.confirmed&&q.exp?"<div class='feedback show "+(S.selected===q.a?"":"wrong-fb")+"'>💡 "+q.exp+"</div>":"";
-
-  const navBtn=S.confirmed
-    ?"<button class='btn btn-main' id='b-next'>"+(S.qIdx<qs.length-1?"السؤال التالي &rarr;":"Finish Exam ✓")+"</button>"
-    :"<button class='btn btn-main' id='b-conf' "+(S.selected===null?"disabled":"")+">Confirm Answer</button>";
-
-  return "<div class='hdr "+lv.id+"'><h1>"+lv.name+"</h1><div class='sub'>"+esc(S.name)+"</div></div><div class='cnt'><div class='prog-wrap'><div class='prog-bar'><div class='prog-fill' style='width:"+pct+"%'></div></div><div class='qinfo'><span>Question "+(S.qIdx+1)+" / "+qs.length+"</span><span>"+pct+"% complete</span></div></div><div class='timer"+(warn?" warn":"")+"'>⏱ "+tStr+(warn?" — Hurry!":"")+"</div>"+passHtml+"<div class='qtext'>"+q.q+"</div><div class='options'>"+opts+"</div>"+expHtml+navBtn+"</div>";
+  stepsHtml+='</div>';
+  render('<div class="hdr '+tc+'"><div class="ar">'+lvl.nameAr+'</div>'+
+  '<h1>Level '+lvl.cefr+': '+lvl.name+'</h1>'+
+  '<div class="sub">'+lvl.desc+'</div></div>'+
+  '<div class="cnt">'+
+  '<p style="font-size:.88em;color:#777;margin-bottom:10px">Your progress across all levels:</p>'+
+  stepsHtml+
+  '<div style="background:#f8f9fa;border:1px solid #e0e0e0;border-left:4px solid '+(isA?'#2980b9':'#27ae60')+';border-radius:10px;padding:14px 16px;margin-bottom:14px">'+
+  '<h4 style="font-size:.92em;font-weight:700;margin-bottom:6px;color:#333">Level '+lvl.cefr+' — '+lvl.name+'</h4>'+
+  '<p style="font-size:.83em;color:#555;line-height:1.5">Skills: '+lvl.skills+'</p>'+
+  '<p style="font-size:.82em;color:#777;margin-top:7px">'+lvl.questions.length+' questions &nbsp;|&nbsp; '+lvl.timeMin+' minutes &nbsp;|&nbsp; Pass: '+lvl.passPct+'%</p>'+
+  '</div>'+
+  '<p style="font-size:.85em;color:#666;margin-bottom:16px">Hello, <strong>'+S.studentName+'</strong>! You are about to take the '+lvl.name+' level exam. Answer all questions. After submitting, if you score ≥'+lvl.passPct+'%, you will automatically advance to the next level.</p>'+
+  '<div style="display:flex;gap:10px;flex-wrap:wrap">'+
+  '<button class="btn '+btnClass()+'" onclick="beginExam()">Begin Exam →</button>'+
+  '<button class="btn btn-sec" onclick="showHome()">← Change Track</button>'+
+  '</div></div>');
 }
 
-function renderResults(){
-  const lv=S.level, qs=QS[lv.id];
-  let cor=0;
-  qs.forEach((q,i)=>{if(S.answers[i]===q.a)cor++;});
-  const pct=Math.round(cor/qs.length*100), passed=pct>=lv.pass;
-
-  const certHtml=passed
-    ?"<div class='cert'><div class='cert-ar'>شهَادَةُ إتْقَانِ</div><h3>Certificate of Achievement</h3><div>This is to certify that</div><div class='cname'>"+esc(S.name)+"</div><div class='cline'>has successfully passed the</div><div class='cline'><b>Roots Quranic Arabic Proficiency &mdash; "+lv.name+" Level</b></div><div class='cline'>with a score of <b>"+pct+"%</b></div><div class='cdate'>Issued by Pathways School &middot; "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})+"</div></div>"
-    :"<p style='text-align:center;color:#666;margin:12px 0;font-size:.9em'>Passing score required: <b>"+lv.pass+"%</b> &mdash; Review the material and try again.</p>";
-
-  const items=qs.map((q,i)=>{
-    const ua=S.answers[i], wHtml=(ua!==undefined&&ua!==q.a)?"<div class='rwrong'>✗ Your answer: "+esc(q.o[ua])+"</div>":"";
-    const eHtml=q.exp?"<div class='rexp'>"+esc(q.exp)+"</div>":"";
-    return "<div class='ri'><div class='rq'>"+(i+1)+". "+esc(q.q)+"</div>"+wHtml+"<div class='rcor'>✓ "+esc(q.o[q.a])+"</div>"+eHtml+"</div>";
-  }).join("");
-
-  return "<div class='hdr "+lv.id+"'><h1>Results</h1><div class='sub'>"+lv.name+" &middot; "+esc(S.name)+"</div></div><div class='cnt'><div class='result-center'><div class='score-num'>"+pct+"%</div><div class='score-sub'>"+cor+" / "+qs.length+" correct</div><div class='badge "+(passed?"pass-badge":"fail-badge")+"'>"+(passed?"✅ PASSED":"❌ Did Not Pass")+"</div>"+certHtml+"</div><div class='review-box'><h4>📋 Detailed Answer Review</h4>"+items+"</div><button class='btn btn-main' id='b-home'>Try Another Level</button><button class='btn btn-sec' id='b-retry' style='margin-top:10px'>Retry This Level</button></div>";
+function beginExam(){
+  var lvl=getCurrentLevel();
+  S.answers=new Array(lvl.questions.length).fill(-1);
+  S.answered=false;
+  S.currentQIdx=0;
+  startTimer(lvl.timeMin*60);
+  showQuestion();
 }
 
-// ── EVENTS ─────────────────────────────────────────────────────────────────
-function bind(){
-  document.querySelectorAll(".card[data-lv]").forEach(el=>el.addEventListener("click",()=>{S.level=LEVELS[el.dataset.lv];S.screen="info";render();}));
-
-  const ni=document.getElementById("n");
-  if(ni){ni.addEventListener("input",e=>{S.name=e.target.value;const b=document.getElementById("b-begin");if(b)b.disabled=!S.name.trim();});}
-  const ei=document.getElementById("e");if(ei)ei.addEventListener("input",e=>S.email=e.target.value);
-  const ai=document.getElementById("a");if(ai)ai.addEventListener("input",e=>S.age=e.target.value);
-
-  const bBegin=document.getElementById("b-begin");
-  if(bBegin)bBegin.addEventListener("click",()=>{
-    if(!S.name.trim())return;
-    Object.assign(S,{screen:"exam",qIdx:0,answers:{},selected:null,confirmed:false,passRef:null,timeLeft:S.level.dur*60});
-    if(S.timer)clearInterval(S.timer);
-    S.timer=setInterval(()=>{S.timeLeft--;if(S.timeLeft<=0){clearInterval(S.timer);S.screen="results";}render();},1000);
-    render();
+function showQuestion(){
+  var lvl=getCurrentLevel();
+  var q=lvl.questions[S.currentQIdx];
+  var isA=S.track==='arabic';
+  var tc=trackClass();
+  var pct=Math.round((S.currentQIdx/lvl.questions.length)*100);
+  
+  var headerHtml='<div class="hdr '+tc+'"><h1>'+lvl.cefr+': '+lvl.name+'</h1><div class="sub">'+S.studentName+'</div></div>';
+  
+  var metaHtml='<div class="exam-meta">'+
+  '<span class="em-level'+(isA?'':' q')+'">Question '+(S.currentQIdx+1)+' of '+lvl.questions.length+'</span>'+
+  '<span class="timer" id="timer">--:--</span>'+
+  '</div>';
+  
+  var progHtml='<div class="prog-wrap"><div class="prog-lbl"><span>Progress</span><span>'+pct+'%</span></div>'+
+  '<div class="prog"><div class="prog-fill '+progClass()+'" style="width:'+pct+'%"></div></div></div>';
+  
+  var passageHtml='';
+  if(q.passage){
+    passageHtml='<div class="passage"><h4>'+q.passage.t+'</h4>'+
+    '<p class="pt">'+q.passage.ar+'</p>'+
+    (q.passage.tr?'<p class="ptr">'+q.passage.tr+'</p>':'')+
+    '</div>';
+  }
+  
+  var answered=S.answers[S.currentQIdx];
+  var isAnswered=answered>=0;
+  
+  var optsHtml='<div class="opts" id="opts">';
+  q.opts.forEach(function(opt,i){
+    var cls='opt';
+    if(isAnswered){
+      cls+=' locked';
+      if(i===q.c)cls+=' showok';
+      if(i===answered&&answered!==q.c)cls+=' wrong';
+      if(i===answered&&answered===q.c)cls+=' ok';
+    }
+    var isArabic=q.oa&&!opt.includes('<');
+    var optContent=isArabic?'<span class="aro">'+opt+'</span>':opt;
+    optsHtml+='<div class="'+cls+'"'+(isAnswered?'':' onclick="selectAnswer('+i+')"')+'>'+optContent+'</div>';
   });
-
-  const bBack=document.getElementById("b-back");if(bBack)bBack.addEventListener("click",()=>{S.screen="home";render();});
-
-  document.querySelectorAll(".opt[data-i]").forEach(el=>el.addEventListener("click",()=>{if(S.confirmed)return;S.selected=parseInt(el.dataset.i);render();}));
-
-  const bConf=document.getElementById("b-conf");
-  if(bConf)bConf.addEventListener("click",()=>{if(S.selected===null)return;S.answers[S.qIdx]=S.selected;S.confirmed=true;render();});
-
-  const bNext=document.getElementById("b-next");
-  if(bNext)bNext.addEventListener("click",()=>{
-    if(S.qIdx<QS[S.level.id].length-1){S.qIdx++;S.selected=null;S.confirmed=false;render();}
-    else{clearInterval(S.timer);S.screen="results";render();}
-  });
-
-  const bHome=document.getElementById("b-home");
-  if(bHome)bHome.addEventListener("click",()=>{clearInterval(S.timer);Object.assign(S,{screen:"home",qIdx:0,answers:{},selected:null,confirmed:false,passRef:null});render();});
-
-  const bRetry=document.getElementById("b-retry");
-  if(bRetry)bRetry.addEventListener("click",()=>{
-    Object.assign(S,{screen:"exam",qIdx:0,answers:{},selected:null,confirmed:false,passRef:null,timeLeft:S.level.dur*60});
-    if(S.timer)clearInterval(S.timer);
-    S.timer=setInterval(()=>{S.timeLeft--;if(S.timeLeft<=0){clearInterval(S.timer);S.screen="results";}render();},1000);
-    render();
-  });
+  optsHtml+='</div>';
+  
+  var explainHtml='<div class="explain'+(isA?'':' qe')+(isAnswered?' show':'')+'id="exp">'+
+  '<strong>💡 </strong>'+q.exp+'</div>';
+  
+  var navHtml='<div class="nxt">';
+  if(isAnswered){
+    if(S.currentQIdx<lvl.questions.length-1){
+      navHtml+='<button class="btn '+btnClass()+' btn-sm" onclick="nextQuestion()">Next →</button>';
+    } else {
+      navHtml+='<button class="btn '+btnClass()+' btn-sm" onclick="submitExam()">Submit Exam</button>';
+    }
+  }
+  navHtml+='</div>';
+  
+  var qHtml='<div class="qbox"><div class="qnum">Question '+(S.currentQIdx+1)+' / '+lvl.questions.length+'</div>'+
+  '<div class="qtext">'+q.q+'</div>'+
+  passageHtml+
+  optsHtml+
+  explainHtml+
+  navHtml+
+  '</div>';
+  
+  render(headerHtml+'<div class="cnt">'+metaHtml+progHtml+qHtml+'</div>');
+  
+  // Restore timer display
+  var timerEl=document.getElementById('timer');
+  if(timerEl){
+    var m=Math.floor(S.secsLeft/60),s=S.secsLeft%60;
+    timerEl.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    if(S.secsLeft<=60)timerEl.classList.add('warn');
+  }
 }
 
-render();
-</script>
-</body>
-</html>
+function selectAnswer(i){
+  if(S.answers[S.currentQIdx]>=0)return;
+  S.answers[S.currentQIdx]=i;
+  showQuestion();
+}
+
+function nextQuestion(){
+  S.currentQIdx++;
+  showQuestion();
+}
+
+function submitExam(){
+  stopTimer();
+  var lvl=getCurrentLevel();
+  var correct=0;
+  S.answers.forEach(function(a,i){if(a===lvl.questions[i].c)correct++;});
+  var pct=Math.round((correct/lvl.questions.length)*100);
+  var pass=pct>=lvl.passPct;
+  var isA=S.track==='arabic';
+  var tc=trackClass();
+  var levels=getLevels();
+  
+  if(pass){
+    S.completedLevels[S.track].push(lvl.id);
+  }
+  
+  var icon=pass?'🎉':'📝';
+  var passMsg=pass?'Congratulations! You passed Level '+lvl.cefr+'.':'You did not reach the passing score for Level '+lvl.cefr+'.';
+  
+  var hasNext=(S.currentLevelIdx<levels.length-1)&&pass;
+  var certHtml='';
+  
+  if(pass){
+    certHtml='<div class="cert">'+
+    '<h3>🏆 Certificate of Proficiency</h3>'+
+    '<div class="clvl">'+lvl.cefr+' — '+lvl.name+'</div>'+
+    '<div class="cdesc">Awarded to: '+S.studentName+'<br>Track: '+(isA?'Arabic Language':'Quran &amp; Tajweed')+'</div>'+
+    '</div>';
+  }
+  
+  var statsHtml='<div class="rmsg">'+
+  '<strong>Results:</strong> '+correct+' / '+lvl.questions.length+' correct<br>'+
+  'Passing score: '+lvl.passPct+'%<br>'+
+  (pass?'✅ <strong>PASSED</strong>':'❌ Did not pass')+
+  '</div>';
+  
+  var btnHtml='<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">';
+  if(hasNext){
+    btnHtml+='<button class="btn '+btnClass()+'" onclick="advanceLevel()">Advance to '+levels[S.currentLevelIdx+1].cefr+' →</button>';
+  }
+  if(!pass){
+    btnHtml+='<button class="btn '+btnClass()+'" onclick="retryLevel()">Retry This Level</button>';
+  }
+  if(S.completedLevels[S.track].length>0&&!hasNext){
+    btnHtml+='<button class="btn btn-sec" onclick="showFinalCert()">View Final Certificate</button>';
+  }
+  btnHtml+='<button class="btn btn-sec" onclick="showHome()">🏠 Home</button></div>';
+  
+  render('<div class="hdr '+tc+'"><h1>Exam Results</h1><div class="sub">'+lvl.cefr+' — '+lvl.name+'</div></div>'+
+  '<div class="cnt result">'+
+  '<div class="ric">'+icon+'</div>'+
+  '<h2>'+passMsg+'</h2>'+
+  '<div class="score '+(pass?passColor():'fail')+'">'+pct+'%</div>'+
+  statsHtml+certHtml+btnHtml+
+  '</div>');
+}
+
+function advanceLevel(){
+  S.currentLevelIdx++;
+  showLevelInfo();
+}
+
+function retryLevel(){
+  S.answers=[];
+  S.currentQIdx=0;
+  showLevelInfo();
+}
+
+function showFinalCert(){
+  var isA=S.track==='arabic';
+  var tc=trackClass();
+  var levels=getLevels();
+  var completed=S.completedLevels[S.track];
+  var highest=null;
+  levels.forEach(function(l){if(completed.indexOf(l.id)>=0)highest=l;});
+  if(!highest){showHome();return;}
+  
+  render('<div class="hdr '+tc+'"><div class="ar">'+(isA?'شَهَادَةُ الكَفَاءَةِ':'شَهَادَةُ التِّلَاوَةِ')+'</div>'+
+  '<h1>Certificate of Proficiency</h1></div>'+
+  '<div class="cnt">'+
+  '<div class="cert" style="text-align:center;padding:30px">'+
+  '<h3 style="font-size:1.2em;margin-bottom:12px">🏆 Official Level Certificate</h3>'+
+  '<p style="font-size:1em;margin-bottom:8px">This certifies that</p>'+
+  '<div style="font-size:1.6em;font-weight:800;color:#1a3a5c;margin:10px 0">'+S.studentName+'</div>'+
+  '<p style="margin:8px 0">has demonstrated proficiency at</p>'+
+  '<div class="clvl">'+highest.cefr+' — '+highest.name+'</div>'+
+  '<div class="cdesc">Track: '+(isA?'Arabic Language':'Quran &amp; Tajweed')+'<br>'+highest.desc+'</div>'+
+  '</div>'+
+  '<div style="text-align:center;margin-top:16px">'+
+  '<button class="btn btn-sec" onclick="showHome()">🏠 Home</button>'+
+  '</div></div>');
+}
+
+showHome();
+</script></body></html>
