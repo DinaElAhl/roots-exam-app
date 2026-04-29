@@ -130,7 +130,7 @@ function showLevelInfo(){
   stepsHtml+
   '<div style="background:#f8f9fa;border:1px solid #e0e0e0;border-left:4px solid '+(isA?'#2980b9':'#27ae60')+';border-radius:10px;padding:14px 16px;margin-bottom:14px">'+
   '<h4 style="font-size:.92em;font-weight:700;margin-bottom:6px;color:#333">Level '+lvl.cefr+' — '+lvl.name+'</h4>'+
-  '<p style="font-size:.83em;color:#555;line-height:1.5">Skills: '+lvl.skills+'</p>'+
+  '<p style="font-size:.83em;color:#555;line-height:1.5">Skills: '+(lvl.skills||lvl.desc||'')+'</p>'+
   '<p style="font-size:.82em;color:#777;margin-top:7px">'+lvl.questions.length+' questions &nbsp;|&nbsp; '+lvl.timeMin+' minutes &nbsp;|&nbsp; Pass: '+lvl.passPct+'%</p>'+
   '</div>'+
   '<p style="font-size:.85em;color:#666;margin-bottom:16px">Hello, <strong>'+S.studentName+'</strong>! You are about to take the '+lvl.name+' level exam. Answer all questions. After submitting, if you score ≥'+lvl.passPct+'%, you will automatically advance to the next level.</p>'+
