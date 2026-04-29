@@ -2,426 +2,402 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#667eea">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Roots Exam">
 <title>The Roots - Quranic Arabic Proficiency Exam</title>
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%}
-body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px}
-.app{width:100%;max-width:900px;background:white;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;animation:si .5s ease-out;max-height:95vh;overflow-y:auto}
-@keyframes si{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.hdr{color:white;padding:35px 30px;text-align:center}
-.hdr.elementary{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
-.hdr.middle{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
-.hdr.highschool{background:linear-gradient(135deg,#43e97b 0%,#38f9d7 100%)}
-.hdr.adult{background:linear-gradient(135deg,#fa709a 0%,#fee140 100%)}
-.hdr.home{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
-.hdr h1{font-size:1.8em;margin:10px 0;font-weight:700}
-.hdr .sub{font-size:1.1em;font-style:italic;margin:6px 0;opacity:.9}
-.hdr .ar{font-size:1.6em;margin:12px 0;direction:rtl;font-weight:600}
-.cnt{padding:35px 30px;min-height:350px;animation:fu .5s ease-out}
-.ls{text-align:center}
-.ls h2{color:#333;margin-bottom:10px;font-size:1.8em;font-weight:700}
-.ls p{color:#666;margin-bottom:25px;font-size:1em}
-.lg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;margin-top:25px}
-.lc{border:3px solid #e0e0e0;border-radius:16px;padding:25px 18px;cursor:pointer;transition:all .35s;background:#fafafa;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)}
-.lc:hover{transform:translateY(-6px);box-shadow:0 14px 35px rgba(0,0,0,.15)}
-.lc.elementary:hover{border-color:#f5576c;background:rgba(245,87,108,.07)}
-.lc.middle:hover{border-color:#4facfe;background:rgba(79,172,254,.07)}
-.lc.highschool:hover{border-color:#43e97b;background:rgba(67,233,123,.07)}
-.lc.adult:hover{border-color:#fa709a;background:rgba(250,112,154,.07)}
-.lc .li{font-size:2.8em;margin-bottom:10px;display:block}
-.lc h3{font-size:1.2em;margin:6px 0;font-weight:700;color:#333}
-.ab{font-size:.8em;color:#999;margin:4px 0}
-.ld{color:#666;font-size:.85em;margin:8px 0}
-.ls2{text-align:left;background:#f8f9fa;padding:14px;border-radius:10px;margin:14px 0;font-size:.88em;color:#555;list-style:none;border:1px solid #eee}
-.ls2 li{margin:5px 0;padding-left:18px;position:relative}
-.ls2 li::before{content:'✓';position:absolute;left:0;color:#43e97b;font-weight:bold}
-.lc.elementary .ab{background:linear-gradient(135deg,#f093fb,#f5576c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.lc.middle .ab{background:linear-gradient(135deg,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.lc.highschool .ab{background:linear-gradient(135deg,#43e97b,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.lc.adult .ab{background:linear-gradient(135deg,#fa709a,#fee140);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.if{max-width:560px;margin:0 auto}
-.if h2{color:#333;margin-bottom:20px;font-size:1.6em;font-weight:700;text-align:center}
-.fg{margin-bottom:18px}
-.fg label{display:block;font-weight:600;margin-bottom:6px;color:#444;font-size:.95em}
-.fg input,.fg select{width:100%;padding:12px 15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1em;transition:border-color .3s;outline:none}
-.fg input:focus,.fg select:focus{border-color:#667eea}
-.btn{background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;padding:14px 35px;border-radius:12px;font-size:1.05em;font-weight:600;cursor:pointer;transition:all .3s;width:100%;margin-top:8px}
-.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(102,126,234,.4)}
-.btn.sec{background:#f0f0f0;color:#333;border:2px solid #ddd;margin-top:10px}
-.btn.sec:hover{background:#e0e0e0;transform:translateY(-1px)}
-.pb{background:#f0f0f0;border-radius:20px;height:8px;margin-bottom:20px;overflow:hidden}
-.pf{height:100%;border-radius:20px;background:linear-gradient(90deg,#667eea,#764ba2);transition:width .4s ease}
-.qn{color:#888;font-size:.9em;margin-bottom:8px;font-weight:500}
-.qt{font-size:1.25em;font-weight:700;color:#222;margin-bottom:18px;line-height:1.5}
-.qt.ar{direction:rtl;text-align:right;font-size:1.4em;line-height:1.8;font-family:'Traditional Arabic','Amiri',serif}
-.passage{background:#f8f9fa;border-left:4px solid #667eea;padding:18px;border-radius:0 10px 10px 0;margin-bottom:22px;direction:rtl;text-align:right;font-size:1.1em;line-height:2;font-family:'Traditional Arabic','Amiri',serif;color:#333}
-.passage.en{direction:ltr;text-align:left;font-size:.95em;line-height:1.7;font-family:'Segoe UI',sans-serif}
-.pl{font-size:.8em;color:#667eea;font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;direction:ltr;text-align:left}
-.oa{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
-.ob{background:#f8f9fa;border:2px solid #e0e0e0;border-radius:10px;padding:13px 18px;cursor:pointer;transition:all .3s;text-align:left;font-size:.98em;display:flex;align-items:center;gap:10px}
-.ob.ar-opt{direction:rtl;text-align:right;font-family:'Traditional Arabic','Amiri',serif;font-size:1.1em}
-.ob:hover{background:#f0f0ff;border-color:#667eea}
-.ob.sel{background:#eef0ff;border-color:#667eea;color:#333}
-.ob.cor{background:#e8f8e8;border-color:#43e97b;color:#1a7a1a}
-.ob.wr{background:#ffeaea;border-color:#f5576c;color:#a00}
-.ob .ol{width:26px;height:26px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:.8em;font-weight:700;flex-shrink:0}
-.ob.sel .ol{border-color:#667eea;background:#667eea;color:white}
-.ob.cor .ol{border-color:#43e97b;background:#43e97b;color:white}
-.ob.wr .ol{border-color:#f5576c;background:#f5576c;color:white}
-.nv{display:flex;gap:10px;margin-top:5px}
-.nv .btn{margin-top:0}
-.tm{background:#fff3cd;border:2px solid #ffc107;border-radius:10px;padding:10px 18px;text-align:center;font-weight:700;font-size:1.05em;margin-bottom:18px;color:#856404}
-.tm.warn{background:#ffe0e0;border-color:#f5576c;color:#a00;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
-.rs{text-align:center;padding:10px 0}
-.rs .sc{font-size:3.5em;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:10px 0}
-.rs .sb{display:inline-block;padding:8px 22px;border-radius:20px;font-weight:700;font-size:1.05em;margin:10px 0}
-.rs .sb.pass{background:#e8f8e8;color:#1a7a1a;border:2px solid #43e97b}
-.rs .sb.fail{background:#ffeaea;color:#a00;border:2px solid #f5576c}
-.cert{background:linear-gradient(135deg,#ffecd2,#fcb69f);border-radius:18px;padding:30px;margin:20px 0;text-align:center;border:3px solid #f5a623;box-shadow:0 8px 25px rgba(245,166,35,.25)}
-.cert h3{font-size:1.4em;color:#7c4200;margin-bottom:10px;font-weight:700}
-.cert .cn{font-size:1.7em;font-weight:800;color:#5c3200;margin:10px 0}
-.cert .cl{font-size:1em;color:#7c4200;margin:5px 0}
-.cert .cs{font-size:.85em;color:#a05800;margin-top:12px;font-style:italic}
-.rv{background:#f8f9fa;border-radius:14px;padding:18px;margin:18px 0;text-align:left}
-.rv h4{color:#333;margin-bottom:14px;font-weight:700;font-size:1.05em}
-.ri{border-bottom:1px solid #eee;padding:10px 0;font-size:.9em}
-.ri:last-child{border-bottom:none}
-.ri .rq{color:#444;margin-bottom:5px;font-weight:500;line-height:1.4}
-.ri .ra{color:#1a7a1a;font-weight:600}
-.ri .rw{color:#a00;font-weight:600}
-.ri .rc{color:#2196F3;font-size:.88em}
-@media(max-width:500px){.lg{grid-template-columns:1fr 1fr}.cnt{padding:22px 18px}.hdr{padding:25px 18px}.btn{padding:12px 20px}}
+html,body{width:100%;min-height:100%}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea,#764ba2);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px}
+#app{width:100%;max-width:860px;background:#fff;border-radius:22px;box-shadow:0 16px 50px rgba(0,0,0,.28);overflow:hidden;margin:auto}
+.hdr{color:#fff;padding:32px 28px;text-align:center}
+.hdr.home{background:linear-gradient(135deg,#667eea,#764ba2)}
+.hdr.elementary{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.hdr.middle{background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.hdr.highschool{background:linear-gradient(135deg,#43e97b,#38f9d7)}
+.hdr.adult{background:linear-gradient(135deg,#fa709a,#fee140)}
+.hdr h1{font-size:1.75em;font-weight:700;margin:8px 0}
+.hdr .sub{font-size:1em;opacity:.9;font-style:italic}
+.hdr .ar{font-size:1.5em;font-weight:600;direction:rtl;margin:8px 0}
+.cnt{padding:32px 28px}
+/* HOME */
+.home-title{text-align:center;margin-bottom:24px}
+.home-title h2{font-size:1.7em;font-weight:700;color:#222;margin-bottom:6px}
+.home-title p{color:#666;font-size:.97em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:16px}
+.card{border:2.5px solid #e8e8e8;border-radius:14px;padding:22px 16px;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;background:#fafafa;text-align:center}
+.card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,.13)}
+.card.elementary:hover{border-color:#f5576c;background:rgba(245,87,108,.05)}
+.card.middle:hover{border-color:#4facfe;background:rgba(79,172,254,.05)}
+.card.highschool:hover{border-color:#43e97b;background:rgba(67,233,123,.05)}
+.card.adult:hover{border-color:#fa709a;background:rgba(250,112,154,.05)}
+.card .icon{font-size:2.6em;display:block;margin-bottom:8px}
+.card h3{font-size:1.1em;font-weight:700;color:#222;margin:4px 0}
+.card .age{font-size:.78em;font-weight:700;margin:3px 0}
+.card.elementary .age{color:#f5576c}
+.card.middle .age{color:#0099cc}
+.card.highschool .age{color:#1ea86b}
+.card.adult .age{color:#d63f6f}
+.card .desc{color:#666;font-size:.82em;margin:6px 0}
+.card ul{text-align:left;background:#f0f0f0;border-radius:8px;padding:10px 12px;margin:10px 0;list-style:none;font-size:.8em;color:#555}
+.card ul li{padding:3px 0 3px 16px;position:relative}
+.card ul li::before{content:"✓";position:absolute;left:0;color:#43e97b;font-weight:700}
+.card .meta{font-size:.75em;color:#999;margin-top:6px}
+/* INFO FORM */
+.info-form{max-width:520px;margin:0 auto}
+.info-form h2{text-align:center;font-size:1.5em;font-weight:700;color:#222;margin-bottom:20px}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:600;color:#444;font-size:.92em;margin-bottom:5px}
+.field input{width:100%;padding:11px 14px;border:2px solid #ddd;border-radius:9px;font-size:.97em;outline:none;transition:border-color .2s}
+.field input:focus{border-color:#667eea}
+/* EXAM */
+.prog-bar{background:#eee;border-radius:20px;height:7px;margin-bottom:18px;overflow:hidden}
+.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#667eea,#764ba2);transition:width .3s}
+.qnum{color:#888;font-size:.87em;margin-bottom:6px;font-weight:500}
+.timer{padding:9px 16px;border-radius:9px;text-align:center;font-weight:700;font-size:1em;margin-bottom:16px;background:#fff8e1;border:2px solid #ffc107;color:#7a5500}
+.timer.warn{background:#ffe8e8;border-color:#f5576c;color:#a00;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.passage-label{font-size:.78em;color:#667eea;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.passage-box{background:#f5f7ff;border-left:4px solid #667eea;padding:16px;border-radius:0 10px 10px 0;margin-bottom:18px;direction:rtl;text-align:right;font-size:1.1em;line-height:2;color:#222}
+.passage-note{font-size:.78em;color:#888;text-align:right;margin-bottom:12px}
+.qtext{font-size:1.18em;font-weight:700;color:#111;margin-bottom:16px;line-height:1.55}
+.options{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.opt{background:#f7f7f7;border:2px solid #ddd;border-radius:9px;padding:12px 16px;cursor:pointer;transition:all .2s;text-align:left;font-size:.96em;display:flex;align-items:center;gap:10px}
+.opt:hover:not(.locked){background:#f0f0ff;border-color:#667eea}
+.opt.selected{background:#eef0ff;border-color:#667eea}
+.opt.correct{background:#e6f9ee;border-color:#2ecc71;color:#155724}
+.opt.wrong{background:#fce8e8;border-color:#e74c3c;color:#7a0000}
+.opt.ar{direction:rtl;text-align:right;font-size:1.05em}
+.opt-letter{width:26px;height:26px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:.78em;font-weight:700;flex-shrink:0}
+.opt.selected .opt-letter{border-color:#667eea;background:#667eea;color:#fff}
+.opt.correct .opt-letter{border-color:#2ecc71;background:#2ecc71;color:#fff}
+.opt.wrong .opt-letter{border-color:#e74c3c;background:#e74c3c;color:#fff}
+/* BUTTONS */
+.btn{display:block;width:100%;padding:13px;border-radius:11px;font-size:1em;font-weight:600;cursor:pointer;border:none;transition:all .22s;margin-top:8px}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(102,126,234,.4)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-sec{background:#f0f0f0;color:#333;border:2px solid #ddd}
+.btn-sec:hover{background:#e4e4e4}
+/* RESULTS */
+.result-box{text-align:center;padding:8px 0}
+.score-big{font-size:3.8em;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin:10px 0}
+.score-label{color:#555;font-size:.97em;margin-bottom:10px}
+.badge{display:inline-block;padding:7px 22px;border-radius:20px;font-weight:700;font-size:1em;margin:10px 0}
+.badge.pass{background:#e6f9ee;color:#155724;border:2px solid #2ecc71}
+.badge.fail{background:#fce8e8;color:#7a0000;border:2px solid #e74c3c}
+.cert{background:linear-gradient(135deg,#fff8e1,#ffe0b2);border-radius:16px;padding:26px;margin:18px 0;border:2.5px solid #f5a623;text-align:center}
+.cert h3{color:#7c4200;font-size:1.3em;font-weight:700;margin-bottom:8px}
+.cert .cname{font-size:1.6em;font-weight:800;color:#5c3200;margin:8px 0}
+.cert .cline{color:#7c4200;font-size:.95em;margin:4px 0}
+.cert .cdate{font-size:.8em;color:#a05800;margin-top:10px;font-style:italic}
+.review{background:#f8f9fa;border-radius:12px;padding:16px;margin:16px 0;text-align:left}
+.review h4{font-weight:700;color:#333;margin-bottom:12px;font-size:1em}
+.ritem{border-bottom:1px solid #eee;padding:9px 0;font-size:.88em}
+.ritem:last-child{border-bottom:none}
+.rq{color:#444;font-weight:500;margin-bottom:4px;line-height:1.4}
+.rcorrect{color:#155724;font-weight:600}
+.rwrong{color:#7a0000;font-weight:600}
+.fail-note{color:#888;font-size:.9em;margin:12px 0;text-align:center}
+@media(max-width:480px){.grid{grid-template-columns:1fr 1fr}.cnt{padding:20px 15px}.hdr{padding:22px 15px}}
 </style>
 </head>
 <body>
-<div id="root"></div>
-<script type="text/babel">
-const {useState,useEffect,useRef}=React;
-
-// LEVEL CONFIGURATIONS
-const LC={
-  elementary:{id:'elementary',name:'Elementary',ar:'المستوى الابتدائي',age:'Ages 6–11',dur:25,q:8,pass:70,
-    icon:'🌱',color:'elementary',desc:'Arabic letters, basic vocabulary & greetings',
-    skills:['Recognize Arabic letters','Basic greetings & numbers','Simple vocabulary (animals, colors, family)','Identify short Arabic words']},
-  middle:{id:'middle',name:'Middle School',ar:'المستوى المتوسط',age:'Ages 12–14',dur:45,q:15,pass:70,
-    icon:'📖',color:'middle',desc:'Grammar, vocabulary & short reading comprehension',
-    skills:['Arabic root recognition','Basic verb conjugation','Short reading passages','Quranic vocabulary']},
-  highschool:{id:'highschool',name:'High School',ar:'المستوى الثانوي',age:'Ages 15–18',dur:90,q:20,pass:70,
-    icon:'🎓',color:'highschool',desc:'Advanced grammar, tajweed & reading analysis',
-    skills:['Advanced grammar cases (إعراب)','Verb forms & patterns','Reading comprehension','Tajweed fundamentals']},
-  adult:{id:'adult',name:'Professional / Adult',ar:'المستوى المتقدم',age:'Ages 18+',dur:195,q:25,pass:65,
-    icon:'🏆',color:'adult',desc:'Full RQAP Level 2 – Quranic Arabic mastery',
-    skills:['Complex sentence analysis','Advanced tajweed & recitation','Balaghah (rhetoric) basics','RQAP framework & certification']}
+<div id="app"></div>
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const LEVELS={
+  elementary:{id:"elementary",name:"Elementary",ar:"المستوى الابتدائي",age:"Ages 6-11",dur:25,total:8,pass:70,icon:"🌱",
+    desc:"Arabic letters, basic vocabulary and greetings",
+    skills:["Recognize Arabic letters","Basic greetings and numbers","Simple vocabulary (animals, colors, family)","Identify short Arabic words"]},
+  middle:{id:"middle",name:"Middle School",ar:"المستوى المتوسط",age:"Ages 12-14",dur:45,total:15,pass:70,icon:"📖",
+    desc:"Grammar, vocabulary and short reading comprehension",
+    skills:["Arabic root recognition","Basic verb conjugation","Short reading passages","Quranic vocabulary"]},
+  highschool:{id:"highschool",name:"High School",ar:"المستوى الثانوي",age:"Ages 15-18",dur:90,total:20,pass:70,icon:"🎓",
+    desc:"Advanced grammar, tajweed and reading analysis",
+    skills:["Advanced grammar cases (إعراب)","Verb forms and patterns","Reading comprehension","Tajweed fundamentals"]},
+  adult:{id:"adult",name:"Professional / Adult",ar:"المستوى المتقدم",age:"Ages 18+",dur:195,total:25,pass:65,icon:"🏆",
+    desc:"Full RQAP Level 2 - Quranic Arabic mastery",
+    skills:["Complex sentence analysis","Advanced tajweed and recitation","Balaghah (rhetoric) basics","RQAP framework and certification"]}
 };
 
-// QUESTION BANKS — fully age-appropriate, no duplicates across levels
 const QS={
-
-// ─── ELEMENTARY (Ages 6–11) ───────────────────────────────────────────────
-// Focus: letters, simple Arabic words, numbers, colors, greetings, animals, family
 elementary:[
-  {id:1,t:'What letter is this?  ب',o:['Alif','Ba','Jim','Dal'],c:1},
-  {id:2,t:'What does  ماء  mean in English?',o:['Fire','Water','Tree','Sun'],c:1},
-  {id:3,t:'Which Arabic word means "Hello / Peace"?',o:['شكراً','مع السلامة','السلام عليكم','نعم'],c:2},
-  {id:4,t:'What does  ثلاثة  (thalatha) mean?',o:['One','Two','Three','Four'],c:2},
-  {id:5,t:'Which word means "red" in Arabic?',o:['أخضر','أزرق','أحمر','أصفر'],c:2},
-  {id:6,t:'What does  أسد  mean in English?',o:['Dog','Cat','Lion','Bird'],c:2},
-  {id:7,t:'What Arabic word means "mother"?',o:['أب','أخ','أم','ابن'],c:2},
-  {id:8,t:'How do you say "Thank you" in Arabic?',o:['نعم','شكراً','لا','صباح الخير'],c:1}
+  {id:1,q:"What letter is this?  ب",o:["Alif","Ba","Jim","Dal"],a:1},
+  {id:2,q:"What does  ماء  mean in English?",o:["Fire","Water","Tree","Sun"],a:1},
+  {id:3,q:"Which Arabic word means Hello / Peace?",o:["شكراً","مع السلامة","السلام عليكم","نعم"],a:2},
+  {id:4,q:"What does  ثلاثة  (thalatha) mean?",o:["One","Two","Three","Four"],a:2},
+  {id:5,q:"Which word means red in Arabic?",o:["أخضر","أزرق","أحمر","أصفر"],a:2},
+  {id:6,q:"What does  أسد  mean in English?",o:["Dog","Cat","Lion","Bird"],a:2},
+  {id:7,q:"What Arabic word means mother?",o:["أب","أخ","أم","ابن"],a:2},
+  {id:8,q:"How do you say Thank you in Arabic?",o:["نعم","شكراً","لا","صباح الخير"],a:1}
 ],
-// ─── MIDDLE SCHOOL (Ages 12–14) ──────────────────────────────────────────
-// Focus: roots, grammar, verbs, Quranic vocabulary, reading comprehension
-// Passage used for Q1–Q3
 middle:[
-  {id:1,passage:{label:'Read the passage then answer Q1–Q3:',text:'ذَهَبَ أَحْمَدُ إِلَى الْمَسْجِدِ كُلَّ يَوْمٍ. هُوَ يُحِبُّ قِرَاءَةَ الْقُرْآنِ الْكَرِيمِ. قَالَ أَبُوهُ: الْعِلْمُ نُورٌ.'},
-    t:'In the passage, who went to the mosque?',o:['His father','Ahmad','His brother','A teacher'],c:1},
-  {id:2,passage:{same:true},t:'What does Ahmad love doing according to the passage?',o:['Playing football','Reading the Quran','Studying math','Cooking'],c:1},
-  {id:3,passage:{same:true},t:'What did his father say? (translate: العلم نور)',o:["Knowledge is light","Prayer is peace","God is great","Work is worship"],c:0},
-  {id:4,t:'What is the root (جذر) of the verb  كَتَبَ  (he wrote)?',o:['ك-ت-ب','ك-ت-م','ك-ب-ر','ك-ل-م'],c:0},
-  {id:5,t:'What is the Arabic word for "school"?',o:['مسجد','مدرسة','بيت','سوق'],c:1},
-  {id:6,t:'Which word is a verb (فعل)?',o:['كتاب','مدرسة','ذَهَبَ','قلم'],c:2},
-  {id:7,t:'What is the plural of  كِتَاب  (book)?',o:['كُتُب','كَتَبَة','كُتَّاب','كِتَابات'],c:0},
-  {id:8,t:'How do you say "in the house" using a preposition?',o:['على البيت','في البيت','من البيت','إلى البيت'],c:1},
-  {id:9,t:'Which Surah is the opening chapter of the Quran?',o:['Al-Baqarah','Al-Ikhlas','Al-Fatiha','Al-Nas'],c:2},
-  {id:10,t:'What does  بِسْمِ اللَّهِ  mean?',o:['Praise be to God','In the name of God','God is great','Thanks to God'],c:1},
-  {id:11,t:'Identify the subject (المبتدأ) in:  الْوَلَدُ طَالِبٌ',o:['طَالِبٌ','الْوَلَدُ','Both','Neither'],c:1},
-  {id:12,t:'What is the past tense of  يَذْهَبُ  (he goes)?',o:['ذَهَبَ','يَذْهَبُ','اذْهَبْ','ذَاهِبٌ'],c:0},
-  {id:13,t:'Which word means "knowledge" in Arabic?',o:['صبر','علم','حلم','نور'],c:1},
-  {id:14,t:'What type of word is  الطَّالِبُ  in a sentence?',o:['Verb','Preposition','Noun','Adjective'],c:2},
-  {id:15,t:'How many Juz (parts) are in the Holy Quran?',o:['20','25','30','40'],c:2}
+  {id:1,passage:{label:"Read the passage then answer Q1-Q3:",text:"ذَهَبَ أَحْمَدُ إِلَى الْمَسْجِدِ كُلَّ يَوْمٍ. هُوَ يُحِبُّ قِرَاءَةَ الْقُرْآنِ الْكَرِيمِ. قَالَ أَبُوهُ: الْعِلْمُ نُورٌ."},
+    q:"In the passage, who went to the mosque?",o:["His father","Ahmad","His brother","A teacher"],a:1},
+  {id:2,passage:{same:true},q:"What does Ahmad love doing according to the passage?",o:["Playing football","Reading the Quran","Studying math","Cooking"],a:1},
+  {id:3,passage:{same:true},q:"Translate: العلم نور",o:["Knowledge is light","Prayer is peace","God is great","Work is worship"],a:0},
+  {id:4,q:"What is the root of the verb  كَتَبَ  (he wrote)?",o:["ك-ت-ب","ك-ت-م","ك-ب-ر","ك-ل-م"],a:0},
+  {id:5,q:"What is the Arabic word for school?",o:["مسجد","مدرسة","بيت","سوق"],a:1},
+  {id:6,q:"Which word is a verb?",o:["كتاب","مدرسة","ذَهَبَ","قلم"],a:2},
+  {id:7,q:"What is the plural of  كِتَاب  (book)?",o:["كُتُب","كَتَبَة","كُتَّاب","كِتَابات"],a:0},
+  {id:8,q:"How do you say in the house using a preposition?",o:["على البيت","في البيت","من البيت","إلى البيت"],a:1},
+  {id:9,q:"Which Surah is the opening chapter of the Quran?",o:["Al-Baqarah","Al-Ikhlas","Al-Fatiha","Al-Nas"],a:2},
+  {id:10,q:"What does  بِسْمِ اللَّهِ  mean?",o:["Praise be to God","In the name of God","God is great","Thanks to God"],a:1},
+  {id:11,q:"Identify the subject in:  الْوَلَدُ طَالِبٌ",o:["طَالِبٌ","الْوَلَدُ","Both","Neither"],a:1},
+  {id:12,q:"What is the past tense of  يَذْهَبُ  (he goes)?",o:["ذَهَبَ","يَذْهَبُ","اذْهَبْ","ذَاهِبٌ"],a:0},
+  {id:13,q:"Which word means knowledge in Arabic?",o:["صبر","علم","حلم","نور"],a:1},
+  {id:14,q:"What type of word is  الطَّالِبُ  in a sentence?",o:["Verb","Preposition","Noun","Adjective"],a:2},
+  {id:15,q:"How many Juz (parts) are in the Holy Quran?",o:["20","25","30","40"],a:2}
 ],
-// ─── HIGH SCHOOL (Ages 15–18) ────────────────────────────────────────────
-// Focus: إعراب, verb forms, tajweed basics, advanced vocabulary, reading analysis
-// Passage used for Q1–Q3
 highschool:[
-  {id:1,passage:{label:'Read this Quranic verse then answer Q1–Q3:',text:'إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٦﴾',note:'(Surah Al-Sharh: 6)'},
-    t:'What is the meaning of  الْعُسْرِ  in the verse?',o:['Ease / Relief','Hardship / Difficulty','Patience','Reward'],c:1},
-  {id:2,passage:{same:true},t:'What is the meaning of  يُسْرًا  in the verse?',o:['Hardship','Patience','Ease / Relief','Struggle'],c:2},
-  {id:3,passage:{same:true},t:'What is the grammatical role of  مَعَ  in the verse?',o:['Verb','Preposition (حرف جر)','Subject','Adjective'],c:1},
-  {id:4,t:'Identify the case (إعراب) of  الطَّالِبُ  in:  جَاءَ الطَّالِبُ',o:['Accusative (منصوب)','Genitive (مجرور)','Nominative (مرفوع)','Undefined'],c:2},
-  {id:5,t:'What is the Verbal Noun (مصدر) of  كَتَبَ ?',o:['كِتَابَة','كَاتِب','مَكْتُوب','كُتُب'],c:0},
-  {id:6,t:'What is the Dual form (المثنى) of  كِتَاب ?',o:['كُتُب','كِتَابَيْنِ','كِتَابَات','كَاتِبَان'],c:1},
-  {id:7,t:'In Arabic, the Conditional sentence uses which particle?',o:['إِنَّ','إِنْ','إِلَّا','إِنَّمَا'],c:1},
-  {id:8,t:'What is the correct Jussive (مجزوم) form of  يَذْهَبُ ?',o:['يَذْهَبُ','ذَهَبَ','يَذْهَبْ','اذْهَبْ'],c:2},
-  {id:9,t:'What tajweed rule applies when  نْ  is followed by  ب ?',o:['Idhar (إظهار)','Idgham (إدغام)','Iqlab (إقلاب)','Ikhfa (إخفاء)'],c:2},
-  {id:10,t:'What is the active participle (اسم الفاعل) of  عَلِمَ ?',o:['مَعْلُوم','عَالِم','عِلْم','تَعَلَّمَ'],c:1},
-  {id:11,t:'What Arabic term describes the 14 letters after which Quran recitation is paused or continued?',o:['Huruf Muqatta'at','Madd','Tanwin','Waqf'],c:0},
-  {id:12,t:'Which grammatical case is marked by Damma (ـُ)?',o:['Genitive','Accusative','Nominative','Jussive'],c:2},
-  {id:13,t:'What is the Passive Voice (المبني للمجهول) of  كَتَبَ الوَلَدُ الدَّرْسَ ?',o:['كَتَبَ الدَّرْسُ','كُتِبَ الدَّرْسُ','يُكْتَبُ الدَّرْسُ','اكْتُبِ الدَّرْسَ'],c:1},
-  {id:14,t:'The longest Surah in the Quran is:',o:['Al-Fatiha','Al-Imran','Al-Baqarah','An-Nisa'],c:2},
-  {id:15,t:'What does  إِضَافَة  (Idafa) describe in Arabic grammar?',o:['A verb conjugation','A possessive noun construct','An adjective phrase','A conditional sentence'],c:1},
-  {id:16,t:'The Arabic verb pattern (وزن)  فَعَّلَ  indicates:',o:['Simple past action','Causative or intensive meaning','A question form','A passive action'],c:1},
-  {id:17,t:'What is the Madd Tabii (natural elongation) duration?',o:['1 beat (harakah)','2 beats (harakat)','4 beats','6 beats'],c:1},
-  {id:18,t:'In  إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ , what is the grammatical role of  اللَّهَ ?',o:['Subject (مبتدأ)','Predicate (خبر)','Noun of Inna (اسم إن)','Adjective'],c:2},
-  {id:19,t:'Which word is a Relative Pronoun (اسم موصول)?',o:['هُوَ','الَّذِي','هَذَا','كُلٌّ'],c:1},
-  {id:20,t:'How many letters in the Arabic alphabet?',o:['26','28','29','30'],c:1}
+  {id:1,passage:{label:"Read this Quranic verse then answer Q1-Q3:",text:"إِنَّ مَعَ الْعُسْرِ يُسْرًا",note:"(Surah Al-Sharh: 6)"},
+    q:"What is the meaning of  الْعُسْرِ  in the verse?",o:["Ease / Relief","Hardship / Difficulty","Patience","Reward"],a:1},
+  {id:2,passage:{same:true},q:"What is the meaning of  يُسْرًا  in the verse?",o:["Hardship","Patience","Ease / Relief","Struggle"],a:2},
+  {id:3,passage:{same:true},q:"What is the grammatical role of  مَعَ  in the verse?",o:["Verb","Preposition","Subject","Adjective"],a:1},
+  {id:4,q:"Identify the grammatical case of  الطَّالِبُ  in:  جَاءَ الطَّالِبُ",o:["Accusative (منصوب)","Genitive (مجرور)","Nominative (مرفوع)","Undefined"],a:2},
+  {id:5,q:"What is the Verbal Noun (مصدر) of  كَتَبَ ?",o:["كِتَابَة","كَاتِب","مَكْتُوب","كُتُب"],a:0},
+  {id:6,q:"What is the Dual form of  كِتَاب ?",o:["كُتُب","كِتَابَيْنِ","كِتَابَات","كَاتِبَان"],a:1},
+  {id:7,q:"In Arabic, the Conditional sentence uses which particle?",o:["إِنَّ","إِنْ","إِلَّا","إِنَّمَا"],a:1},
+  {id:8,q:"What is the correct Jussive form of  يَذْهَبُ ?",o:["يَذْهَبُ","ذَهَبَ","يَذْهَبْ","اذْهَبْ"],a:2},
+  {id:9,q:"What tajweed rule applies when noon sakinah is followed by ba?",o:["Idhar","Idgham","Iqlab","Ikhfa"],a:2},
+  {id:10,q:"What is the active participle of  عَلِمَ ?",o:["مَعْلُوم","عَالِم","عِلْم","تَعَلَّمَ"],a:1},
+  {id:11,q:"What term refers to the disconnected letters at the start of some Quranic surahs?",o:["Huruf Muqattaat","Madd","Tanwin","Waqf"],a:0},
+  {id:12,q:"Which grammatical case is marked by Damma?",o:["Genitive","Accusative","Nominative","Jussive"],a:2},
+  {id:13,q:"What is the Passive Voice of  كَتَبَ الوَلَدُ الدَّرْسَ ?",o:["كَتَبَ الدَّرْسُ","كُتِبَ الدَّرْسُ","يُكْتَبُ الدَّرْسُ","اكْتُبِ الدَّرْسَ"],a:1},
+  {id:14,q:"The longest Surah in the Quran is:",o:["Al-Fatiha","Al-Imran","Al-Baqarah","An-Nisa"],a:2},
+  {id:15,q:"What does Idafa describe in Arabic grammar?",o:["A verb conjugation","A possessive noun construct","An adjective phrase","A conditional sentence"],a:1},
+  {id:16,q:"The Arabic verb pattern Faaala indicates:",o:["Simple past action","Causative or intensive meaning","A question form","A passive action"],a:1},
+  {id:17,q:"What is the Madd Tabii (natural elongation) duration?",o:["1 beat","2 beats","4 beats","6 beats"],a:1},
+  {id:18,q:"In  إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ , the role of  اللَّهَ  is:",o:["Subject","Predicate","Noun of Inna","Adjective"],a:2},
+  {id:19,q:"Which word is a Relative Pronoun?",o:["هُوَ","الَّذِي","هَذَا","كُلٌّ"],a:1},
+  {id:20,q:"How many letters in the Arabic alphabet?",o:["26","28","29","30"],a:1}
 ],
-// ─── ADULT / PROFESSIONAL (Ages 18+) ─────────────────────────────────────
-// Focus: Advanced إعراب, balaghah, complex tajweed, RQAP framework, discourse
-// Passage used for Q1–Q3
 adult:[
-  {id:1,passage:{label:'Analyze this Quranic verse (Q1–Q3):',text:'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ﴿٢﴾ وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ',note:'(Surah At-Talaq: 2–3)'},
-    t:'What rhetorical device is used by repeating the conditional structure (من... يجعل / يرزق)?',o:['Simile (تشبيه)','Parallelism (ازدواج)','Metaphor (استعارة)','Repetition for emphasis (تكرار)'],c:1},
-  {id:2,passage:{same:true},t:'In  وَيَرْزُقْهُ , what is the grammatical status of  يَرْزُقْهُ ?',o:['Indicative (مرفوع)','Jussive (مجزوم) — response to conditional','Subjunctive (منصوب)','Imperative'],c:1},
-  {id:3,passage:{same:true},t:'What tajweed rule governs  مِنْ حَيْثُ  (noon sakinah before ha)?',o:['Idgham without ghunnah','Idhar (clear pronunciation)','Ikhfa','Iqlab'],c:1},
-  {id:4,t:'In Arabic morphology, what is the measure (وزن) of the word  مُكَاتِب ?',o:['فَاعِل','مُفَاعِل','فَعَّال','مُفَعِّل'],c:1},
-  {id:5,t:'What is the difference between  إِنَّ  and  أَنَّ  in Arabic grammar?',o:['No difference','إِنَّ follows a sentence; أَنَّ follows a verb','إِنَّ is for past; أَنَّ for future','إِنَّ is nominal; أَنَّ is verbal'],c:1},
-  {id:6,t:'In Balaghah, what literary device does  أَسَدٌ  refer to when describing a brave man?',o:['Simile (تشبيه)','Metaphor — pure Istiara (استعارة تصريحية)','Hyperbole (مبالغة)','Personification'],c:1},
-  {id:7,t:'What is the Madd Muttasil (connected elongation) and its required duration in Hafs recitation?',o:['2 beats — occurs within one word','4 or 5 beats — hamza follows madd in same word','6 beats — hamza precedes madd','Optional — any length'],c:1},
-  {id:8,t:'Which Arabic verb form (باب) has the pattern  اِفْتَعَلَ  and typically conveys reflexive meaning?',o:['فَعَّلَ','تَفَعَّلَ','اِفْتَعَلَ','اِسْتَفْعَلَ'],c:2},
-  {id:9,t:'In Quranic recitation, what is Ghunnah?',o:['A pause marker','A nasal resonance in ن and م','A type of elongation','Silent letter rule'],c:1},
-  {id:10,t:'What is the CEFR level that RQAP Level 2 (Asasi) corresponds to?',o:['A1','A2','B1','B2'],c:2},
-  {id:11,t:'In Arabic grammar,  الحال  (Hal) serves what function?',o:['Subject of the sentence','Describes the state of the doer/object during the action','Defines the verb tense','Acts as a conjunction'],c:1},
-  {id:12,t:'What does the tajweed rule  القلقلة  (Qalqalah) apply to?',o:['All letters','Only long vowels','Letters: ق ط ب ج د when sukun','Solar letters only'],c:2},
-  {id:13,t:'In Balaghah,  التَّقْدِيم وَالتَّأْخِير  (fronting/delaying) is used for:',o:['Changing verb tense','Emphasis and rhetorical contrast','Connecting two sentences','Describing plurals'],c:1},
-  {id:14,t:'The RQAP exam assesses proficiency across which three dimensions?',o:['Writing, Reading, Listening','Receptive, Productive, and Interactive','Grammar, Vocabulary, Pronunciation','Tajweed, Fiqh, History'],c:1},
-  {id:15,t:'What is  النَّعْت السَّبَبِي  (causal adjective) in Arabic?',o:['An adjective matching the noun in all 4 features','An adjective describing something related to the noun','A verbal adjective','An adjective in comparative form'],c:1},
-  {id:16,t:'In the Quran, what is  الْوَقْف الْمُطْلَق  (absolute stop)?',o:['Recommended pause at end of complete meaning','Mandatory stop mid-verse','Pause forbidden','Optional stop anywhere'],c:0},
-  {id:17,t:'Which Arabic grammatical concept describes agreement in gender, number, case & definiteness?',o:['الإضافة','التطابق (agreement)','الإعراب','الصرف'],c:1},
-  {id:18,t:'In RQAP assessment, portfolio evidence is:',o:['Not required','Required for all levels','Required for Level 2 and above','Optional but recommended'],c:2},
-  {id:19,t:'What is  المفعول المطلق  (Absolute Object) used for in Arabic?',o:['To show direction','To emphasize or clarify the verb','To indicate time','To show cause'],c:1},
-  {id:20,t:'The recitation method used in most of the Arab world is:',o:['Warsh','Qalun','Hafs an Asim','Ad-Duri'],c:2},
-  {id:21,t:'What distinguishes  التَّشْبِيه البَلِيغ  (Concise Simile) from a regular simile?',o:['It uses the word كَأَنَّ','Both أداة and وجه الشبه are omitted','It compares two nouns directly without أداة','It is only used in poetry'],c:2},
-  {id:22,t:'In RQAP certification, what is the standard retake waiting period after a failed attempt?',o:['1 week','1 month','3 months','6 months'],c:2},
-  {id:23,t:'What Arabic term refers to the science of Quranic readings (recitation variants)?',o:['التجويد','القراءات','الصرف','البلاغة'],c:1},
-  {id:24,t:'Which of the following is a feature of  الأسلوب الخبري  (declarative style)?',o:['It contains a question','It issues a command','It states information as true or false','It expresses a wish'],c:2},
-  {id:25,t:'RQAP Level 2 certificate validity period is:',o:['1 year','2 years','3 years','5 years'],c:3}
+  {id:1,passage:{label:"Analyze this Quranic verse (Q1-Q3):",text:"وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ",note:"(Surah At-Talaq: 2-3)"},
+    q:"What rhetorical device is used by the parallel conditional structure?",o:["Simile","Parallelism (Izdiwaaj)","Metaphor","Repetition for emphasis"],a:1},
+  {id:2,passage:{same:true},q:"In  وَيَرْزُقْهُ , what is the grammatical status of the verb?",o:["Indicative (مرفوع)","Jussive (مجزوم) - response to conditional","Subjunctive (منصوب)","Imperative"],a:1},
+  {id:3,passage:{same:true},q:"What tajweed rule governs noon sakinah before ha in  مِنْ حَيْثُ ?",o:["Idgham without ghunnah","Idhar (clear pronunciation)","Ikhfa","Iqlab"],a:1},
+  {id:4,q:"In Arabic morphology, what is the measure of the word  مُكَاتِب ?",o:["فَاعِل","مُفَاعِل","فَعَّال","مُفَعِّل"],a:1},
+  {id:5,q:"What is the difference between Inna and Anna in Arabic?",o:["No difference","Inna follows a sentence; Anna follows a verb","Inna is for past; Anna for future","Inna is nominal; Anna is verbal"],a:1},
+  {id:6,q:"In Balaghah, what device is used when calling a brave man a lion?",o:["Simile (Tashbih)","Pure Metaphor (Istiaara Tasrihiyya)","Hyperbole","Personification"],a:1},
+  {id:7,q:"What is Madd Muttasil and its duration in Hafs recitation?",o:["2 beats within one word","4 or 5 beats - hamza follows madd in same word","6 beats - hamza precedes madd","Optional length"],a:1},
+  {id:8,q:"Which verb form has pattern Iftaala and conveys reflexive meaning?",o:["Faaalaa","Tafaaaala","Iftaaala","Istafaala"],a:2},
+  {id:9,q:"In Quranic recitation, what is Ghunnah?",o:["A pause marker","A nasal resonance in nun and mim","A type of elongation","A silent letter rule"],a:1},
+  {id:10,q:"What CEFR level corresponds to RQAP Level 2 (Asasi)?",o:["A1","A2","B1","B2"],a:2},
+  {id:11,q:"In Arabic grammar, Hal serves what function?",o:["Subject of sentence","Describes state of doer during action","Defines verb tense","Acts as conjunction"],a:1},
+  {id:12,q:"What does the tajweed rule Qalqalah apply to?",o:["All letters","Only long vowels","Letters qaaf-taa-ba-jiim-daal when sukun","Solar letters only"],a:2},
+  {id:13,q:"In Balaghah, Taqdim and Taakhir (fronting/delaying) is used for:",o:["Changing verb tense","Emphasis and rhetorical contrast","Connecting two sentences","Describing plurals"],a:1},
+  {id:14,q:"The RQAP exam assesses proficiency across which three dimensions?",o:["Writing, Reading, Listening","Receptive, Productive, and Interactive","Grammar, Vocabulary, Pronunciation","Tajweed, Fiqh, History"],a:1},
+  {id:15,q:"What is Naat Sababi (causal adjective) in Arabic?",o:["Adjective matching noun in 4 features","Adjective describing something related to noun","A verbal adjective","Adjective in comparative form"],a:1},
+  {id:16,q:"In the Quran, what is Waqf Mutlaq (absolute stop)?",o:["Recommended pause at end of complete meaning","Mandatory stop mid-verse","Pause forbidden","Optional stop anywhere"],a:0},
+  {id:17,q:"Which concept describes agreement in gender, number, case and definiteness?",o:["Al-Idafa","Al-Tataabuq (agreement)","Al-Iraab","Al-Sarf"],a:1},
+  {id:18,q:"In RQAP assessment, portfolio evidence is:",o:["Not required","Required for all levels","Required for Level 2 and above","Optional but recommended"],a:2},
+  {id:19,q:"What is Mafool Mutlaq (Absolute Object) used for in Arabic?",o:["To show direction","To emphasize or clarify the verb","To indicate time","To show cause"],a:1},
+  {id:20,q:"The recitation method used in most of the Arab world is:",o:["Warsh","Qalun","Hafs an Asim","Ad-Duri"],a:2},
+  {id:21,q:"What distinguishes Tashbih Baligh (Concise Simile) from a regular simile?",o:["It uses the word kaaanna","Both the tool and point of comparison are omitted","It compares two nouns without a tool","It is only used in poetry"],a:2},
+  {id:22,q:"In RQAP certification, what is the standard retake waiting period after failing?",o:["1 week","1 month","3 months","6 months"],a:2},
+  {id:23,q:"What Arabic term refers to the science of Quranic recitation variants?",o:["Tajweed","Al-Qiraat","Al-Sarf","Al-Balaghah"],a:1},
+  {id:24,q:"Which feature defines the declarative style (Asloob Khabari)?",o:["It contains a question","It issues a command","It states information as true or false","It expresses a wish"],a:2},
+  {id:25,q:"RQAP Level 2 certificate validity period is:",o:["1 year","2 years","3 years","5 years"],a:3}
 ]};
-function App(){
-  const [screen,setScreen]=useState('home');
-  const [level,setLevel]=useState(null);
-  const [info,setInfo]=useState({name:'',email:'',age:''});
-  const [qIdx,setQIdx]=useState(0);
-  const [answers,setAnswers]=useState({});
-  const [selected,setSelected]=useState(null);
-  const [confirmed,setConfirmed]=useState(false);
-  const [timeLeft,setTimeLeft]=useState(0);
-  const timerRef=useRef(null);
-  const passageShown=useRef(null);
+// ── STATE ─────────────────────────────────────────────────────────────────
+let state={
+  screen:"home",   // home | info | exam | results
+  level:null,
+  name:"",email:"",age:"",
+  qIdx:0,
+  answers:{},      // {qIdx: selectedOption}
+  confirmed:false,
+  selected:null,
+  timeLeft:0,
+  timer:null,
+  passageRef:null  // current passage being shown
+};
 
-  useEffect(()=>{
-    if(screen==='exam'){
-      timerRef.current=setInterval(()=>setTimeLeft(t=>{if(t<=1){clearInterval(timerRef.current);setScreen('results');return 0;}return t-1;}),1000);
-    }
-    return()=>clearInterval(timerRef.current);
-  },[screen]);
-
-  const startExam=(lv)=>{setLevel(lv);setScreen('info');};
-  const beginExam=()=>{
-    const qs=QS[level.id];
-    setQIdx(0);setAnswers({});setSelected(null);setConfirmed(false);
-    setTimeLeft(level.dur*60);setScreen('exam');passageShown.current=null;
-  };
-  const selectOpt=(i)=>{if(!confirmed){setSelected(i);}};
-  const confirm=()=>{
-    if(selected===null)return;
-    setAnswers(a=>({...a,[qIdx]:selected}));
-    setConfirmed(true);
-  };
-  const next=()=>{
-    const qs=QS[level.id];
-    if(qIdx<qs.length-1){setQIdx(q=>q+1);setSelected(null);setConfirmed(false);}
-    else{clearInterval(timerRef.current);setScreen('results');}
-  };
-
-  const calcScore=()=>{
-    const qs=QS[level.id];
-    let correct=0;
-    qs.forEach((q,i)=>{if(answers[i]===q.c)correct++;});
-    return{correct,total:qs.length,pct:Math.round((correct/qs.length)*100)};
-  };
-
-  const fmt=(s)=>{const m=Math.floor(s/60),sec=s%60;return m+':'+(sec<10?'0':'')+sec;};
-
-  if(screen==='home'){
-    return(
-      <div className="app">
-        <div className="hdr home">
-          <div className="ar">جُذُور — الاختبار العربي القرآني</div>
-          <h1>The Roots – Quranic Arabic Proficiency</h1>
-          <div className="sub">Select your level to begin</div>
-        </div>
-        <div className="cnt">
-          <div className="ls">
-            <h2>Choose Your Level</h2>
-            <p>Age-appropriate exams for non-native Arabic learners — from beginners to advanced professionals</p>
-            <div className="lg">
-              {Object.values(LC).map(lv=>(
-                <div key={lv.id} className={"lc "+lv.id} onClick={()=>startExam(lv)}>
-                  <span className="li">{lv.icon}</span>
-                  <h3>{lv.name}</h3>
-                  <div className="ab">{lv.age}</div>
-                  <div className="ld">{lv.desc}</div>
-                  <ul className="ls2">{lv.skills.map((s,i)=><li key={i}>{s}</li>)}</ul>
-                  <div className="ab">{lv.q} questions · {lv.dur} min · Pass: {lv.pass}%</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if(screen==='info'){
-    return(
-      <div className="app">
-        <div className={"hdr "+level.color}>
-          <div className="ar">{level.ar}</div>
-          <h1>{level.name} Level</h1>
-          <div className="sub">{level.age} · {level.q} Questions · {level.dur} min</div>
-        </div>
-        <div className="cnt">
-          <div className="if">
-            <h2>Candidate Information</h2>
-            <div className="fg"><label>Full Name</label>
-              <input value={info.name} onChange={e=>setInfo({...info,name:e.target.value})} placeholder="Enter your full name"/></div>
-            <div className="fg"><label>Email Address</label>
-              <input type="email" value={info.email} onChange={e=>setInfo({...info,email:e.target.value})} placeholder="Enter your email"/></div>
-            <div className="fg"><label>Age</label>
-              <input type="number" value={info.age} onChange={e=>setInfo({...info,age:e.target.value})} placeholder="Your age"/></div>
-            <button className="btn" onClick={()=>{if(info.name.trim())beginExam();}} disabled={!info.name.trim()}>
-              Begin Examination →
-            </button>
-            <button className="btn sec" onClick={()=>setScreen('home')}>← Back to Levels</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if(screen==='exam'){
-    const qs=QS[level.id];
-    const q=qs[qIdx];
-    const pct=((qIdx+1)/qs.length)*100;
-    const warn=timeLeft<120;
-    const showPassage=q.passage&&!q.passage.same;
-    const samePassage=q.passage&&q.passage.same;
-    if(showPassage)passageShown.current=q.passage;
-    const currentPassage=showPassage?q.passage:(samePassage?passageShown.current:null);
-    return(
-      <div className="app">
-        <div className={"hdr "+level.color}>
-          <h1>{level.name} Exam</h1>
-          <div className="sub">{info.name}</div>
-        </div>
-        <div className="cnt">
-          <div className="pb"><div className="pf" style={{width:pct+'%'}}></div></div>
-          <div className="qn">Question {qIdx+1} of {qs.length}</div>
-          <div className={"tm"+(warn?' warn':'')}>⏱ {fmt(timeLeft)}{warn?' — Hurry!':''}</div>
-          {currentPassage&&(
-            <div>
-              <div className="pl">{currentPassage.label}</div>
-              <div className="passage">{currentPassage.text}</div>
-              {currentPassage.note&&<div style={{fontSize:'.8em',color:'#888',marginBottom:'10px',textAlign:'right'}}>{currentPassage.note}</div>}
-            </div>
-          )}
-          <div className="qt">{q.t}</div>
-          <div className="oa">
-            {q.o.map((opt,i)=>{
-              let cls='ob';
-              const isAr=/[؀-ۿ]/.test(opt);
-              if(isAr)cls+=' ar-opt';
-              if(confirmed){
-                if(i===q.c)cls+=' cor';
-                else if(i===selected&&selected!==q.c)cls+=' wr';
-              }else if(i===selected){cls+=' sel';}
-              return(
-                <button key={i} className={cls} onClick={()=>selectOpt(i)}>
-                  <span className="ol">{String.fromCharCode(65+i)}</span>
-                  {opt}
-                </button>
-              );
-            })}
-          </div>
-          <div className="nv">
-            {!confirmed?
-              <button className="btn" onClick={confirm} disabled={selected===null}>Confirm Answer</button>:
-              <button className="btn" onClick={next}>{qIdx<qs.length-1?'Next Question →':'Finish Exam ✓'}</button>
-            }
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if(screen==='results'){
-    const {correct,total,pct}=calcScore();
-    const passed=pct>=level.pass;
-    const qs=QS[level.id];
-    return(
-      <div className="app">
-        <div className={"hdr "+level.color}>
-          <h1>Exam Complete</h1>
-          <div className="sub">{level.name} Level · {info.name}</div>
-        </div>
-        <div className="cnt">
-          <div className="rs">
-            <div className="sc">{pct}%</div>
-            <div>{correct} out of {total} correct</div>
-            <div className={"sb "+(passed?'pass':'fail')}>{passed?'✅ PASSED':'❌ Did Not Pass'}</div>
-            {passed&&(
-              <div className="cert">
-                <h3>🏅 Certificate of Achievement</h3>
-                <div>This certifies that</div>
-                <div className="cn">{info.name}</div>
-                <div className="cl">has passed the <strong>Roots Quranic Arabic Proficiency</strong></div>
-                <div className="cl"><strong>{level.name} Level</strong> with a score of <strong>{pct}%</strong></div>
-                <div className="cs">Issued by Pathways School · {new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div>
-              </div>
-            )}
-            {!passed&&<p style={{color:'#888',margin:'12px 0',fontSize:'.95em'}}>Required passing score: {level.pass}% · Please review the material and try again.</p>}
-          </div>
-          <div className="rv">
-            <h4>📋 Answer Review</h4>
-            {qs.map((q,i)=>(
-              <div key={i} className="ri">
-                <div className="rq">{i+1}. {q.t}</div>
-                {answers[i]!==undefined&&answers[i]!==q.c&&<div className="rw">✗ Your answer: {q.o[answers[i]]}</div>}
-                <div className="ra">✓ Correct: {q.o[q.c]}</div>
-              </div>
-            ))}
-          </div>
-          <button className="btn" onClick={()=>{setScreen('home');setAnswers({});setSelected(null);setConfirmed(false);setQIdx(0);}}>Try Another Level</button>
-          <button className="btn sec" onClick={()=>{setQIdx(0);setAnswers({});setSelected(null);setConfirmed(false);setTimeLeft(level.dur*60);setScreen('exam');passageShown.current=null;}}>Retry This Level</button>
-        </div>
-      </div>
-    );
-  }
-  return null;
+// ── RENDER ────────────────────────────────────────────────────────────────
+function render(){
+  const app=document.getElementById("app");
+  if(state.screen==="home")       app.innerHTML=renderHome();
+  else if(state.screen==="info")  app.innerHTML=renderInfo();
+  else if(state.screen==="exam")  app.innerHTML=renderExam();
+  else if(state.screen==="results") app.innerHTML=renderResults();
+  attachEvents();
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+// ── HOME ──────────────────────────────────────────────────────────────────
+function renderHome(){
+  const cards=Object.values(LEVELS).map(lv=>{
+    const skills=lv.skills.map(s=>"<li>"+s+"</li>").join("");
+    return "<div class='card "+lv.id+"' data-level='"+lv.id+"'><span class='icon'>"+lv.icon+"</span><h3>"+lv.name+"</h3><div class='age'>"+lv.age+"</div><div class='desc'>"+lv.desc+"</div><ul>"+skills+"</ul><div class='meta'>"+lv.total+" questions &middot; "+lv.dur+" min &middot; Pass: "+lv.pass+"%</div></div>";
+  }).join("");
+  return "<div class='hdr home'><div class='ar'>جُذُور — الاختبار العربي القرآني</div><h1>The Roots - Quranic Arabic Proficiency</h1><div class='sub'>Select your level to begin</div></div><div class='cnt'><div class='home-title'><h2>Choose Your Level</h2><p>Age-appropriate exams for non-native Arabic learners — from beginners to advanced professionals</p></div><div class='grid'>"+cards+"</div></div>";
+}
+
+// ── INFO ──────────────────────────────────────────────────────────────────
+function renderInfo(){
+  const lv=state.level;
+  return "<div class='hdr "+lv.id+"'><div class='ar'>"+lv.ar+"</div><h1>"+lv.name+" Level</h1><div class='sub'>"+lv.age+" &middot; "+lv.total+" Questions &middot; "+lv.dur+" min</div></div><div class='cnt'><div class='info-form'><h2>Candidate Information</h2><div class='field'><label>Full Name</label><input id='inp-name' type='text' placeholder='Enter your full name' value='"+esc(state.name)+"'></div><div class='field'><label>Email Address</label><input id='inp-email' type='email' placeholder='Enter your email' value='"+esc(state.email)+"'></div><div class='field'><label>Age</label><input id='inp-age' type='number' placeholder='Your age' value='"+esc(state.age)+"'></div><button class='btn btn-primary' id='btn-begin' "+(state.name.trim()?"":"disabled")+">Begin Examination</button><button class='btn btn-sec' id='btn-back' style='margin-top:10px'>Back to Levels</button></div></div>";
+}
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
+
+// ── EXAM ──────────────────────────────────────────────────────────────────
+function renderExam(){
+  const lv=state.level;
+  const qs=QS[lv.id];
+  const q=qs[state.qIdx];
+  const pct=((state.qIdx+1)/qs.length*100).toFixed(1);
+  const warn=state.timeLeft<120;
+  const mins=Math.floor(state.timeLeft/60);
+  const secs=state.timeLeft%60;
+  const timeStr=mins+":"+(secs<10?"0":"")+secs;
+
+  // Passage logic
+  let passageHtml="";
+  if(q.passage&&!q.passage.same){
+    state.passageRef=q.passage;
+    passageHtml="<div class='passage-label'>"+q.passage.label+"</div><div class='passage-box'>"+q.passage.text+"</div>"+(q.passage.note?"<div class='passage-note'>"+q.passage.note+"</div>":"");
+  } else if(q.passage&&q.passage.same&&state.passageRef){
+    passageHtml="<div class='passage-label'>"+state.passageRef.label+"</div><div class='passage-box'>"+state.passageRef.text+"</div>"+(state.passageRef.note?"<div class='passage-note'>"+state.passageRef.note+"</div>":"");
+  }
+
+  const opts=q.o.map((opt,i)=>{
+    const isAr=/[؀-ۿ]/.test(opt);
+    let cls="opt"+(isAr?" ar":"");
+    if(state.confirmed){
+      if(i===q.a) cls+=" correct";
+      else if(i===state.selected&&state.selected!==q.a) cls+=" wrong";
+      cls+=" locked";
+    } else if(i===state.selected) cls+=" selected";
+    const letter=String.fromCharCode(65+i);
+    return "<button class='"+cls+"' data-opt='"+i+"'><span class='opt-letter'>"+letter+"</span>"+opt+"</button>";
+  }).join("");
+
+  const navBtn=state.confirmed
+    ? "<button class='btn btn-primary' id='btn-next'>"+(state.qIdx<qs.length-1?"Next Question &rarr;":"Finish Exam ✓")+"</button>"
+    : "<button class='btn btn-primary' id='btn-confirm' "+(state.selected===null?"disabled":"")+"}>Confirm Answer</button>";
+
+  return "<div class='hdr "+lv.id+"'><h1>"+lv.name+" Exam</h1><div class='sub'>"+esc(state.name)+"</div></div><div class='cnt'><div class='prog-bar'><div class='prog-fill' style='width:"+pct+"%'></div></div><div class='qnum'>Question "+(state.qIdx+1)+" of "+qs.length+"</div><div class='timer"+(warn?" warn":"")+"'>⏱ "+timeStr+(warn?" — Hurry!":"")+"</div>"+passageHtml+"<div class='qtext'>"+q.q+"</div><div class='options'>"+opts+"</div>"+navBtn+"</div>";
+}
+
+// ── RESULTS ───────────────────────────────────────────────────────────────
+function renderResults(){
+  const lv=state.level;
+  const qs=QS[lv.id];
+  let correct=0;
+  qs.forEach((q,i)=>{if(state.answers[i]===q.a)correct++;});
+  const pct=Math.round(correct/qs.length*100);
+  const passed=pct>=lv.pass;
+
+  const certHtml=passed?"<div class='cert'><h3>Certificate of Achievement</h3><div>This certifies that</div><div class='cname'>"+esc(state.name)+"</div><div class='cline'>has passed the <b>Roots Quranic Arabic Proficiency</b></div><div class='cline'><b>"+lv.name+" Level</b> with a score of <b>"+pct+"%</b></div><div class='cdate'>Issued by Pathways School &middot; "+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})+"</div></div>":"<p class='fail-note'>Required passing score: "+lv.pass+"% &mdash; Please review the material and try again.</p>";
+
+  const reviewItems=qs.map((q,i)=>{
+    const userAns=state.answers[i];
+    const wrongHtml=(userAns!==undefined&&userAns!==q.a)?"<div class='rwrong'>✗ Your answer: "+q.o[userAns]+"</div>":"";
+    return "<div class='ritem'><div class='rq'>"+(i+1)+". "+q.q+"</div>"+wrongHtml+"<div class='rcorrect'>✓ Correct: "+q.o[q.a]+"</div></div>";
+  }).join("");
+
+  return "<div class='hdr "+lv.id+"'><h1>Exam Complete</h1><div class='sub'>"+lv.name+" Level &middot; "+esc(state.name)+"</div></div><div class='cnt'><div class='result-box'><div class='score-big'>"+pct+"%</div><div class='score-label'>"+correct+" out of "+qs.length+" correct</div><div class='badge "+(passed?"pass":"fail")+"'>"+(passed?"✅ PASSED":"❌ Did Not Pass")+"</div>"+certHtml+"</div><div class='review'><h4>📋 Answer Review</h4>"+reviewItems+"</div><button class='btn btn-primary' id='btn-home'>Try Another Level</button><button class='btn btn-sec' id='btn-retry' style='margin-top:10px'>Retry This Level</button></div>";
+}
+
+// ── EVENTS ────────────────────────────────────────────────────────────────
+function attachEvents(){
+  // Home: click level card
+  document.querySelectorAll(".card[data-level]").forEach(el=>{
+    el.addEventListener("click",()=>{
+      state.level=LEVELS[el.dataset.level];
+      state.screen="info";
+      render();
+    });
+  });
+
+  // Info: live name update
+  const nm=document.getElementById("inp-name");
+  if(nm){
+    nm.addEventListener("input",e=>{
+      state.name=e.target.value;
+      const btn=document.getElementById("btn-begin");
+      if(btn) btn.disabled=!state.name.trim();
+    });
+  }
+  const em=document.getElementById("inp-email");
+  if(em) em.addEventListener("input",e=>state.email=e.target.value);
+  const ag=document.getElementById("inp-age");
+  if(ag) ag.addEventListener("input",e=>state.age=e.target.value);
+
+  const btnBegin=document.getElementById("btn-begin");
+  if(btnBegin) btnBegin.addEventListener("click",()=>{
+    if(!state.name.trim())return;
+    state.screen="exam";
+    state.qIdx=0;state.answers={};state.selected=null;state.confirmed=false;
+    state.passageRef=null;
+    state.timeLeft=state.level.dur*60;
+    if(state.timer)clearInterval(state.timer);
+    state.timer=setInterval(()=>{
+      state.timeLeft--;
+      if(state.timeLeft<=0){clearInterval(state.timer);state.screen="results";}
+      render();
+    },1000);
+    render();
+  });
+
+  const btnBack=document.getElementById("btn-back");
+  if(btnBack) btnBack.addEventListener("click",()=>{state.screen="home";render();});
+
+  // Exam: select option
+  document.querySelectorAll(".opt[data-opt]").forEach(el=>{
+    el.addEventListener("click",()=>{
+      if(state.confirmed)return;
+      state.selected=parseInt(el.dataset.opt);
+      render();
+    });
+  });
+
+  const btnConfirm=document.getElementById("btn-confirm");
+  if(btnConfirm) btnConfirm.addEventListener("click",()=>{
+    if(state.selected===null)return;
+    state.answers[state.qIdx]=state.selected;
+    state.confirmed=true;
+    render();
+  });
+
+  const btnNext=document.getElementById("btn-next");
+  if(btnNext) btnNext.addEventListener("click",()=>{
+    const qs=QS[state.level.id];
+    if(state.qIdx<qs.length-1){
+      state.qIdx++;state.selected=null;state.confirmed=false;
+      render();
+    } else {
+      clearInterval(state.timer);
+      state.screen="results";render();
+    }
+  });
+
+  const btnHome=document.getElementById("btn-home");
+  if(btnHome) btnHome.addEventListener("click",()=>{
+    clearInterval(state.timer);
+    state.screen="home";state.qIdx=0;state.answers={};state.selected=null;state.confirmed=false;state.passageRef=null;
+    render();
+  });
+
+  const btnRetry=document.getElementById("btn-retry");
+  if(btnRetry) btnRetry.addEventListener("click",()=>{
+    state.screen="exam";state.qIdx=0;state.answers={};state.selected=null;state.confirmed=false;state.passageRef=null;
+    state.timeLeft=state.level.dur*60;
+    if(state.timer)clearInterval(state.timer);
+    state.timer=setInterval(()=>{
+      state.timeLeft--;
+      if(state.timeLeft<=0){clearInterval(state.timer);state.screen="results";}
+      render();
+    },1000);
+    render();
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+render();
 </script>
 </body>
 </html>
