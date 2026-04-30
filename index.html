@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>The Roots - Arabic and Quran Proficiency</title>
+  <meta name="description" content="The Roots - A Duolingo-inspired Arabic Language and Quran proficiency assessment app with 6 levels, prep cards, vocabulary, and auto-advance."/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -216,8 +217,7 @@ function showPrep(){
     return '<div class="prep-tip-card tip-'+tc+' anim-slide" style="animation-delay:'+(i*0.1)+'s">'+
       '<span class="icon">'+t.icon+'</span>'+
       '<div class="content"><h4>'+t.title+'</h4><p>'+t.text+'</p>'+
-      (t.arabic?'<div class="arabic-eg">'+t.arabic.replace(/
-/g,'<br>')+'</div>':'')+'</div></div>';
+      (t.arabic?'<div class="arabic-eg">'+t.arabic.replace(/\n/g,'<br>')+'</div>':'')+'</div></div>';
   }).join('');
   var vocabHTML=l.vocab.map(function(v){
     return '<div class="vocab-card"><div class="ar-word">'+v.ar+'</div><div class="en-word">'+v.en+'</div><div class="trans"><em>'+v.tr+'</em></div></div>';
